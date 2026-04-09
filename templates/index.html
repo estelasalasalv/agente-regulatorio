@@ -285,6 +285,83 @@
     }
     @keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:none} }
 
+    /* ── Slide Novedades ── */
+    #panel-novedades { background: var(--gray1); }
+    .slide-wrap {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,43,69,.13);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 540px;
+    }
+    .slide-head {
+      background: var(--navy);
+      color: var(--white);
+      padding: 28px 36px 22px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .slide-head-left { display: flex; flex-direction: column; gap: 4px; }
+    .slide-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); }
+    .slide-title-big { font-size: 26px; font-weight: 800; line-height: 1.1; }
+    .slide-subtitle { font-size: 13px; opacity: .7; margin-top: 2px; }
+    .slide-head-date { font-size: 12px; opacity: .55; text-align: right; white-space: nowrap; }
+    .slide-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      flex: 1;
+      gap: 0;
+    }
+    @media(max-width:820px) { .slide-cols { grid-template-columns: 1fr; } }
+    .slide-col { padding: 20px 22px; border-right: 1px solid var(--gray2); display: flex; flex-direction: column; gap: 10px; }
+    .slide-col:last-child { border-right: none; }
+    .slide-col-head {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px;
+      padding-bottom: 10px; border-bottom: 2px solid;
+      margin-bottom: 4px;
+    }
+    .col-nac  { color: var(--navy);  border-color: var(--navy); }
+    .col-eur  { color: #1565c0;      border-color: #1565c0; }
+    .col-cons { color: var(--teal2); border-color: var(--teal); }
+    .slide-item {
+      background: var(--gray1);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      border-left: 3px solid transparent;
+    }
+    .slide-item.nac  { border-color: var(--navy); }
+    .slide-item.eur  { border-color: #1565c0; }
+    .slide-item.cons { border-color: var(--teal); }
+    .slide-item-tag {
+      display: inline-block; font-size: 9px; font-weight: 800; text-transform: uppercase;
+      border-radius: 8px; padding: 1px 6px; margin-bottom: 4px;
+    }
+    .tag-new      { background: rgba(0,184,176,.2);  color: var(--teal2); }
+    .tag-modified { background: rgba(249,168,37,.2);  color: #b8860b; }
+    .tag-open     { background: rgba(46,125,50,.2);   color: #2e7d32; }
+    .slide-item-title { font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .slide-item-meta  { font-size: 11px; color: var(--gray4); }
+    .slide-item-dias  { font-size: 11px; font-weight: 700; color: var(--teal2); margin-top: 3px; }
+    .slide-foot {
+      background: var(--gray1);
+      border-top: 1px solid var(--gray2);
+      padding: 10px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--gray4);
+    }
+    .slide-empty { font-size: 12px; color: var(--gray3); font-style: italic; padding: 8px 0; }
+
     /* ── Benchmark panel ── */
     .benchmark-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 24px; }
     .bench-topic-btn {
@@ -352,6 +429,7 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Inteligencia</div>
+      <div class="sidebar-item" onclick="switchPanel('novedades')"><span class="icon">🗞</span> Novedades del Mes</div>
       <div class="sidebar-item" onclick="switchPanel('benchmark')"><span class="icon">🌍</span> Benchmark Europeo</div>
     </div>
     <div class="sidebar-section" style="margin-top:auto; padding-top:16px;">
@@ -368,6 +446,7 @@
       <div class="tab"        id="tab-nacional"   onclick="switchPanel('nacional')">📋 Normativa Nacional</div>
       <div class="tab"        id="tab-europea"    onclick="switchPanel('europea')">🇪🇺 Normativa UE</div>
       <div class="tab active" id="tab-consultas"  onclick="switchPanel('consultas')">📢 Consultas</div>
+      <div class="tab"        id="tab-novedades"  onclick="switchPanel('novedades')">🗞 Novedades</div>
       <div class="tab"        id="tab-benchmark"  onclick="switchPanel('benchmark')">🌍 Benchmark</div>
     </div>
 
@@ -433,6 +512,38 @@
       <div id="list-consultas"></div>
     </div>
 
+    <!-- PANEL NOVEDADES -->
+    <div class="panel" id="panel-novedades">
+      <div class="slide-wrap">
+        <div class="slide-head">
+          <div class="slide-head-left">
+            <div class="slide-eyebrow">REE · Asuntos Regulatorios</div>
+            <div class="slide-title-big">Novedades del Último Mes</div>
+            <div class="slide-subtitle" id="slide-subtitle"></div>
+          </div>
+          <div class="slide-head-date" id="slide-head-date"></div>
+        </div>
+        <div class="slide-cols">
+          <div class="slide-col">
+            <div class="slide-col-head col-nac">📋 Normativa Nacional</div>
+            <div id="slide-nac"></div>
+          </div>
+          <div class="slide-col">
+            <div class="slide-col-head col-eur">🇪🇺 Normativa Europea</div>
+            <div id="slide-eur"></div>
+          </div>
+          <div class="slide-col">
+            <div class="slide-col-head col-cons">📢 Consultas Abiertas</div>
+            <div id="slide-cons"></div>
+          </div>
+        </div>
+        <div class="slide-foot">
+          <span>Red Eléctrica de España · Dirección de Regulación</span>
+          <span id="slide-foot-date"></span>
+        </div>
+      </div>
+    </div>
+
     <!-- PANEL BENCHMARK -->
     <div class="panel" id="panel-benchmark">
       <div class="benchmark-grid" id="bench-topics"></div>
@@ -461,6 +572,7 @@ async function loadData() {
   renderNacional();
   renderEuropea();
   renderConsultas();
+  renderNovedades();
   renderBenchTopics();
 }
 
@@ -723,6 +835,80 @@ async function actualizarConsultas() {
     icon.className = '';
     icon.textContent = '🔄';
   }
+}
+
+// ── Novedades (slide resumen) ─────────────────────────
+function renderNovedades() {
+  const hoy   = new Date();
+  const hace90 = new Date(hoy); hace90.setDate(hoy.getDate() - 90);
+  const hace30 = new Date(hoy); hace30.setDate(hoy.getDate() - 30);
+
+  // Fecha de referencia de un item: la más reciente entre date y updated
+  function refDate(n) {
+    const d1 = n.date    ? new Date(n.date)    : null;
+    const d2 = n.updated ? new Date(n.updated) : null;
+    if(d1 && d2) return d1 > d2 ? d1 : d2;
+    return d1 || d2 || new Date(0);
+  }
+
+  // Normativa nacional: new/modified, últimos 90 días, más reciente primero
+  const nac = DATA.nacional
+    .filter(n => ['new','modified'].includes(n.tag) && refDate(n) >= hace90)
+    .sort((a,b) => refDate(b) - refDate(a))
+    .slice(0, 5);
+
+  // Normativa europea: new/modified, últimos 90 días
+  const eur = DATA.europea
+    .filter(n => ['new','modified'].includes(n.tag) && refDate(n) >= hace90)
+    .sort((a,b) => refDate(b) - refDate(a))
+    .slice(0, 5);
+
+  // Consultas abiertas ordenadas por plazo más cercano
+  const cons = DATA.consultas
+    .filter(c => c.estado === 'open')
+    .sort((a,b) => (a.fecha_cierre||'9999').localeCompare(b.fecha_cierre||'9999'))
+    .slice(0, 6);
+
+  // Rango de fechas para el subtítulo
+  const fmtSlide = d => d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('slide-subtitle').textContent =
+    `${fmtSlide(hace30)} — ${fmtSlide(hoy)}`;
+  document.getElementById('slide-head-date').textContent =
+    `Actualizado: ${fmtSlide(hoy)}`;
+  document.getElementById('slide-foot-date').textContent =
+    hoy.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  const tagHtml = t => {
+    if(t==='new')      return '<span class="slide-item-tag tag-new">Nuevo</span>';
+    if(t==='modified') return '<span class="slide-item-tag tag-modified">Actualizado</span>';
+    return '';
+  };
+
+  function nacCard(n) {
+    const d = refDate(n);
+    const dateStr = d.getFullYear() > 2000 ? d.toLocaleDateString('es-ES',{month:'short',year:'numeric'}) : '';
+    return `<div class="slide-item nac">
+      ${tagHtml(n.tag)}
+      <div class="slide-item-title">${n.title}</div>
+      <div class="slide-item-meta">${n.type ? n.type.toUpperCase() + ' · ' : ''}${dateStr}</div>
+      ${n.impactoREE ? `<div class="slide-item-meta" style="margin-top:3px;color:var(--navy)">${n.impactoREE.slice(0,90)}${n.impactoREE.length>90?'…':''}</div>` : ''}
+    </div>`;
+  }
+
+  function consCard(c) {
+    const dias = diasRestantes(c.fecha_cierre);
+    const urgente = dias != null && dias <= 7;
+    return `<div class="slide-item cons" ${urgente ? 'style="border-color:var(--red)"' : ''}>
+      <span class="slide-item-tag tag-open">Abierta</span>
+      <div class="slide-item-title">${c.titulo.length>70 ? c.titulo.slice(0,70)+'…' : c.titulo}</div>
+      <div class="slide-item-meta">${c.organismo}</div>
+      ${dias!=null ? `<div class="slide-item-dias" style="${urgente?'color:var(--red)':''}">⏱ ${dias} días · Cierre ${fmtFecha(c.fecha_cierre)}</div>` : ''}
+    </div>`;
+  }
+
+  document.getElementById('slide-nac').innerHTML  = nac.length  ? nac.map(nacCard).join('') : '<div class="slide-empty">Sin novedades en el período</div>';
+  document.getElementById('slide-eur').innerHTML  = eur.length  ? eur.map(nacCard).join('') : '<div class="slide-empty">Sin novedades en el período</div>';
+  document.getElementById('slide-cons').innerHTML = cons.length ? cons.map(consCard).join('') : '<div class="slide-empty">No hay consultas abiertas</div>';
 }
 
 // ── Benchmark ─────────────────────────────────────────
