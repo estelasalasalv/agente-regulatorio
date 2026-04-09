@@ -646,6 +646,10 @@ function renderEuropea() {
     if(tipo && n.type!==tipo) return false;
     if(q) { const t=(n.title+' '+n.summary+' '+n.impactoREE).toLowerCase(); return q.split(' ').some(w=>t.includes(w)); }
     return true;
+  }).slice().sort((a,b)=>{
+    const da = a.updated || a.date || '';
+    const db = b.updated || b.date || '';
+    return db.localeCompare(da);
   });
   document.getElementById('cards-europea').innerHTML = list.map(normCard).join('') || '<p style="color:var(--gray4)">Sin resultados.</p>';
 }
