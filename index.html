@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agente Regulatorio — REE</title>
+  <style>
+    /* ── Variables y reset ── */
+    :root {
+      --navy:   #002b45;
+      --teal:   #00b8b0;
+      --teal2:  #009990;
+      --gray1:  #f4f6f8;
+      --gray2:  #e8ecf0;
+      --gray3:  #b0bec5;
+      --gray4:  #607d8b;
+      --text:   #1a2e3b;
+      --white:  #ffffff;
+      --red:    #e53935;
+      --yellow: #f9a825;
+      --green:  #2e7d32;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0,43,69,.10);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--gray1); }
+
+    /* ── Topbar ── */
+    .topbar {
+      background: var(--navy);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 12px; }
+    .topbar-logo  { width: 32px; height: 32px; background: var(--teal); border-radius: 6px;
+                    display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 14px; }
+    .topbar-title { font-size: 15px; font-weight: 600; letter-spacing: .3px; }
+    .topbar-sub   { font-size: 11px; opacity: .65; }
+    .topbar-meta  { font-size: 12px; opacity: .7; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 260px 1fr; height: calc(100vh - 56px); }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: var(--navy);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 16px 0 24px;
+      border-right: 1px solid rgba(255,255,255,.07);
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 8px; }
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--teal);
+      padding: 12px 0 6px;
+    }
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background .15s;
+      margin-bottom: 2px;
+    }
+    .sidebar-item:hover     { background: rgba(255,255,255,.08); }
+    .sidebar-item.active    { background: rgba(0,184,176,.18); color: var(--teal); font-weight: 600; }
+    .sidebar-item .icon     { font-size: 15px; width: 20px; text-align: center; }
+    .sidebar-stat {
+      background: rgba(255,255,255,.06);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 4px 16px;
+      font-size: 12px;
+    }
+    .stat-num   { font-size: 22px; font-weight: 700; color: var(--teal); line-height: 1; }
+    .stat-label { opacity: .7; font-size: 11px; margin-top: 2px; }
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-new      { background: rgba(0,184,176,.25); color: var(--teal); }
+    .badge-open     { background: rgba(46,125,50,.3);  color: #81c784; }
+    .badge-upcoming { background: rgba(249,168,37,.2); color: #ffd54f; }
+    .badge-closed   { background: rgba(255,255,255,.1); color: var(--gray3); }
+
+    /* ── Main ── */
+    .main { display: flex; flex-direction: column; overflow: hidden; }
+
+    /* ── Tabs ── */
+    .tabs {
+      background: var(--white);
+      display: flex;
+      gap: 4px;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--gray2);
+      flex-shrink: 0;
+    }
+    .tab {
+      padding: 14px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray4);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .tab:hover  { color: var(--navy); }
+    .tab.active { color: var(--teal2); border-bottom-color: var(--teal); font-weight: 700; }
+
+    /* ── Panels ── */
+    .panel      { display: none; flex: 1; overflow-y: auto; padding: 24px; }
+    .panel.show { display: flex; flex-direction: column; }
+
+
+    /* ── Normativa panel ── */
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      border: 1.5px solid var(--gray2);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search-input:focus { border-color: var(--teal); }
+    .filter-select {
+      border: 1.5px solid var(--gray2);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 13px;
+      outline: none;
+      background: var(--white);
+      cursor: pointer;
+    }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+    .norm-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      border-left: 3px solid var(--teal);
+      transition: transform .15s, box-shadow .15s;
+      cursor: pointer;
+    }
+    .norm-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,43,69,.13); }
+    .norm-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+    .norm-card-title  { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.4; }
+    .norm-card-meta   { font-size: 11px; color: var(--gray4); margin-bottom: 6px; }
+    .norm-card-summary{ font-size: 12px; color: var(--gray4); line-height: 1.5; margin-bottom: 8px; }
+    .norm-card-impact { font-size: 12px; color: var(--text); background: rgba(0,184,176,.07); border-radius: 6px; padding: 7px 10px; }
+    .norm-card-impact strong { color: var(--teal2); }
+    .type-chip { background: var(--gray1); border: 1px solid var(--gray2); color: var(--gray4); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; flex-shrink: 0; }
+
+    /* ── Consultas panel ── */
+    .consulta-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+      border-left: 3px solid var(--teal);
+    }
+    .consulta-card.closed  { border-left-color: var(--gray3); opacity: .85; }
+    .consulta-card.upcoming{ border-left-color: var(--yellow); }
+    .consulta-title    { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .consulta-title a  { color: var(--navy); text-decoration: none; }
+    .consulta-title a:hover { color: var(--teal2); text-decoration: underline; }
+    .consulta-organismo{ font-size: 12px; color: var(--teal2); font-weight: 600; margin-bottom: 6px; }
+    .consulta-summary  { font-size: 12px; color: var(--gray4); line-height: 1.5; margin-bottom: 8px; }
+    .consulta-fechas   { display: flex; gap: 16px; font-size: 11px; color: var(--gray4); margin-top: 6px; flex-wrap: wrap; }
+    .consulta-fechas span strong { color: var(--text); }
+    .consulta-relevancia { font-size: 11px; background: rgba(0,184,176,.07); border-radius: 5px; padding: 5px 9px; margin-top: 7px; color: var(--text); }
+    .consulta-relevancia strong { color: var(--teal2); }
+    .consulta-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 8px; font-size: 11px; font-weight: 600;
+      color: var(--teal2); text-decoration: none;
+      background: rgba(0,184,176,.08); border: 1px solid rgba(0,184,176,.25);
+      padding: 4px 10px; border-radius: 20px; transition: background .15s;
+    }
+    .consulta-link:hover { background: rgba(0,184,176,.18); }
+    .progress-wrap  { margin-top: 8px; }
+    .progress-bar   { background: var(--gray2); border-radius: 4px; height: 5px; overflow: hidden; margin-top: 4px; }
+    .progress-fill  { height: 100%; background: var(--teal); border-radius: 4px; }
+    .progress-label { font-size: 10px; color: var(--gray4); display: flex; justify-content: space-between; }
+    .consulta-meta  { text-align: right; min-width: 110px; }
+    .days-badge     { font-size: 24px; font-weight: 800; color: var(--teal); line-height: 1; }
+    .days-label     { font-size: 10px; color: var(--gray4); }
+    .org-chip {
+      display: inline-block; padding: 2px 8px; border-radius: 10px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; flex-shrink: 0;
+    }
+    .org-cnmc   { background: rgba(0,43,69,.1);  color: var(--navy); }
+    .org-miteco { background: rgba(46,125,50,.15); color: #2e7d32; }
+    .org-os     { background: rgba(0,184,176,.15); color: var(--teal2); }
+    .org-eu     { background: rgba(25,118,210,.15); color: #1565c0; }
+    .org-acer   { background: rgba(123,31,162,.15); color: #6a1b9a; }
+    .consultas-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+    }
+    .consultas-count { font-size: 12px; color: var(--gray4); }
+
+    /* ── Botón actualizar ── */
+    .btn-actualizar {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 8px;
+      padding: 8px 16px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background .15s;
+    }
+    .btn-actualizar:hover:not(:disabled) { background: #004070; }
+    .btn-actualizar:disabled { background: var(--gray3); cursor: not-allowed; }
+    .btn-actualizar .spin { display: inline-block; animation: rotar 1s linear infinite; }
+    @keyframes rotar { to { transform: rotate(360deg); } }
+
+    .actualizar-log {
+      background: var(--navy); color: #a8d5e2;
+      border-radius: 8px; padding: 12px 16px;
+      font-size: 12px; font-family: 'Consolas', monospace;
+      margin-bottom: 16px; max-height: 180px; overflow-y: auto;
+      display: none;
+    }
+    .actualizar-log.visible { display: block; }
+    .log-line { padding: 2px 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .log-line.ok    { color: #81c784; }
+    .log-line.warn  { color: #ffd54f; }
+    .log-line.error { color: #ef9a9a; }
+    .log-line.done  { color: var(--teal); font-weight: 700; }
+
+    .nuevas-badge {
+      display: inline-block; background: var(--teal); color: var(--white);
+      border-radius: 12px; padding: 2px 8px; font-size: 11px; font-weight: 700;
+      margin-left: 8px; animation: fadeIn .4s;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:none} }
+
+    /* ── Benchmark panel ── */
+    .benchmark-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .bench-topic-btn {
+      background: var(--white);
+      border: 2px solid var(--gray2);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: all .15s;
+    }
+    .bench-topic-btn:hover  { border-color: var(--teal); }
+    .bench-topic-btn.active { border-color: var(--teal); background: rgba(0,184,176,.07); }
+    .bench-topic-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+    .bench-topic-desc { font-size: 12px; color: var(--gray4); margin-top: 4px; }
+    .bench-table-wrap { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow-x: auto; }
+    .bench-table      { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .bench-table th   { background: var(--navy); color: var(--white); padding: 10px 14px; text-align: left; position: sticky; top: 0; }
+    .bench-table td   { padding: 10px 14px; border-bottom: 1px solid var(--gray2); vertical-align: top; }
+    .bench-table tr:hover td { background: var(--gray1); }
+    .bench-table tr.spain-row td { background: rgba(0,184,176,.06); font-weight: 600; }
+    .stars { color: var(--teal); font-size: 13px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .consulta-card { grid-template-columns: 1fr; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar       { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--gray3); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">R</div>
+    <div>
+      <div class="topbar-title">Agente Regulatorio REE</div>
+      <div class="topbar-sub">Sector Eléctrico Español · Monitorización Normativa</div>
+    </div>
+  </div>
+  <div class="topbar-meta" id="topbar-date"></div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Normativa</div>
+      <div class="sidebar-item" onclick="switchPanel('nacional')"><span class="icon">📋</span> Normativa Nacional</div>
+      <div class="sidebar-item" onclick="switchPanel('europea')"><span class="icon">🇪🇺</span> Normativa Europea</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Participación</div>
+      <div class="sidebar-item active" onclick="switchPanel('consultas')"><span class="icon">📢</span> Consultas Públicas</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Inteligencia</div>
+      <div class="sidebar-item" onclick="switchPanel('benchmark')"><span class="icon">🌍</span> Benchmark Europeo</div>
+    </div>
+    <div class="sidebar-section" style="margin-top:auto; padding-top:16px;">
+      <div class="sidebar-label">Estadísticas</div>
+    </div>
+    <div class="sidebar-stat" id="stat-nac"></div>
+    <div class="sidebar-stat" id="stat-eu"></div>
+    <div class="sidebar-stat" id="stat-consultas"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="tabs">
+      <div class="tab"        id="tab-nacional"   onclick="switchPanel('nacional')">📋 Normativa Nacional</div>
+      <div class="tab"        id="tab-europea"    onclick="switchPanel('europea')">🇪🇺 Normativa UE</div>
+      <div class="tab active" id="tab-consultas"  onclick="switchPanel('consultas')">📢 Consultas</div>
+      <div class="tab"        id="tab-benchmark"  onclick="switchPanel('benchmark')">🌍 Benchmark</div>
+    </div>
+
+    <!-- PANEL NORMATIVA NACIONAL -->
+    <div class="panel" id="panel-nacional">
+      <div class="search-bar">
+        <input class="search-input" id="search-nac" placeholder="Buscar en normativa nacional..." oninput="renderNacional()"/>
+        <select class="filter-select" id="filter-nac" onchange="renderNacional()">
+          <option value="">Todos los tipos</option>
+          <option value="ley">Ley</option>
+          <option value="rdl">Real Decreto-Ley</option>
+          <option value="rd">Real Decreto</option>
+          <option value="om">Orden Ministerial</option>
+          <option value="circular">Circular CNMC</option>
+        </select>
+      </div>
+      <div class="cards-grid" id="cards-nacional"></div>
+    </div>
+
+    <!-- PANEL NORMATIVA EUROPEA -->
+    <div class="panel" id="panel-europea">
+      <div class="search-bar">
+        <input class="search-input" id="search-eu" placeholder="Buscar en normativa europea..." oninput="renderEuropea()"/>
+        <select class="filter-select" id="filter-eu" onchange="renderEuropea()">
+          <option value="">Todos los tipos</option>
+          <option value="directiva">Directiva</option>
+          <option value="reglamento">Reglamento</option>
+          <option value="codigo_red">Código de Red</option>
+        </select>
+      </div>
+      <div class="cards-grid" id="cards-europea"></div>
+    </div>
+
+    <!-- PANEL CONSULTAS -->
+    <div class="panel show" id="panel-consultas">
+      <div class="search-bar">
+        <select class="filter-select" id="filter-estado" onchange="renderConsultas()">
+          <option value="">Todos los estados</option>
+          <option value="open">Abiertas</option>
+          <option value="closed">Cerradas</option>
+          <option value="upcoming">Próximas</option>
+        </select>
+        <select class="filter-select" id="filter-org" onchange="renderConsultas()">
+          <option value="">Todos los organismos</option>
+          <option value="CNMC">CNMC</option>
+          <option value="MITECO">MITECO</option>
+          <option value="OS">OS (Red Eléctrica)</option>
+          <option value="Comisión Europea">Comisión Europea</option>
+          <option value="ACER">ACER</option>
+        </select>
+      </div>
+      <div class="consultas-header">
+        <span class="consultas-count" id="consultas-count"></span>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:11px;color:var(--gray4)">Más reciente primero</span>
+          <span id="nuevas-badge" class="nuevas-badge" style="display:none;"></span>
+        </div>
+      </div>
+      <div class="actualizar-log" id="actualizar-log"></div>
+      <div id="list-consultas"></div>
+    </div>
+
+    <!-- PANEL BENCHMARK -->
+    <div class="panel" id="panel-benchmark">
+      <div class="benchmark-grid" id="bench-topics"></div>
+      <div class="bench-table-wrap" id="bench-table-wrap" style="display:none;"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── Datos ──────────────────────────────────────────
+let DATA = { nacional: [], europea: [], consultas: [], benchmark: {} };
+let activeTopic = null;
+
+async function loadData() {
+  const [nac, eur, cons, bench] = await Promise.all([
+    fetch('./data/normativa_nacional.json').then(r=>r.json()),
+    fetch('./data/normativa_europea.json').then(r=>r.json()),
+    fetch('./data/consultas_publicas.json').then(r=>r.json()),
+    fetch('./data/benchmark_europeo.json').then(r=>r.json()),
+  ]);
+  DATA.nacional   = nac  || [];
+  DATA.europea    = eur  || [];
+  DATA.consultas  = cons || [];
+  DATA.benchmark  = bench || {};
+  renderStats();
+  renderNacional();
+  renderEuropea();
+  renderConsultas();
+  renderBenchTopics();
+}
+
+// ── Fecha ───────────────────────────────────────────
+(function updateClock(){
+  const el = document.getElementById('topbar-date');
+  const now = new Date();
+  el.textContent = now.toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+})();
+
+// ── Stats sidebar ────────────────────────────────────
+function renderStats() {
+  const abiertas = DATA.consultas.filter(c=>c.estado==='open').length;
+  const nuevas   = DATA.nacional.filter(n=>n.tag==='new').length;
+  document.getElementById('stat-nac').innerHTML =
+    `<div class="stat-num">${DATA.nacional.length}</div><div class="stat-label">Normas nacionales · ${nuevas} nuevas</div>`;
+  document.getElementById('stat-eu').innerHTML  =
+    `<div class="stat-num">${DATA.europea.length}</div><div class="stat-label">Instrumentos europeos</div>`;
+  document.getElementById('stat-consultas').innerHTML =
+    `<div class="stat-num">${abiertas}</div><div class="stat-label">Consultas abiertas</div>`;
+}
+
+// ── Panel switch ─────────────────────────────────────
+function switchPanel(id) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s=>s.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('show');
+  const tab = document.getElementById('tab-'+id);
+  if(tab) tab.classList.add('active');
+}
+
+// ── Normativa cards ──────────────────────────────────
+const TAG_LABEL = {new:'Nuevo', modified:'Modificado', eu:'UE'};
+const TAG_COLOR = {new:'badge-new', modified:'badge-open', eu:'badge-upcoming'};
+
+function normCard(n) {
+  const tag = n.tag ? `<span class="badge ${TAG_COLOR[n.tag]||''}">${TAG_LABEL[n.tag]||n.tag}</span>` : '';
+  return `<div class="norm-card" onclick="openDetail('${n.id}')">
+    <div class="norm-card-header">
+      <div class="norm-card-title">${n.title}</div>
+      ${tag}
+    </div>
+    <div class="norm-card-meta">
+      <span class="type-chip">${n.type||''}</span>
+      &nbsp;${n.date||''} ${n.updated?`· Actualizado: ${n.updated}`:''}
+    </div>
+    <div class="norm-card-summary">${n.summary||''}</div>
+    ${n.impactoREE?`<div class="norm-card-impact"><strong>Impacto REE:</strong> ${n.impactoREE}</div>`:''}
+  </div>`;
+}
+
+function renderNacional() {
+  const q    = (document.getElementById('search-nac').value||'').toLowerCase();
+  const tipo = document.getElementById('filter-nac').value;
+  const list = DATA.nacional.filter(n=>{
+    if(tipo && n.type!==tipo) return false;
+    if(q) { const t=(n.title+' '+n.summary+' '+n.impactoREE).toLowerCase(); return q.split(' ').some(w=>t.includes(w)); }
+    return true;
+  });
+  document.getElementById('cards-nacional').innerHTML = list.map(normCard).join('') || '<p style="color:var(--gray4)">Sin resultados.</p>';
+}
+
+function renderEuropea() {
+  const q    = (document.getElementById('search-eu').value||'').toLowerCase();
+  const tipo = document.getElementById('filter-eu').value;
+  const list = DATA.europea.filter(n=>{
+    if(tipo && n.type!==tipo) return false;
+    if(q) { const t=(n.title+' '+n.summary+' '+n.impactoREE).toLowerCase(); return q.split(' ').some(w=>t.includes(w)); }
+    return true;
+  });
+  document.getElementById('cards-europea').innerHTML = list.map(normCard).join('') || '<p style="color:var(--gray4)">Sin resultados.</p>';
+}
+
+function openDetail(id) {
+  const all = [...DATA.nacional,...DATA.europea];
+  const n   = all.find(x=>x.id===id);
+  if(!n) return;
+  switchPanel('nacional');
+}
+
+// ── Consultas ─────────────────────────────────────────
+const ORG_CLASS = {
+  'CNMC': 'org-cnmc',
+  'MITECO': 'org-miteco',
+  'OS (Red Eléctrica)': 'org-os',
+  'Comisión Europea': 'org-eu',
+  'ACER': 'org-acer',
+};
+
+function diasRestantes(fechaCierre) {
+  if(!fechaCierre) return null;
+  const diff = (new Date(fechaCierre) - new Date()) / (1000 * 86400);
+  return Math.max(0, Math.round(diff));
+}
+
+function fmtFecha(iso) {
+  if(!iso) return '—';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function renderConsultas() {
+  const estado = document.getElementById('filter-estado').value;
+  const org    = document.getElementById('filter-org').value;
+
+  let list = DATA.consultas.filter(c=>{
+    if(estado && c.estado!==estado) return false;
+    if(org && !c.organismo.includes(org)) return false;
+    return true;
+  });
+
+  // Ordenar: más reciente primero por fecha_publicacion
+  list = list.slice().sort((a,b)=>
+    (b.fecha_publicacion||'').localeCompare(a.fecha_publicacion||'')
+  );
+
+  const stateLabel = {open:'Abierta',closed:'Cerrada',upcoming:'Próxima'};
+  const stateClass = {open:'badge-open',closed:'badge-closed',upcoming:'badge-upcoming'};
+
+  document.getElementById('consultas-count').textContent =
+    `${list.length} consulta${list.length!==1?'s':''} encontrada${list.length!==1?'s':''}`;
+
+  document.getElementById('list-consultas').innerHTML = list.map(c=>{
+    const dias = c.estado==='open' ? diasRestantes(c.fecha_cierre) : null;
+    const diasHtml = dias!=null
+      ? `<div class="days-badge">${dias}</div><div class="days-label">días restantes</div>`
+      : '';
+
+    const progHtml = c.fecha_publicacion && c.fecha_cierre && c.estado==='open' ? (()=>{
+      const total   = (new Date(c.fecha_cierre)-new Date(c.fecha_publicacion))/(1000*86400);
+      const elapsed = (new Date()-new Date(c.fecha_publicacion))/(1000*86400);
+      const pct     = Math.min(100,Math.max(0,elapsed/total*100)).toFixed(0);
+      return `<div class="progress-wrap">
+        <div class="progress-label">
+          <span>Publicación: ${fmtFecha(c.fecha_publicacion)}</span>
+          <span>Cierre: ${fmtFecha(c.fecha_cierre)}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>`;
+    })() : '';
+
+    const enlaceHtml = c.enlace
+      ? `<a class="consulta-link" href="${c.enlace}" target="_blank" rel="noopener">↗ Ver consulta oficial</a>`
+      : '';
+
+    const relevanciaHtml = c.relevanciaREE
+      ? `<div class="consulta-relevancia"><strong>Relevancia REE:</strong> ${c.relevanciaREE}</div>`
+      : '';
+
+    const expedienteHtml = c.expediente
+      ? `<span style="font-size:10px;color:var(--gray4);margin-left:6px;">Exp. ${c.expediente}</span>`
+      : '';
+
+    const orgClass = ORG_CLASS[c.organismo] || 'org-cnmc';
+
+    return `<div class="consulta-card ${c.estado||''}">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
+          <span class="badge ${stateClass[c.estado]||''}">${stateLabel[c.estado]||c.estado}</span>
+          <span class="org-chip ${orgClass}">${c.organismo}</span>
+          ${expedienteHtml}
+        </div>
+        <div class="consulta-title">${c.enlace
+          ? `<a href="${c.enlace}" target="_blank" rel="noopener">${c.titulo}</a>`
+          : c.titulo}</div>
+        <div class="consulta-fechas">
+          <span>📅 <strong>Publicación:</strong> ${fmtFecha(c.fecha_publicacion)}</span>
+          <span>⏱ <strong>Plazo:</strong> ${fmtFecha(c.fecha_cierre)}</span>
+          ${c.contacto ? `<span>✉ ${c.contacto}</span>` : ''}
+        </div>
+        <div class="consulta-summary">${c.resumen}</div>
+        ${relevanciaHtml}
+        ${progHtml}
+        ${enlaceHtml}
+      </div>
+      <div class="consulta-meta">${diasHtml}</div>
+    </div>`;
+  }).join('') || '<p style="color:var(--gray4);padding:20px 0;">Sin resultados para los filtros seleccionados.</p>';
+}
+
+// ── Actualizar consultas ──────────────────────────────
+async function actualizarConsultas() {
+  const btn  = document.getElementById('btn-actualizar');
+  const icon = document.getElementById('actualizar-icon');
+  const log  = document.getElementById('actualizar-log');
+  const badge = document.getElementById('nuevas-badge');
+
+  btn.disabled = true;
+  icon.className = 'spin';
+  icon.textContent = '🔄';
+  log.innerHTML = '';
+  log.classList.add('visible');
+  badge.style.display = 'none';
+
+  function addLine(msg, cls='') {
+    const d = document.createElement('div');
+    d.className = 'log-line' + (cls ? ' '+cls : '');
+    d.textContent = msg;
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  addLine('Iniciando actualización de consultas públicas…');
+
+  try {
+    const resp = await fetch('/api/actualizar-consultas', { method: 'POST' });
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = '';
+
+    while(true) {
+      const { done, value } = await reader.read();
+      if(done) break;
+      buf += decoder.decode(value, { stream: true });
+      const parts = buf.split('\n\n');
+      buf = parts.pop();
+      for(const part of parts) {
+        if(!part.startsWith('data:')) continue;
+        let ev;
+        try { ev = JSON.parse(part.slice(5).trim()); } catch { continue; }
+
+        if(ev.tipo === 'progreso') {
+          const cls = ev.nivel === 'ok' ? 'ok' : ev.nivel === 'error' ? 'error' : ev.nivel === 'warn' ? 'warn' : '';
+          addLine(ev.mensaje, cls);
+        } else if(ev.tipo === 'completado') {
+          const n = ev.nuevas || 0;
+          addLine(`✓ Actualización completada — ${n} consulta${n!==1?'s':''} nueva${n!==1?'s':''} añadida${n!==1?'s':''}`, 'done');
+          if(n > 0) {
+            badge.textContent = `+${n} nueva${n!==1?'s':''}`;
+            badge.style.display = 'inline-block';
+          }
+          // Recargar datos
+          const cons = await fetch('/api/consultas').then(r=>r.json());
+          DATA.consultas = cons || [];
+          renderStats();
+          renderConsultas();
+        } else if(ev.tipo === 'error') {
+          addLine('✗ ' + (ev.mensaje||'Error desconocido'), 'error');
+        }
+      }
+    }
+  } catch(e) {
+    addLine('✗ Error de conexión: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    icon.className = '';
+    icon.textContent = '🔄';
+  }
+}
+
+// ── Benchmark ─────────────────────────────────────────
+const TOPICO_DESC = {
+  'acceso-conexion':  'Plazos y costes de acceso a la red',
+  'retribucion-tso':  'WACC y modelo retributivo del TSO',
+  'apoyo-renovables': 'Mecanismos de apoyo y objetivos 2030',
+  'almacenamiento':   'Marco regulatorio del almacenamiento',
+  'hidrogeno-verde':  'Regulación y objetivos de H2 verde'
+};
+
+function renderBenchTopics() {
+  const topicos = DATA.benchmark.topicos || [];
+  document.getElementById('bench-topics').innerHTML = topicos.map(t=>
+    `<button class="bench-topic-btn ${activeTopic===t.id?'active':''}" onclick="selectTopic('${t.id}')">
+      <div class="bench-topic-name">${t.nombre}</div>
+      <div class="bench-topic-desc">${TOPICO_DESC[t.id]||t.descripcion||''}</div>
+    </button>`
+  ).join('');
+}
+
+function selectTopic(id) {
+  activeTopic = id;
+  renderBenchTopics();
+  const topicos = DATA.benchmark.topicos || [];
+  const t = topicos.find(x=>x.id===id);
+  if(!t) return;
+  const paises = Object.entries(t.paises||{});
+  const keys   = paises.length ? Object.keys(paises[0][1]).filter(k=>k!=='particularidades'&&k!=='calificacion') : [];
+
+  const colHeaders = keys.map(k=>`<th>${k.replace(/_/g,' ')}</th>`).join('');
+  const rows = paises.map(([pais, datos])=>
+    `<tr class="${pais==='España'?'spain-row':''}">
+      <td><strong>${pais}</strong></td>
+      ${keys.map(k=>`<td>${datos[k]||'—'}</td>`).join('')}
+      <td><span class="stars">${datos.calificacion||''}</span></td>
+      <td style="font-size:11px;color:var(--gray4);max-width:200px">${datos.particularidades||''}</td>
+    </tr>`
+  ).join('');
+
+  document.getElementById('bench-table-wrap').style.display = 'block';
+  document.getElementById('bench-table-wrap').innerHTML =
+    `<table class="bench-table">
+      <thead><tr><th>País</th>${colHeaders}<th>Rating</th><th>Notas</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── Init ──────────────────────────────────────────────
+loadData();
+</script>
+</body>
+</html>
