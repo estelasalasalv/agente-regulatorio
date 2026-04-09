@@ -1,0 +1,298 @@
+{
+  "topicos": [
+    {
+      "id": "acceso-conexion",
+      "nombre": "Acceso y Conexión a la Red",
+      "descripcion": "Plazos, requisitos y costes de acceso a la red de transporte para nuevas instalaciones.",
+      "paises": {
+        "España": {
+          "modelo": "First-come, first-served con nodos saturados",
+          "plazo_medio_meses": 36,
+          "coste_acceso": "Coste real de los nudos de conexión a cargo del promotor",
+          "particularidades": "Grave problema de saturación de nudos. Reforma en curso (RD 997/2025).",
+          "calificacion": "★★☆"
+        },
+        "Francia": {
+          "modelo": "S-TERRA: sistema de subastas zonales",
+          "plazo_medio_meses": 24,
+          "coste_acceso": "Parcialmente socializado",
+          "particularidades": "RTE ha implementado un sistema de priorización por zonificación que reduce cuellos de botella.",
+          "calificacion": "★★★"
+        },
+        "Alemania": {
+          "modelo": "Registro de proyectos con ventanilla única",
+          "plazo_medio_meses": 18,
+          "coste_acceso": "Mayoritariamente socializado",
+          "particularidades": "El Netzausbaubeschleunigungsgesetz (NABEG) ha acelerado significativamente los plazos.",
+          "calificacion": "★★★★"
+        },
+        "Italia": {
+          "modelo": "Subastas de acceso (Aste di Capacità)",
+          "plazo_medio_meses": 42,
+          "coste_acceso": "Coste real a cargo del promotor",
+          "particularidades": "Graves retrasos por litigios administrativos, especialmente en el sur.",
+          "calificacion": "★☆☆"
+        },
+        "Reino Unido": {
+          "modelo": "REMA Reform: nuevo diseño post-Brexit",
+          "plazo_medio_meses": 12,
+          "coste_acceso": "Socializado",
+          "particularidades": "Reforma profunda del mercado de acceso con resultados prometedores.",
+          "calificacion": "★★★★★"
+        },
+        "Portugal": {
+          "modelo": "Coordinado con España (MIBEL)",
+          "plazo_medio_meses": 30,
+          "coste_acceso": "Coste real parcialmente socializado",
+          "particularidades": "Modelo alineado con España, con ligeras ventajas por menor saturación.",
+          "calificacion": "★★★"
+        },
+        "Países Bajos": {
+          "modelo": "Congestión severa, moratoria parcial",
+          "plazo_medio_meses": 48,
+          "coste_acceso": "Coste real a cargo del promotor",
+          "particularidades": "TenneT ha declarado zonas de congestión con moratoria de nuevas conexiones.",
+          "calificacion": "★☆☆"
+        }
+      }
+    },
+    {
+      "id": "retribucion-tso",
+      "nombre": "Retribución del TSO (WACC y modelo regulatorio)",
+      "descripcion": "Tasa de retribución del capital y modelo regulatorio aplicado a los operadores del sistema de transporte.",
+      "paises": {
+        "España": {
+          "WACC_nominal": "6,58% (TRF Circular CNMC 2/2024, período 2026-2031)",
+          "modelo": "Rate of Return / Coste del servicio",
+          "revision_periodicidad": "Cada 6 años",
+          "particularidades": "Incremento significativo respecto al 5,58% anterior. Nuevo incentivo por ciberseguridad.",
+          "calificacion": "★★★"
+        },
+        "Francia": {
+          "WACC_nominal": "5,80% (período 2023-2027)",
+          "modelo": "Rate of Return / Coste del servicio",
+          "revision_periodicidad": "Cada 5 años",
+          "particularidades": "CRE fija el WACC. Incentivos por rendimiento en digitalización.",
+          "calificacion": "★★★"
+        },
+        "Alemania": {
+          "WACC_nominal": "6,05% (período 2024-2028)",
+          "modelo": "Price Cap / Incentive Regulation",
+          "revision_periodicidad": "Cada 5 años",
+          "particularidades": "BNetzA aplica un modelo de incentivos con X-factor para eficiencia.",
+          "calificacion": "★★★★"
+        },
+        "Italia": {
+          "WACC_nominal": "6,30% (período 2024-2027)",
+          "modelo": "Price Cap / Incentive Regulation",
+          "revision_periodicidad": "Cada 4 años",
+          "particularidades": "ARERA aplica un modelo avanzado de regulación por incentivos.",
+          "calificacion": "★★★★"
+        },
+        "Reino Unido": {
+          "WACC_nominal": "5,20% (RIIO-T2, 2021-2026)",
+          "modelo": "RIIO (Revenue = Incentives + Innovation + Outputs)",
+          "revision_periodicidad": "Cada 5 años",
+          "particularidades": "Ofgem aplica el modelo RIIO más avanzado de Europa, con fuertes incentivos por resultados.",
+          "calificacion": "★★★★★"
+        },
+        "Portugal": {
+          "WACC_nominal": "5,95% (período 2024-2027)",
+          "modelo": "Rate of Return / Coste del servicio",
+          "revision_periodicidad": "Cada 4 años",
+          "particularidades": "ERSE fija el WACC. Modelo similar al español pero con ciclos más cortos.",
+          "calificacion": "★★★"
+        },
+        "Países Bajos": {
+          "WACC_nominal": "5,70% (período 2023-2027)",
+          "modelo": "Price Cap / Incentive Regulation",
+          "revision_periodicidad": "Cada 5 años",
+          "particularidades": "ACM aplica incentivos a la calidad del suministro. TenneT tiene fondos de inversión especiales.",
+          "calificacion": "★★★★"
+        }
+      }
+    },
+    {
+      "id": "apoyo-renovables",
+      "nombre": "Apoyo a las Energías Renovables",
+      "descripcion": "Mecanismos de apoyo a la generación renovable: subastas, primas, objetivos 2030.",
+      "paises": {
+        "España": {
+          "objetivo_2030": "74% renovables en generación eléctrica",
+          "mecanismo_principal": "Subastas IDAE (Régimen Retributivo Específico)",
+          "precio_adjudicacion_solar": "~28 €/MWh (última subasta 2025)",
+          "particularidades": "Líder europeo en MW subastados. CfD bidireccionales previstos desde 2025 (Reg. 2024/1747).",
+          "calificacion": "★★★★"
+        },
+        "Francia": {
+          "objetivo_2030": "40% renovables en consumo final de energía",
+          "mecanismo_principal": "AO (Appels d'Offres) CRE - subastas tecnológicas",
+          "precio_adjudicacion_solar": "~35 €/MWh",
+          "particularidades": "Fuerte peso nuclear limita la expansión renovable. Nueva ley de aceleración 2023.",
+          "calificacion": "★★★"
+        },
+        "Alemania": {
+          "objetivo_2030": "80% renovables en generación eléctrica",
+          "mecanismo_principal": "EEG - Subastas tecnológicas anuales",
+          "precio_adjudicacion_solar": "~42 €/MWh",
+          "particularidades": "Expansión masiva de eólica terrestre y solar. Objetivo 600 GW solar en 2035.",
+          "calificacion": "★★★★★"
+        },
+        "Italia": {
+          "objetivo_2030": "65% renovables en generación eléctrica",
+          "mecanismo_principal": "FER+ y Aste - Subastas GSE",
+          "precio_adjudicacion_solar": "~38 €/MWh",
+          "particularidades": "Fuerte retraso por burocracia. Nuevo plan de simplificación DL PNRR.",
+          "calificacion": "★★☆"
+        },
+        "Reino Unido": {
+          "objetivo_2030": "100% electricidad limpia",
+          "mecanismo_principal": "CfD (Contracts for Difference) - Rondas anuales",
+          "precio_adjudicacion_solar": "~30 £/MWh",
+          "particularidades": "El modelo CfD es referencia europea. GB Electricity Action Plan 2035.",
+          "calificacion": "★★★★★"
+        },
+        "Portugal": {
+          "objetivo_2030": "80% renovables en generación eléctrica",
+          "mecanismo_principal": "Leilões DGEG - Subastas tecnológicas",
+          "precio_adjudicacion_solar": "~25 €/MWh",
+          "particularidades": "Precios más competitivos de Europa. Excepcional recurso solar y eólico.",
+          "calificacion": "★★★★"
+        },
+        "Países Bajos": {
+          "objetivo_2030": "70% renovables en generación eléctrica",
+          "mecanismo_principal": "SDE++ - Subsidio diferencial",
+          "precio_adjudicacion_solar": "~32 €/MWh",
+          "particularidades": "Foco en offshore. Política Holland Coast ambiciosa. Congestión limita renovables terrestres.",
+          "calificacion": "★★★★"
+        }
+      }
+    },
+    {
+      "id": "almacenamiento",
+      "nombre": "Marco Regulatorio del Almacenamiento",
+      "descripcion": "Regulación del almacenamiento energético: acceso a la red, retribución y participación en mercados.",
+      "paises": {
+        "España": {
+          "marco_legal": "RD 997/2025 + RDL 7/2026",
+          "capacidad_instalada_gwh": "4,2 GWh (2025)",
+          "acceso_red": "Simplificado para almacenamiento puro (RD 997/2025)",
+          "participacion_mercados": "Mercado diario, intradiario y servicios de ajuste (desde 2024)",
+          "particularidades": "Marco reciente. Riesgo de doble imposición (peajes de generación y consumo). En revisión.",
+          "calificacion": "★★★"
+        },
+        "Alemania": {
+          "marco_legal": "EnWG §14a + KWKG",
+          "capacidad_instalada_gwh": "12,5 GWh (2025)",
+          "acceso_red": "Exención de peajes para almacenamiento gestionado por el TSO/DSO",
+          "participacion_mercados": "Todos los mercados incluyendo FCR, aFRR, mFRR",
+          "particularidades": "Líder europeo. Mercado de FCR muy competitivo con participación de baterías.",
+          "calificacion": "★★★★★"
+        },
+        "Reino Unido": {
+          "marco_legal": "Electricity Act 1989 (modificado 2023)",
+          "capacidad_instalada_gwh": "8,1 GWh (2025)",
+          "acceso_red": "Mercado abierto, sin peajes de descarga",
+          "participacion_mercados": "BM (Balancing Mechanism), FFR, DCL, todas las reservas",
+          "particularidades": "Mercado más desarrollado de Europa para almacenamiento grid-scale.",
+          "calificacion": "★★★★★"
+        },
+        "Francia": {
+          "marco_legal": "Code de l'énergie - Décret 2021-1843",
+          "capacidad_instalada_gwh": "2,8 GWh (2025)",
+          "acceso_red": "TURPE exención parcial para almacenamiento",
+          "participacion_mercados": "Mercado FCR, aFRR (TERRA/PICASSO)",
+          "particularidades": "Desarrollo más lento por competencia del nuclear para servicios de sistema.",
+          "calificacion": "★★★"
+        },
+        "Italia": {
+          "marco_legal": "TIDE (Testo Integrato Dispacciamento Elettrico) ARERA",
+          "capacidad_instalada_gwh": "3,1 GWh (2025)",
+          "acceso_red": "En revisión. Exención parcial de peajes en estudio",
+          "participacion_mercados": "MSD (Mercato Servizi Dispacciamento) desde 2022",
+          "particularidades": "Importante despliegue de BESS en el sur para gestión de congestiones.",
+          "calificacion": "★★★"
+        },
+        "Portugal": {
+          "marco_legal": "Decreto-Lei 76/2019",
+          "capacidad_instalada_gwh": "1,2 GWh (2025)",
+          "acceso_red": "Simplificado, sin doble peaje",
+          "participacion_mercados": "MIBEL (mercado ibérico) + servicios sistema REN",
+          "particularidades": "Marco claro y sin doble imposición. Pequeño mercado pero modelo de referencia.",
+          "calificacion": "★★★★"
+        },
+        "Países Bajos": {
+          "marco_legal": "Elektriciteitswet 1998 (revisión 2023)",
+          "capacidad_instalada_gwh": "2,4 GWh (2025)",
+          "acceso_red": "Limitado por congestión severa de la red",
+          "participacion_mercados": "FCR, aFRR, imFFR",
+          "particularidades": "La congestión de red limita el despliegue. TenneT financia baterías en zonas congestionadas.",
+          "calificacion": "★★☆"
+        }
+      }
+    },
+    {
+      "id": "hidrogeno-verde",
+      "nombre": "Regulación del Hidrógeno Verde",
+      "descripcion": "Marco regulatorio para la producción de hidrógeno renovable y su conexión a la red eléctrica.",
+      "paises": {
+        "España": {
+          "objetivo_gw_electrolizadores_2030": "10 GW",
+          "marco_legal": "RDL 4/2024 + Hoja de Ruta del Hidrógeno MITECO",
+          "acceso_red": "En desarrollo. REE coordinando con promotores los accesos de alta potencia.",
+          "ayudas": "PERTE VEC H2 (1.000 M€) + fondos europeos IPCEI H2",
+          "particularidades": "Ambicioso plan pero ejecución muy lenta. Sólo ~200 MW operativos en 2025.",
+          "calificacion": "★★★"
+        },
+        "Alemania": {
+          "objetivo_gw_electrolizadores_2030": "10 GW",
+          "marco_legal": "Wasserstoffstrategie 2023 + EnWG §93 H2",
+          "acceso_red": "Regulación específica para conexión de electrolizadores >10 MW",
+          "ayudas": "H2Global + EU IPCEI H2 (~4.000 M€ nacionales)",
+          "particularidades": "Líder en producción y demanda industrial. Red de H2 en construcción (H2-Netz).",
+          "calificacion": "★★★★★"
+        },
+        "Francia": {
+          "objetivo_gw_electrolizadores_2030": "6,5 GW",
+          "marco_legal": "Stratégie nationale pour le développement de l'hydrogène décarboné",
+          "acceso_red": "TURPE especial para electrolizadores (tarifa E5 experimental)",
+          "ayudas": "France 2030: 9.000 M€ para H2",
+          "particularidades": "Fuerte compromiso político. H2 nuclear + renovable (modelo mixto).",
+          "calificacion": "★★★★"
+        },
+        "Portugal": {
+          "objetivo_gw_electrolizadores_2030": "2,5 GW",
+          "marco_legal": "Estratégia Nacional para o Hidrogénio (EN-H2)",
+          "acceso_red": "Simplificado. REN coordinando accesos con promotores.",
+          "ayudas": "PRR (Plan de Recuperación y Resiliencia): 1.100 M€ para H2 verde",
+          "particularidades": "Gran potencial por recurso solar. Conexión al futuro H2MED (corredor H2 con España).",
+          "calificacion": "★★★★"
+        },
+        "Países Bajos": {
+          "objetivo_gw_electrolizadores_2030": "4 GW",
+          "marco_legal": "Klimaatakkoord + Waterstofwet (en elaboración)",
+          "acceso_red": "Limitado por congestión. TenneT reserva capacidad para proyectos H2 prioritarios.",
+          "ayudas": "Maatwerkafspraken (acuerdos a medida con industria)",
+          "particularidades": "Hub de H2 en Rotterdam (HyPort). Dependencia de importaciones a largo plazo.",
+          "calificacion": "★★★"
+        },
+        "Italia": {
+          "objetivo_gw_electrolizadores_2030": "5 GW",
+          "marco_legal": "PNRR + Decreto H2 MISE 2022",
+          "acceso_red": "En desarrollo. Terna coordinando accesos.",
+          "ayudas": "PNRR: 3.600 M€ para H2 renovable",
+          "particularidades": "Sur de Italia como hub H2 para exportación a Europa central.",
+          "calificacion": "★★★"
+        },
+        "Reino Unido": {
+          "objetivo_gw_electrolizadores_2030": "10 GW",
+          "marco_legal": "British Energy Security Strategy + Hydrogen Production Business Model",
+          "acceso_red": "Marco específico de acceso. Ofgem regulando conexiones H2.",
+          "ayudas": "HPBM (contratos CfD para H2): 2.000 M£/año",
+          "particularidades": "Modelo más avanzado de incentivos (HPBM tipo CfD). Offshore H2 líder.",
+          "calificacion": "★★★★★"
+        }
+      }
+    }
+  ]
+}

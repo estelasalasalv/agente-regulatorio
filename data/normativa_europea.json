@@ -1,0 +1,90 @@
+[
+  {
+    "id": "DIR-2019-944",
+    "title": "Directiva 2019/944/UE, mercado interior de la electricidad (CEP)",
+    "type": "directiva",
+    "date": "2019-06-05",
+    "updated": "2024-09-01",
+    "tag": "eu",
+    "summary": "Marco regulatorio del mercado interior de electricidad de la UE. Establece los derechos de los consumidores, el papel de los TSO y las obligaciones de los distribuidores.",
+    "impactoREE": "Obliga a REE a publicar información de la red, garantizar acceso no discriminatorio y cooperar en ENTSO-E. Implementada en España vía LSE y RD de acceso.",
+    "detail": "<p>La Directiva 2019/944 (parte del Paquete de Energía Limpia - CEP) establece:</p><ul><li>Separación funcional de actividades de transporte y comercialización</li><li>Obligación de publicar los planes de desarrollo de red (TYNDP)</li><li>Derechos de los consumidores activos y comunidades de energía</li><li>Papel de los TSO en la facilitación del acceso de renovables</li></ul><p>La modificación de 2024 refuerza las obligaciones de ciberseguridad para infraestructuras críticas.</p>"
+  },
+  {
+    "id": "REG-2019-943",
+    "title": "Reglamento 2019/943/UE, mercado interior de la electricidad",
+    "type": "reglamento",
+    "date": "2019-06-05",
+    "updated": "2024-07-01",
+    "tag": "eu",
+    "summary": "Reglas del mercado eléctrico mayorista: diseño de mercado, congestiones, capacidades de interconexión y cooperación entre TSO.",
+    "impactoREE": "Directamente aplicable. Regula cómo REE gestiona las congestiones en la red de transporte y cómo participa en el mercado de capacidad europeo. Define los ingresos por congestión que debe reportar.",
+    "detail": "<p>El Reglamento 2019/943 (modificado por el Reglamento 2024/1747 de reforma del mercado) es directamente aplicable en España sin necesidad de transposición. Aspectos clave para REE:</p><ul><li>Gestión de congestiones basada en señales de precio</li><li>Mínimo del 70% de capacidad de interconexión disponible para el mercado</li><li>Redistribución de ingresos por congestión a través de REE</li><li>Participación en plataformas de balance europeas (TERRE, MARI, PICASSO, PRIMA)</li></ul>"
+  },
+  {
+    "id": "REG-2024-1747",
+    "title": "Reglamento 2024/1747/UE, reforma del diseño del mercado eléctrico",
+    "type": "reglamento",
+    "date": "2024-06-11",
+    "updated": null,
+    "tag": "new",
+    "summary": "Reforma el diseño del mercado eléctrico europeo: introduce contratos a largo plazo (CfD), refuerza los PPAs, crea el mecanismo de peak shaving y moderniza los mercados de capacidad.",
+    "impactoREE": "REE debe implementar los nuevos mecanismos de peak shaving y adaptar la gestión de la red para el mayor peso de PPAs y contratos bilaterales. Potencial creación de un mecanismo de capacidad en España.",
+    "detail": "<p>La reforma del mercado de 2024 introduce:</p><ul><li><strong>CfD bidireccionales</strong> para renovables como alternativa a las subastas IDAE</li><li><strong>Contratos Power Purchase Agreement (PPA)</strong> con garantías de estado</li><li><strong>Peak shaving</strong>: mecanismo voluntario para que consumidores reduzcan consumo en horas punta</li><li>Reforma de los <strong>mercados de capacidad</strong>: nuevos requisitos de design y participación transfronteriza</li></ul><p>Plazo de implementación: los estados miembros deben adaptar sus marcos nacionales antes del 17 de diciembre de 2025.</p>"
+  },
+  {
+    "id": "SO-GL",
+    "title": "Reglamento 2017/1485/UE - SO GL (System Operation Guideline)",
+    "type": "codigo_red",
+    "date": "2017-08-25",
+    "updated": "2024-01-01",
+    "tag": "eu",
+    "summary": "Código de red europeo para la operación del sistema. Define los requisitos técnicos que los TSO deben cumplir en la gestión de la red de transporte.",
+    "impactoREE": "Obligación directa para REE como TSO: define los procedimientos de operación, los criterios de seguridad (N-1), los requisitos de coordinación con otros TSO y los estándares de ciberseguridad operacional.",
+    "detail": "<p>El SO GL es el principal código de red para los TSO. Para REE implica:</p><ul><li>Criterio de seguridad N-1 en todo momento para la red de transporte</li><li>Coordinación en tiempo real con RTE (Francia) y REN (Portugal)</li><li>Planes de defensa y reenganche coordinados a nivel ENTSO-E</li><li>Notificación de incidentes graves a ACER y ENTSO-E en menos de 24 horas</li><li>Implementación del Common Grid Model europeo</li></ul>"
+  },
+  {
+    "id": "CACM",
+    "title": "Reglamento 2015/1222/UE - CACM (Capacity Allocation and Congestion Management)",
+    "type": "codigo_red",
+    "date": "2015-07-24",
+    "updated": "2023-11-01",
+    "tag": "eu",
+    "summary": "Reglas armonizadas para la asignación de capacidad de interconexión en los mercados diario e intradiario europeos.",
+    "impactoREE": "REE participa en el acoplamiento de mercados europeo (PCR) y en las plataformas intradiarias (XBID). Debe calcular y publicar las capacidades de interconexión disponibles para el mercado.",
+    "detail": "<p>El CACM establece las reglas del acoplamiento de mercados europeo. REE, junto con OMIE, participa en:</p><ul><li>Cálculo coordinado de capacidades de interconexión</li><li>Plataforma PCR (Price Coupling of Regions) para el mercado diario</li><li>Plataforma XBID para el mercado intradiario continuo</li></ul>"
+  },
+  {
+    "id": "RED-III",
+    "title": "Directiva 2023/2413/UE (RED III), energías renovables revisada",
+    "type": "directiva",
+    "date": "2023-10-18",
+    "updated": null,
+    "tag": "eu",
+    "summary": "Eleva el objetivo vinculante de renovables al 42,5% del consumo final de energía en 2030 (aspiracional: 45%). Acelera los procedimientos de autorización.",
+    "impactoREE": "La mayor penetración de renovables requerirá refuerzos acelerados de la red de transporte. REE debe facilitar los nuevos accesos y adaptar la operación del sistema a una generación más variable e incierta.",
+    "detail": "<p>La RED III eleva el objetivo de renovables al 42,5% del consumo final de energía en 2030 (en electricidad se traduce en >74%). Para REE:</p><ul><li>Obligación de integrar las renovables sin discriminación y con plazos de acceso reducidos</li><li>Nuevos procedimientos para autorización de instalaciones de red en zonas de aceleración renovable</li><li>Estimación de necesidades de red derivadas de las expansiones renovables</li></ul>"
+  },
+  {
+    "id": "NIS2",
+    "title": "Directiva 2022/2555/UE (NIS2), ciberseguridad de infraestructuras críticas",
+    "type": "directiva",
+    "date": "2022-12-27",
+    "updated": null,
+    "tag": "eu",
+    "summary": "Refuerza los requisitos de ciberseguridad para infraestructuras críticas, incluyendo la red eléctrica de transporte.",
+    "impactoREE": "REE queda sujeta como 'entidad esencial' a los más estrictos requisitos de NIS2: gestión de riesgos, notificación de incidentes en 24h, auditorías de seguridad anuales y responsabilidad personal de la alta dirección.",
+    "detail": "<p>La NIS2, transpuesta en España por el Real Decreto de transposición de 2024, impone a REE como entidad esencial:</p><ul><li>Implementación de un marco de gestión de riesgos de ciberseguridad</li><li>Notificación de incidentes significativos a CCN-CERT en menos de 24 horas</li><li>Auditorías de seguridad anuales por terceros acreditados</li><li>Responsabilidad personal de los miembros del consejo de administración</li><li>Cadena de suministro: evaluación de riesgos de proveedores críticos (Huawei, ZTE)</li></ul>"
+  },
+  {
+    "id": "GL-ER",
+    "title": "Reglamento 2016/631/UE - RfG (Requirements for Generators)",
+    "type": "codigo_red",
+    "date": "2016-04-14",
+    "updated": "2023-07-01",
+    "tag": "eu",
+    "summary": "Requisitos técnicos mínimos que deben cumplir los generadores para conectarse a la red eléctrica europea.",
+    "impactoREE": "REE debe verificar el cumplimiento de los requisitos de los nuevos generadores y gestionar las derogaciones para instalaciones existentes. La modificación de 2023 incluye requisitos para generadores de hidrógeno y almacenamiento.",
+    "detail": "<p>El RfG define los requisitos técnicos de conexión para todos los generadores según su tipo y potencia (PPM, SPM, HVDC). REE como TSO debe aprobar las condiciones de conexión y verificar el cumplimiento antes de la puesta en servicio.</p>"
+  }
+]

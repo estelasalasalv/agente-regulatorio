@@ -1,0 +1,74 @@
+[
+  {
+    "id": "CP-CNMC-2026-01",
+    "titulo": "Consulta pública circular retribución distribución 2026-2031",
+    "organismo": "CNMC",
+    "estado": "open",
+    "fecha_publicacion": "2026-01-15",
+    "fecha_cierre": "2026-04-30",
+    "resumen": "La CNMC somete a consulta la metodología retributiva de las empresas distribuidoras para el próximo período regulatorio 2026-2031, incluyendo la TRF, la base regulatoria y los incentivos a la digitalización.",
+    "relevanciaREE": "Alta: aunque afecta directamente a distribuidores, la metodología sirve de referencia para la revisión futura de la retribución de transporte.",
+    "enlace_oficial": "https://www.cnmc.es/consultas",
+    "detalle": "La consulta incluye tres ejes: (1) Tasa de Retribución Financiera (TRF), (2) Reconocimiento de la base de activos regulatorios (BAR) y (3) Incentivos para redes inteligentes. La CNMC prevé publicar la circular definitiva en el tercer trimestre de 2026."
+  },
+  {
+    "id": "CP-MITECO-2026-01",
+    "titulo": "Consulta pública PNIEC revisión 2025-2030",
+    "organismo": "MITECO",
+    "estado": "open",
+    "fecha_publicacion": "2026-02-01",
+    "fecha_cierre": "2026-05-15",
+    "resumen": "El Ministerio para la Transición Ecológica actualiza el Plan Nacional Integrado de Energía y Clima (PNIEC) para alinear los objetivos españoles con las nuevas metas europeas de la RED III y el Reglamento 2024/1747.",
+    "relevanciaREE": "Muy alta: el PNIEC revisado determinará las necesidades de expansión de la red de transporte que REE deberá planificar y ejecutar hasta 2030.",
+    "enlace_oficial": "https://www.miteco.gob.es/pniec",
+    "detalle": "La revisión eleva el objetivo de renovables al 81% de generación eléctrica en 2030, mantiene la descarbonización del sistema en 2035 y actualiza las previsiones de demanda con el impacto de la electrificación del transporte y la industria."
+  },
+  {
+    "id": "CP-ACER-2025-03",
+    "titulo": "Consulta ACER - Metodología de cálculo de capacidades interconexión (ENTSO-E)",
+    "organismo": "ACER",
+    "estado": "closed",
+    "fecha_publicacion": "2025-09-01",
+    "fecha_cierre": "2025-11-30",
+    "resumen": "ACER somete a consulta la metodología coordinada de cálculo de capacidades de interconexión en la región peninsular (España, Portugal, Francia), en el marco del CACM.",
+    "relevanciaREE": "Alta: determina la capacidad disponible para el mercado en las fronteras con Francia y Portugal, con impacto en ingresos por congestión y en la operación del sistema.",
+    "enlace_oficial": "https://www.acer.europa.eu/consultas",
+    "detalle": "La consulta se centró en el método NTC vs Flow-based para el cálculo de capacidades en la región peninsular. La decisión de ACER se espera para el segundo trimestre de 2026."
+  },
+  {
+    "id": "CP-CNMC-2025-04",
+    "titulo": "Consulta CNMC - Procedimientos de operación del sistema (actualización)",
+    "organismo": "CNMC",
+    "estado": "closed",
+    "fecha_publicacion": "2025-07-10",
+    "fecha_cierre": "2025-09-30",
+    "resumen": "Consulta sobre la actualización de los Procedimientos de Operación (PO) del sistema eléctrico para adaptarlos al mayor peso de las renovables y al nuevo marco de almacenamiento.",
+    "relevanciaREE": "Muy alta: los PO son el marco técnico-operativo de REE. La actualización afecta a los criterios de despacho, reservas de regulación y gestión de vertidos.",
+    "enlace_oficial": "https://www.cnmc.es/consultas",
+    "detalle": "Se actualizaron los PO 1.1 (Criterios de funcionamiento), PO 7.1 (Servicio de regulación primaria), PO 7.4 (Servicio de balance) y PO 14.4 (Gestión de desviaciones). REE presentó alegaciones solicitando mayor flexibilidad en la gestión del almacenamiento."
+  },
+  {
+    "id": "CP-CE-2026-01",
+    "titulo": "Consulta Comisión Europea - Código de red para hidrógeno y gases renovables",
+    "organismo": "Comisión Europea",
+    "estado": "upcoming",
+    "fecha_publicacion": "2026-05-01",
+    "fecha_cierre": "2026-07-31",
+    "resumen": "La Comisión Europea prepara un código de red específico para la conexión de electrolizadores e instalaciones de producción de hidrógeno verde a las redes de electricidad y gas.",
+    "relevanciaREE": "Media-alta: REE deberá gestionar el acceso de grandes electrolizadores (>100 MW) a la red de transporte, con nuevos requisitos técnicos de conexión.",
+    "enlace_oficial": "https://energy.ec.europa.eu",
+    "detalle": "La consulta está prevista para el segundo trimestre de 2026, en el marco del paquete de regulación del hidrógeno. ENTSO-E participará en la elaboración del código."
+  },
+  {
+    "id": "CP-CNMC-2025-02",
+    "titulo": "Consulta CNMC - Mecanismo de capacidad para España",
+    "organismo": "CNMC",
+    "estado": "closed",
+    "fecha_publicacion": "2025-04-15",
+    "fecha_cierre": "2025-06-30",
+    "resumen": "La CNMC analiza la necesidad y el diseño de un mecanismo de capacidad en España para garantizar la seguridad de suministro ante el cierre de centrales de respaldo.",
+    "relevanciaREE": "Alta: REE es responsable del análisis de adecuación del sistema. Un mecanismo de capacidad supondrá nuevas funciones operativas y coordinación con el operador del mercado.",
+    "enlace_oficial": "https://www.cnmc.es/consultas",
+    "detalle": "La consulta concluyó con la recomendación de implementar un mecanismo de capacidad basado en subastas de fiabilidad para 2027, en línea con el Reglamento 2024/1747. REE apoyó la propuesta en sus alegaciones."
+  }
+]
