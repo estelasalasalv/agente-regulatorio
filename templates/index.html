@@ -228,6 +228,23 @@
     .org-os     { background: rgba(0,184,176,.15); color: var(--teal2); }
     .org-eu     { background: rgba(25,118,210,.15); color: #1565c0; }
     .org-acer   { background: rgba(123,31,162,.15); color: #6a1b9a; }
+
+    /* ── Botones de filtro de organismo ── */
+    .org-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .org-btn {
+      border: 1.5px solid var(--gray2); border-radius: 20px;
+      padding: 5px 13px; font-size: 12px; font-weight: 600;
+      cursor: pointer; background: var(--white); color: var(--gray4);
+      transition: all .15s;
+    }
+    .org-btn:hover { border-color: var(--teal); color: var(--teal2); }
+    .org-btn.active { color: var(--white); border-color: transparent; }
+    .org-btn.active.all    { background: var(--navy); }
+    .org-btn.active.cnmc   { background: var(--navy); }
+    .org-btn.active.miteco { background: #2e7d32; }
+    .org-btn.active.os     { background: var(--teal2); }
+    .org-btn.active.eu     { background: #1565c0; }
+    .org-btn.active.acer   { background: #6a1b9a; }
     .consultas-header {
       display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
@@ -393,19 +410,19 @@
           <option value="closed">Cerradas</option>
           <option value="upcoming">Próximas</option>
         </select>
-        <select class="filter-select" id="filter-org" onchange="renderConsultas()">
-          <option value="">Todos los organismos</option>
-          <option value="CNMC">CNMC</option>
-          <option value="MITECO">MITECO</option>
-          <option value="OS">OS (Red Eléctrica)</option>
-          <option value="Comisión Europea">Comisión Europea</option>
-          <option value="ACER">ACER</option>
-        </select>
+      </div>
+      <div class="org-btns">
+        <button class="org-btn active all" data-org="" onclick="setOrgFilter(this,'')">Todos</button>
+        <button class="org-btn cnmc"  data-org="CNMC"             onclick="setOrgFilter(this,'CNMC')">CNMC</button>
+        <button class="org-btn miteco" data-org="MITECO"          onclick="setOrgFilter(this,'MITECO')">MITECO</button>
+        <button class="org-btn os"    data-org="OS"               onclick="setOrgFilter(this,'OS')">OS · Red Eléctrica</button>
+        <button class="org-btn eu"    data-org="Comisión Europea" onclick="setOrgFilter(this,'Comisión Europea')">Comisión Europea</button>
+        <button class="org-btn acer"  data-org="ACER"             onclick="setOrgFilter(this,'ACER')">ACER</button>
       </div>
       <div class="consultas-header">
         <span class="consultas-count" id="consultas-count"></span>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:11px;color:var(--gray4)">Más reciente primero</span>
+          <span style="font-size:11px;color:var(--gray4)">Abiertas por plazo · Cerradas por fecha</span>
           <span id="nuevas-badge" class="nuevas-badge" style="display:none;"></span>
           <button class="btn-actualizar" id="btn-actualizar" onclick="actualizarConsultas()">
             <span id="actualizar-icon">🔄</span> Actualizar consultas
@@ -546,20 +563,33 @@ function fmtFecha(iso) {
   return `${d}/${m}/${y}`;
 }
 
+let activeOrg = '';
+
+function setOrgFilter(btn, org) {
+  activeOrg = org;
+  document.querySelectorAll('.org-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderConsultas();
+}
+
 function renderConsultas() {
   const estado = document.getElementById('filter-estado').value;
-  const org    = document.getElementById('filter-org').value;
 
   let list = DATA.consultas.filter(c=>{
     if(estado && c.estado!==estado) return false;
-    if(org && !c.organismo.includes(org)) return false;
+    if(activeOrg && !c.organismo.includes(activeOrg)) return false;
     return true;
   });
 
-  // Ordenar: más reciente primero por fecha_publicacion
-  list = list.slice().sort((a,b)=>
-    (b.fecha_publicacion||'').localeCompare(a.fecha_publicacion||'')
-  );
+  // Abiertas/próximas: por fecha_cierre ascendente (plazo más cercano primero)
+  // Cerradas: por fecha_publicacion descendente al final
+  list = list.slice().sort((a,b)=>{
+    const aOpen = a.estado !== 'closed';
+    const bOpen = b.estado !== 'closed';
+    if(aOpen !== bOpen) return aOpen ? -1 : 1;
+    if(aOpen) return (a.fecha_cierre||'9999').localeCompare(b.fecha_cierre||'9999');
+    return (b.fecha_publicacion||'').localeCompare(a.fecha_publicacion||'');
+  });
 
   const stateLabel = {open:'Abierta',closed:'Cerrada',upcoming:'Próxima'};
   const stateClass = {open:'badge-open',closed:'badge-closed',upcoming:'badge-upcoming'};
