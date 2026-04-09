@@ -9,8 +9,9 @@ import json
 import os
 import re
 import asyncio
+import hashlib
 from pathlib import Path
-from datetime import date
+from datetime import date, datetime
 from typing import AsyncGenerator
 
 import anthropic
@@ -18,7 +19,6 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
 
 # ──────────────────────────────────────────────
 # Setup
@@ -51,235 +51,12 @@ CONSULTAS_PUBLICAS = _load("consultas_publicas.json")
 BENCHMARK_EUROPEO = _load("benchmark_europeo.json")
 
 # ──────────────────────────────────────────────
-# Herramientas (misma lógica que en CLI)
-# ──────────────────────────────────────────────
-
-def buscar_normativa_nacional(query: str = "", tipo: str = "") -> str:
-    resultados = []
-    query_lower = query.lower()
-    for norma in NORMATIVA_NACIONAL:
-        if tipo and norma.get("type") != tipo:
-            continue
-        if query_lower:
-            texto = (norma.get("title","") + " " + norma.get("summary","") + " " + norma.get("impactoREE","")).lower()
-            if not any(w in texto for w in query_lower.split()):
-                continue
-        resultados.append({k: v for k, v in norma.items() if k != "detail"})
-    if not resultados:
-        return json.dumps({"mensaje": "No se encontraron normas.", "total": 0})
-    return json.dumps({"total": len(resultados), "normas": resultados}, ensure_ascii=False)
-
-
-def obtener_detalle_norma(id_norma: str) -> str:
-    for norma in NORMATIVA_NACIONAL + NORMATIVA_EUROPEA:
-        if norma.get("id") == id_norma:
-            detail_texto = re.sub(r"<[^>]+>", " ", norma.get("detail", "")).strip()
-            return json.dumps({**norma, "detail_texto": detail_texto}, ensure_ascii=False)
-    return json.dumps({"error": f"Norma '{id_norma}' no encontrada."})
-
-
-def buscar_normativa_europea(query: str = "", tipo: str = "") -> str:
-    resultados = []
-    query_lower = query.lower()
-    for norma in NORMATIVA_EUROPEA:
-        if tipo and norma.get("type") != tipo:
-            continue
-        if query_lower:
-            texto = (norma.get("title","") + " " + norma.get("summary","") + " " + norma.get("impactoREE","")).lower()
-            if not any(w in texto for w in query_lower.split()):
-                continue
-        resultados.append({k: v for k, v in norma.items() if k != "detail"})
-    if not resultados:
-        return json.dumps({"mensaje": "No se encontraron normas europeas.", "total": 0})
-    return json.dumps({"total": len(resultados), "normas": resultados}, ensure_ascii=False)
-
-
-def consultar_consultas_publicas(estado: str = "", organismo: str = "") -> str:
-    from datetime import datetime
-    hoy = date.today().isoformat()
-    resultados = []
-    for c in CONSULTAS_PUBLICAS:
-        if estado and c.get("estado") != estado:
-            continue
-        if organismo and organismo.lower() not in c.get("organismo","").lower():
-            continue
-        enriquecida = dict(c)
-        if c.get("estado") == "open" and c.get("fecha_cierre"):
-            dias = (datetime.fromisoformat(c["fecha_cierre"]) - datetime.fromisoformat(hoy)).days
-            enriquecida["dias_restantes"] = max(0, dias)
-        resultados.append(enriquecida)
-    if not resultados:
-        return json.dumps({"mensaje": "No se encontraron consultas.", "total": 0})
-    return json.dumps({"total": len(resultados), "consultas": resultados}, ensure_ascii=False)
-
-
-def benchmark_pais(topico: str, pais: str = "") -> str:
-    for t in BENCHMARK_EUROPEO.get("topicos", []):
-        if t["id"] == topico or topico.lower() in t["nombre"].lower():
-            if pais:
-                for p, datos in t["paises"].items():
-                    if pais.lower() in p.lower():
-                        return json.dumps({"topico": t["nombre"], "pais": p, "datos": datos}, ensure_ascii=False)
-                return json.dumps({"error": f"País '{pais}' no encontrado."})
-            return json.dumps(t, ensure_ascii=False)
-    return json.dumps({"error": f"Tópico '{topico}' no encontrado.", "disponibles": [t["id"] for t in BENCHMARK_EUROPEO.get("topicos",[])]})
-
-
-def resumen_estado_regulatorio() -> str:
-    nuevas_nac = [n for n in NORMATIVA_NACIONAL if n.get("tag") == "new"]
-    mod_nac = [n for n in NORMATIVA_NACIONAL if n.get("tag") == "modified"]
-    abiertas = [c for c in CONSULTAS_PUBLICAS if c.get("estado") == "open"]
-    proximas = [c for c in CONSULTAS_PUBLICAS if c.get("estado") == "upcoming"]
-    return json.dumps({
-        "fecha_consulta": date.today().isoformat(),
-        "normativa_nacional": {"total": len(NORMATIVA_NACIONAL), "nuevas": len(nuevas_nac), "modificadas": len(mod_nac)},
-        "normativa_europea": {"total": len(NORMATIVA_EUROPEA)},
-        "consultas": {"abiertas": len(abiertas), "proximas": len(proximas),
-                      "detalle": [{"titulo": c["titulo"], "organismo": c["organismo"], "cierre": c.get("fecha_cierre")} for c in abiertas]},
-        "alertas": [
-            "TRF 6,58% fijada para 2026-2031 (Circular CNMC 2/2024)",
-            "Plan Resiliencia Red: 7.500M€ inversión 2025-2030",
-            "RDL 7/2026: autoconsumo 5km — adaptaciones técnicas requeridas",
-            "NIS2: REE como entidad esencial — auditoría ciberseguridad obligatoria",
-            "Reforma mercado UE (Reg. 2024/1747): CfD y mecanismo capacidad pendientes",
-        ]
-    }, ensure_ascii=False)
-
-
-TOOL_FUNCTIONS = {
-    "buscar_normativa_nacional": lambda a: buscar_normativa_nacional(**a),
-    "obtener_detalle_norma": lambda a: obtener_detalle_norma(**a),
-    "buscar_normativa_europea": lambda a: buscar_normativa_europea(**a),
-    "consultar_consultas_publicas": lambda a: consultar_consultas_publicas(**a),
-    "benchmark_pais": lambda a: benchmark_pais(**a),
-    "resumen_estado_regulatorio": lambda a: resumen_estado_regulatorio(),
-}
-
-TOOLS = [
-    {"name": "buscar_normativa_nacional", "description": "Busca normativa nacional española del sector eléctrico (leyes, RDL, RD, OM, circulares CNMC).", "input_schema": {"type": "object", "properties": {"query": {"type": "string"}, "tipo": {"type": "string", "enum": ["ley","rdl","rd","om","circular"]}}}},
-    {"name": "obtener_detalle_norma", "description": "Obtiene el detalle completo de una norma por su ID.", "input_schema": {"type": "object", "properties": {"id_norma": {"type": "string"}}, "required": ["id_norma"]}},
-    {"name": "buscar_normativa_europea", "description": "Busca directivas, reglamentos y códigos de red europeos aplicables al sector eléctrico español.", "input_schema": {"type": "object", "properties": {"query": {"type": "string"}, "tipo": {"type": "string", "enum": ["directiva","reglamento","codigo_red"]}}}},
-    {"name": "consultar_consultas_publicas", "description": "Lista consultas públicas regulatorias de CNMC, MITECO, ACER y Comisión Europea.", "input_schema": {"type": "object", "properties": {"estado": {"type": "string", "enum": ["open","closed","upcoming"]}, "organismo": {"type": "string"}}}},
-    {"name": "benchmark_pais", "description": "Benchmark regulatorio europeo comparativo entre países.", "input_schema": {"type": "object", "properties": {"topico": {"type": "string", "enum": ["acceso-conexion","retribucion-tso","apoyo-renovables","almacenamiento","hidrogeno-verde"]}, "pais": {"type": "string"}}, "required": ["topico"]}},
-    {"name": "resumen_estado_regulatorio", "description": "Resumen ejecutivo del estado regulatorio actual para REE.", "input_schema": {"type": "object", "properties": {}}},
-]
-
-SYSTEM_PROMPT = """Eres el Agente Regulatorio de REE (Red Eléctrica de España). Experto en el marco regulatorio del sector eléctrico español y europeo.
-
-Proporcionas análisis precisos sobre normativa nacional (LSE, RDL, RD, OM, Circulares CNMC), normativa europea (Directivas, Reglamentos, Códigos de Red), consultas públicas y benchmarking europeo.
-
-Usuario: Equipo de Asuntos Regulatorios de REE. Necesitan información técnica detallada e impacto en la actividad de REE.
-
-Instrucciones:
-1. Usa siempre las herramientas disponibles antes de responder.
-2. Destaca el impacto específico en REE de cualquier norma.
-3. Señala los plazos de consultas públicas abiertas.
-4. Para benchmark europeo, identifica best practices aplicables a España.
-5. Usa formato Markdown en tus respuestas (negrita, listas, tablas).
-6. Responde siempre en español.
-
-Fecha de referencia: 9 de abril de 2026."""
-
-# ──────────────────────────────────────────────
-# Streaming del agente
-# ──────────────────────────────────────────────
-
-async def stream_agente(messages: list) -> AsyncGenerator[str, None]:
-    """Ejecuta el bucle agentico y emite SSE con el texto generado."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
-    if not api_key:
-        yield f"data: {json.dumps({'type': 'error', 'text': 'ANTHROPIC_API_KEY no configurada.'})}\n\n"
-        return
-
-    client = anthropic.Anthropic(api_key=api_key)
-
-    # Bucle agentico: puede haber varias rondas de tool calls antes de la respuesta final
-    while True:
-        # Notificar que estamos pensando
-        yield f"data: {json.dumps({'type': 'thinking'})}\n\n"
-        await asyncio.sleep(0)
-
-        response = await asyncio.get_event_loop().run_in_executor(
-            None,
-            lambda: client.messages.create(
-                model="claude-opus-4-6",
-                max_tokens=8192,
-                thinking={"type": "adaptive"},
-                system=SYSTEM_PROMPT,
-                tools=TOOLS,
-                messages=messages,
-            )
-        )
-
-        # Añadir respuesta al historial
-        messages.append({"role": "assistant", "content": response.content})
-
-        # Respuesta final de texto
-        if response.stop_reason == "end_turn":
-            for block in response.content:
-                if block.type == "text":
-                    # Enviar el texto completo de una vez
-                    yield f"data: {json.dumps({'type': 'text', 'text': block.text})}\n\n"
-                    await asyncio.sleep(0)
-            yield f"data: {json.dumps({'type': 'done'})}\n\n"
-            break
-
-        # Ejecución de herramientas
-        if response.stop_reason == "tool_use":
-            tool_results = []
-            for block in response.content:
-                if block.type == "tool_use":
-                    # Notificar qué herramienta se está usando
-                    yield f"data: {json.dumps({'type': 'tool', 'name': block.name})}\n\n"
-                    await asyncio.sleep(0)
-
-                    resultado = TOOL_FUNCTIONS.get(block.name, lambda a: "{}")(block.input)
-                    tool_results.append({
-                        "type": "tool_result",
-                        "tool_use_id": block.id,
-                        "content": resultado
-                    })
-
-            messages.append({"role": "user", "content": tool_results})
-            # Continuar el bucle para que Claude genere la respuesta final
-            continue
-
-        # Stop reason inesperado
-        yield f"data: {json.dumps({'type': 'done'})}\n\n"
-        break
-
-# ──────────────────────────────────────────────
 # Endpoints
 # ──────────────────────────────────────────────
-
-class ChatRequest(BaseModel):
-    message: str
-    history: list = []
-
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
-
-
-@app.post("/chat")
-async def chat(req: ChatRequest):
-    """Endpoint de chat con streaming SSE."""
-    # Reconstruir historial de mensajes
-    messages = []
-    for turn in req.history:
-        messages.append({"role": "user", "content": turn["user"]})
-        messages.append({"role": "assistant", "content": turn["assistant"]})
-    messages.append({"role": "user", "content": req.message})
-
-    return StreamingResponse(
-        stream_agente(messages),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "X-Accel-Buffering": "no",
-        }
-    )
 
 
 @app.get("/api/normativa")
@@ -293,7 +70,186 @@ async def api_normativa():
 
 @app.get("/api/consultas")
 async def api_consultas():
-    return CONSULTAS_PUBLICAS
+    # Siempre lee del disco para reflejar actualizaciones recientes
+    return _load("consultas_publicas.json")
+
+
+# ──────────────────────────────────────────────
+# Actualización de consultas (SSE streaming)
+# ──────────────────────────────────────────────
+
+FUENTES_CONSULTA = [
+    {
+        "organismo": "CNMC",
+        "url": "https://www.cnmc.es/participa/consultas-publicas",
+        "descripcion": "Consultas públicas energía — CNMC",
+    },
+    {
+        "organismo": "MITECO",
+        "url": "https://www.miteco.gob.es/es/energia/participacion.html",
+        "descripcion": "Participación pública energía — MITECO",
+    },
+    {
+        "organismo": "OS (Red Eléctrica)",
+        "url": "https://www.ree.es/es/clientes/consultas-publicas",
+        "descripcion": "Tablón consultas OS — Red Eléctrica",
+    },
+    {
+        "organismo": "Comisión Europea",
+        "url": "https://energy.ec.europa.eu/consultations_en",
+        "descripcion": "Consultas energía — Comisión Europea",
+    },
+]
+
+PROMPT_EXTRACCION = """Eres un extractor de datos regulatorios. Analiza el contenido de esta página web y extrae TODAS las consultas públicas del sector eléctrico que encuentres.
+
+Para cada consulta devuelve un objeto JSON con estos campos exactos (usa null si no está disponible):
+- id: string identificador único (organismo_año_num, ej: "CNMC-2026-01")
+- titulo: string título completo de la consulta
+- organismo: string nombre del organismo ({organismo})
+- estado: "open" | "closed" | "upcoming"
+- fecha_publicacion: string ISO "YYYY-MM-DD" o null
+- fecha_cierre: string ISO "YYYY-MM-DD" o null
+- resumen: string descripción breve (máx 300 chars)
+- enlace: string URL directa a la consulta o null
+- expediente: string número de expediente o null
+- relevanciaREE: string impacto para Red Eléctrica o null
+
+Responde ÚNICAMENTE con un array JSON válido, sin texto adicional, sin markdown, sin explicaciones.
+Si no encuentras consultas del sector eléctrico, responde con [].
+Solo incluye consultas relacionadas con electricidad, red eléctrica, transporte, distribución, renovables, almacenamiento o mercado eléctrico. Excluye gas, agua u otros sectores."""
+
+
+def _id_consulta(titulo: str, organismo: str) -> str:
+    """Genera un ID único reproducible a partir del título."""
+    raw = f"{organismo}_{titulo}".lower()[:80]
+    return hashlib.md5(raw.encode()).hexdigest()[:10]
+
+
+async def stream_actualizar_consultas() -> AsyncGenerator[str, None]:
+    """Visita cada fuente oficial, extrae consultas con Claude y actualiza el JSON."""
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not api_key:
+        yield f"data: {json.dumps({'type':'error','msg':'ANTHROPIC_API_KEY no configurada.'})}\n\n"
+        return
+
+    client = anthropic.Anthropic(api_key=api_key)
+
+    nuevas_total: list[dict] = []
+    errores: list[str] = []
+
+    for fuente in FUENTES_CONSULTA:
+        org = fuente["organismo"]
+        url = fuente["url"]
+
+        yield f"data: {json.dumps({'type':'progreso','msg':f'Consultando {org}...','org':org})}\n\n"
+        await asyncio.sleep(0)
+
+        try:
+            # Claude fetch la URL y extrae las consultas
+            prompt_org = PROMPT_EXTRACCION.replace("{organismo}", org)
+
+            response = await asyncio.get_event_loop().run_in_executor(
+                None,
+                lambda u=url, p=prompt_org: client.messages.create(
+                    model="claude-opus-4-6",
+                    max_tokens=4096,
+                    tools=[{"type": "web_fetch_20260209", "name": "web_fetch"}],
+                    messages=[{
+                        "role": "user",
+                        "content": f"Visita esta URL y extrae las consultas públicas del sector eléctrico según las instrucciones.\n\nURL: {u}\n\n{p}"
+                    }]
+                )
+            )
+
+            # Extraer el texto final de la respuesta
+            texto = ""
+            for block in response.content:
+                if hasattr(block, "text"):
+                    texto += block.text
+
+            # Parsear el JSON devuelto por Claude
+            texto = texto.strip()
+            # Limpiar posible markdown fence
+            texto = re.sub(r"^```(?:json)?\s*", "", texto)
+            texto = re.sub(r"\s*```$", "", texto)
+
+            if texto and texto.startswith("["):
+                consultas_raw: list[dict] = json.loads(texto)
+                # Normalizar y añadir ID si falta
+                for c in consultas_raw:
+                    if not c.get("id"):
+                        c["id"] = _id_consulta(c.get("titulo",""), org)
+                    c["organismo"] = org  # forzar organismo correcto
+                    # Asegurar campos mínimos
+                    for campo in ["titulo","estado","fecha_publicacion","fecha_cierre",
+                                   "resumen","enlace","expediente","relevanciaREE"]:
+                        c.setdefault(campo, None)
+
+                nuevas_total.extend(consultas_raw)
+                yield f"data: {json.dumps({'type':'progreso','msg':f'{org}: {len(consultas_raw)} consulta(s) encontrada(s)','org':org,'n':len(consultas_raw)})}\n\n"
+            else:
+                yield f"data: {json.dumps({'type':'progreso','msg':f'{org}: sin consultas eléctricas detectadas','org':org,'n':0})}\n\n"
+
+        except Exception as e:
+            errores.append(f"{org}: {str(e)[:120]}")
+            yield f"data: {json.dumps({'type':'progreso','msg':f'{org}: error — {str(e)[:80]}','org':org,'error':True})}\n\n"
+
+        await asyncio.sleep(0.1)
+
+    # ── Combinar con las existentes, evitando duplicados por título ──
+    existentes: list[dict] = _load("consultas_publicas.json")
+    titulos_existentes = {c.get("titulo","").lower().strip() for c in existentes}
+    ids_existentes = {c.get("id","") for c in existentes}
+
+    realmente_nuevas = []
+    for c in nuevas_total:
+        titulo_norm = (c.get("titulo") or "").lower().strip()
+        if titulo_norm and titulo_norm not in titulos_existentes and c.get("id") not in ids_existentes:
+            realmente_nuevas.append(c)
+            titulos_existentes.add(titulo_norm)
+
+    # Marcar cerradas las que ya pasaron su fecha de cierre
+    hoy = date.today().isoformat()
+    actualizadas = list(existentes)
+    for c in actualizadas:
+        if c.get("estado") == "open" and c.get("fecha_cierre") and c["fecha_cierre"] < hoy:
+            c["estado"] = "closed"
+
+    # Añadir las nuevas al principio
+    actualizadas = realmente_nuevas + actualizadas
+
+    # Guardar
+    consultas_path = DATA_DIR / "consultas_publicas.json"
+    with open(consultas_path, "w", encoding="utf-8") as f:
+        json.dump(actualizadas, f, ensure_ascii=False, indent=2)
+
+    # Actualizar variable global en memoria
+    global CONSULTAS_PUBLICAS
+    CONSULTAS_PUBLICAS = actualizadas
+
+    resumen = {
+        "type": "completado",
+        "nuevas": len(realmente_nuevas),
+        "total": len(actualizadas),
+        "errores": errores,
+        "fecha_actualizacion": datetime.now().strftime("%d/%m/%Y %H:%M"),
+        "msg": f"Actualización completada: {len(realmente_nuevas)} nueva(s) consulta(s) añadida(s). Total: {len(actualizadas)}."
+    }
+    yield f"data: {json.dumps(resumen)}\n\n"
+
+
+@app.post("/api/actualizar-consultas")
+async def actualizar_consultas():
+    """Lanza la actualización de consultas con SSE para seguimiento en tiempo real."""
+    return StreamingResponse(
+        stream_actualizar_consultas(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        }
+    )
 
 
 @app.get("/api/benchmark")
