@@ -1,5 +1,77 @@
 [
   {
+    "id": "RES-CNMC-PO-2026",
+    "title": "Resolución CNMC: modificación POs 3.1, 3.2 y 7.2 — estabilización de tensión en el sistema eléctrico",
+    "type": "resolucion",
+    "date": "2026-01-20",
+    "updated": null,
+    "tag": "new",
+    "summary": "La CNMC modifica los procedimientos de operación eléctricos 3.1 (energía reactiva), 3.2 (restricciones técnicas) y 7.2 (calidad de suministro) para facilitar la estabilización de tensión en el sistema eléctrico peninsular.",
+    "impactoREE": "Afecta directamente a la operación del sistema. REE deberá adaptar sus procedimientos internos de operación en tiempo real y los protocolos de coordinación con generadores para la gestión de la energía reactiva y control de tensión.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-1377",
+    "detail": "<p>La CNMC modifica mediante esta resolución (BOE-A-2026-1377) tres procedimientos de operación del sistema eléctrico peninsular: <strong>PO 3.1</strong> (Gestión de la energía reactiva y del control de tensión), <strong>PO 3.2</strong> (Resolución de restricciones técnicas) y <strong>PO 7.2</strong> (Control de la calidad del suministro eléctrico). Las modificaciones tienen por objeto facilitar la estabilización de tensión, mejorar los mecanismos de coordinación entre el operador del sistema y los agentes generadores, e introducir señales de precio para servicios de reactiva.</p>"
+  },
+  {
+    "id": "CONV-MITECO-CNMC-2026",
+    "title": "Convenio MITECO-CNMC: inversiones en red de transporte eléctrico — fondos PRTR",
+    "type": "resolucion",
+    "date": "2026-02-21",
+    "updated": null,
+    "tag": "new",
+    "summary": "Convenio entre MITECO y la CNMC para la gestión de subvenciones directas del Plan de Recuperación (PRTR) destinadas a inversiones estratégicas de descarbonización en la red de transporte de energía eléctrica.",
+    "impactoREE": "REE es el principal beneficiario como gestor de la red de transporte. Los fondos PRTR financian proyectos prioritarios de digitalización, interconexiones y resiliencia de la red de muy alta tensión.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-4040",
+    "detail": "<p>El convenio publicado (BOE-A-2026-4040) formaliza la colaboración entre el Ministerio para la Transición Ecológica (MITECO) y la CNMC para la gestión de subvenciones directas con cargo al Plan de Recuperación, Transformación y Resiliencia (PRTR). Los fondos se destinan a inversiones en la <strong>red de transporte de energía eléctrica</strong> orientadas a proyectos estratégicos de descarbonización, incluyendo digitalización de subestaciones, nuevas interconexiones y sistemas de almacenamiento.</p>"
+  },
+  {
+    "id": "RES-SEE-IBIZA-2026",
+    "title": "Resolución SEE: régimen retributivo adicional — subsistema eléctrico Ibiza-Formentera",
+    "type": "resolucion",
+    "date": "2026-02-24",
+    "updated": null,
+    "tag": "new",
+    "summary": "La Secretaría de Estado de Energía termina el procedimiento de concurrencia competitiva para el reconocimiento del régimen retributivo adicional en el subsistema eléctrico no peninsular de Ibiza-Formentera.",
+    "impactoREE": "Afecta a la operación del sistema insular de Ibiza-Formentera bajo supervisión de REE como operador del sistema. Determina qué instalaciones de generación acceden al régimen retributivo adicional (prima) en los sistemas no peninsulares.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-4269",
+    "detail": "<p>La Secretaría de Estado de Energía resuelve (BOE-A-2026-4269) el procedimiento de concurrencia competitiva para el otorgamiento de la resolución favorable de compatibilidad a efectos del reconocimiento del <strong>régimen retributivo adicional</strong> en el subsistema eléctrico de los territorios no peninsulares de Ibiza-Formentera. El régimen retributivo adicional cubre la diferencia entre los costes de generación en sistemas insulares y los ingresos de mercado.</p>"
+  },
+  {
+    "id": "RES-DGPEM-DEFICIT-2026",
+    "title": "Resolución DGPEM: déficit del Sistema Eléctrico pendiente de cobro a 31/12/2025",
+    "type": "resolucion",
+    "date": "2026-02-25",
+    "updated": null,
+    "tag": "new",
+    "summary": "La Dirección General de Política Energética y Minas fija el importe pendiente de cobro a 31 de diciembre de 2025 de los derechos cedidos al Fondo de Titulización del Déficit del Sistema Eléctrico.",
+    "impactoREE": "Indicador clave de la salud financiera del sistema regulado del que REE forma parte. El déficit acumulado condiciona la solvencia del marco retributivo y puede afectar a los pagos futuros de la actividad de transporte.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-4356",
+    "detail": "<p>La Dirección General de Política Energética y Minas publica anualmente (BOE-A-2026-4356) el importe pendiente de cobro de los derechos de cobro cedidos al <strong>Fondo de Titulización del Déficit del Sistema Eléctrico</strong>. Este fondo fue creado para cubrir el déficit tarifario histórico acumulado entre los ingresos por peajes y los costes reconocidos del sistema eléctrico. La resolución refleja el saldo a 31 de diciembre de 2025.</p>"
+  },
+  {
+    "id": "RES-SEE-ACCESO-RED-2026",
+    "title": "Resolución SEE: concurso de capacidad de acceso de demanda en nudos de la red de transporte",
+    "type": "resolucion",
+    "date": "2026-02-25",
+    "updated": null,
+    "tag": "new",
+    "summary": "La Secretaría de Estado de Energía resuelve el concurso de capacidad de acceso de demanda en determinados nudos de la red de transporte, convocado en julio de 2025, asignando capacidad a las instalaciones seleccionadas.",
+    "impactoREE": "REE gestiona como transportista los nudos objeto del concurso. La resolución determina qué instalaciones de demanda (industria, electrolizadores, centros de datos) obtienen acceso garantizado a la red de transporte, condicionando la planificación y operación de la red.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-4357",
+    "detail": "<p>La Secretaría de Estado de Energía resuelve (BOE-A-2026-4357) el concurso de capacidad de acceso de demanda en determinados nudos de la <strong>red de transporte</strong> convocado mediante Resolución de 11 de julio de 2025. El concurso asigna capacidad de acceso a instalaciones de demanda de gran consumo (industria electrointensiva, producción de hidrógeno, centros de datos) en nudos con disponibilidad de capacidad identificada por REE como operador del sistema.</p>"
+  },
+  {
+    "id": "RES-CNMC-TRF-RECURSOS-2026",
+    "title": "CNMC: recursos contencioso-administrativos contra Circular 9/2025 (TRF 2026-2031)",
+    "type": "resolucion",
+    "date": "2026-03-16",
+    "updated": null,
+    "tag": "new",
+    "summary": "La CNMC notifica la interposición de múltiples recursos contencioso-administrativos ante la Audiencia Nacional contra la Circular 9/2025, que fija la TRF en el 6,58% para el período regulatorio 2026-2031 de transporte, operación del sistema y distribución.",
+    "impactoREE": "Riesgo regulatorio significativo: si prosperan los recursos, la TRF del 6,58% podría ser anulada o modificada, afectando directamente a los ingresos regulados de REE por transporte y operación del sistema para 2026-2031.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-6223",
+    "detail": "<p>La CNMC publica los emplazamientos (BOE-A-2026-6223 y siguientes) a los interesados en los recursos contencioso-administrativos interpuestos ante la Audiencia Nacional contra la <strong>Circular 9/2025</strong>, que modifica la Circular 2/2019 para fijar la <strong>tasa de retribución financiera (TRF) al 6,58%</strong> aplicable a las actividades de transporte, operación del sistema y distribución de energía eléctrica en el período regulatorio 2026-2031. Se han identificado al menos seis expedientes judiciales distintos (4/270/2026, 4/327/2026, 4/330/2026, 4/336/2026, 4/338/2026, 4/350/2026).</p>"
+  },
+  {
     "id": "LSE-24-2013",
     "title": "Ley 24/2013, del Sector Eléctrico",
     "type": "ley",
