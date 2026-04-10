@@ -103,6 +103,8 @@
     .badge-open     { background: rgba(46,125,50,.3);  color: #81c784; }
     .badge-upcoming { background: rgba(249,168,37,.2); color: #ffd54f; }
     .badge-closed   { background: rgba(255,255,255,.1); color: var(--gray3); }
+    .badge-week     { background: rgba(255,87,34,.25); color: #ff7043; animation: pulse-week 1.8s ease-in-out infinite; }
+    @keyframes pulse-week { 0%,100%{opacity:1} 50%{opacity:.55} }
 
     /* ── Main ── */
     .main { display: flex; flex-direction: column; overflow: hidden; }
@@ -624,10 +626,13 @@ const TAG_COLOR = {new:'badge-new', modified:'badge-open', eu:'badge-upcoming'};
 
 function normCard(n) {
   const tag = n.tag ? `<span class="badge ${TAG_COLOR[n.tag]||''}">${TAG_LABEL[n.tag]||n.tag}</span>` : '';
+  const efectiva = n.updated || n.date || '';
+  const esNueva = efectiva && (Date.now() - new Date(efectiva).getTime()) < 7 * 86400000;
+  const weekBadge = esNueva ? `<span class="badge badge-week">Esta semana</span>` : '';
   return `<div class="norm-card" onclick="openDetail('${n.id}')">
     <div class="norm-card-header">
       <div class="norm-card-title">${n.title}</div>
-      ${tag}
+      <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">${weekBadge}${tag}</div>
     </div>
     <div class="norm-card-meta">
       <span class="type-chip">${n.type||''}</span>
