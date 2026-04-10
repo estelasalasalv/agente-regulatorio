@@ -1033,8 +1033,7 @@ function renderNovedades() {
     return `<div class="slide-item nac">
       ${tagHtml(n.tag)}
       <div class="slide-item-title">${titulo}</div>
-      <div class="slide-item-meta">${n.type ? n.type.toUpperCase() + ' · ' : ''}${dateStr}</div>
-      ${n.impactoREE ? `<div class="slide-item-meta" style="margin-top:3px;color:var(--navy)">${n.impactoREE.slice(0,90)}${n.impactoREE.length>90?'…':''}</div>` : ''}
+      <div class="slide-item-meta">${n.type ? n.type.toUpperCase() + ' · ' : ''}${dateStr}${n.organismo ? ' · ' + n.organismo : ''}</div>
     </div>`;
   }
 
