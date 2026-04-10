@@ -698,6 +698,9 @@ function normCard(n) {
   const weekBadge = esNueva ? `<span class="badge badge-week">Esta semana</span>` : '';
   const titulo = `<a class="norm-card-title-link" href="${n.enlace}" target="_blank" rel="noopener">${n.title}</a>`;
   const enlaceBtn = `<a class="norm-card-link" href="${n.enlace}" target="_blank" rel="noopener">↗ Ver fuente oficial</a>`;
+  const enlaceOriginal = n.enlace_original
+    ? `<a class="norm-card-link" href="${n.enlace_original}" target="_blank" rel="noopener" style="margin-left:6px">↗ Ver normativa original</a>`
+    : '';
   return `<div class="norm-card">
     <div class="norm-card-header">
       <div class="norm-card-title">${titulo}</div>
@@ -709,7 +712,7 @@ function normCard(n) {
     </div>
     <div class="norm-card-summary">${n.summary||''}</div>
     ${n.impactoREE?`<div class="norm-card-impact"><strong>Impacto REE:</strong> ${n.impactoREE}</div>`:''}
-    ${enlaceBtn}
+    <div style="display:flex;flex-wrap:wrap;gap:0">${enlaceBtn}${enlaceOriginal}</div>
   </div>`;
 }
 
