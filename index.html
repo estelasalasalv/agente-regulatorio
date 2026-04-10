@@ -287,81 +287,86 @@
     @keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:none} }
 
     /* ── Slide Novedades ── */
-    #panel-novedades { background: var(--gray1); }
+    #panel-novedades { background: var(--gray1); padding: 14px; overflow: hidden; }
     .slide-wrap {
       background: var(--white);
-      border-radius: 14px;
+      border-radius: 12px;
       box-shadow: 0 4px 24px rgba(0,43,69,.13);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      min-height: 540px;
+      flex: 1;
+      height: 100%;
     }
     .slide-head {
       background: var(--navy);
       color: var(--white);
-      padding: 28px 36px 22px;
+      padding: 14px 24px 12px;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
+      flex-shrink: 0;
     }
-    .slide-head-left { display: flex; flex-direction: column; gap: 4px; }
-    .slide-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); }
-    .slide-title-big { font-size: 26px; font-weight: 800; line-height: 1.1; }
-    .slide-subtitle { font-size: 13px; opacity: .7; margin-top: 2px; }
-    .slide-head-date { font-size: 12px; opacity: .55; text-align: right; white-space: nowrap; }
+    .slide-head-left { display: flex; flex-direction: column; gap: 2px; }
+    .slide-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--teal); }
+    .slide-title-big { font-size: 20px; font-weight: 800; line-height: 1.1; }
+    .slide-subtitle { font-size: 11px; opacity: .65; }
+    .slide-head-date { font-size: 11px; opacity: .5; text-align: right; white-space: nowrap; }
     .slide-cols {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       flex: 1;
+      overflow: hidden;
       gap: 0;
     }
-    @media(max-width:820px) { .slide-cols { grid-template-columns: 1fr; } }
-    .slide-col { padding: 20px 22px; border-right: 1px solid var(--gray2); display: flex; flex-direction: column; gap: 10px; }
+    @media(max-width:820px) { .slide-cols { grid-template-columns: 1fr; overflow-y: auto; } }
+    .slide-col { padding: 12px 16px; border-right: 1px solid var(--gray2); display: flex; flex-direction: column; gap: 7px; overflow: hidden; }
     .slide-col:last-child { border-right: none; }
     .slide-col-head {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px;
-      padding-bottom: 10px; border-bottom: 2px solid;
-      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px;
+      padding-bottom: 8px; border-bottom: 2px solid;
+      margin-bottom: 2px; flex-shrink: 0;
     }
     .col-nac  { color: var(--navy);  border-color: var(--navy); }
     .col-eur  { color: #1565c0;      border-color: #1565c0; }
     .col-cons { color: var(--teal2); border-color: var(--teal); }
     .slide-item {
       background: var(--gray1);
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 12px;
-      line-height: 1.45;
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: 11.5px;
+      line-height: 1.4;
       border-left: 3px solid transparent;
+      flex-shrink: 0;
     }
     .slide-item.nac  { border-color: var(--navy); }
     .slide-item.eur  { border-color: #1565c0; }
     .slide-item.cons { border-color: var(--teal); }
     .slide-item-tag {
       display: inline-block; font-size: 9px; font-weight: 800; text-transform: uppercase;
-      border-radius: 8px; padding: 1px 6px; margin-bottom: 4px;
+      border-radius: 8px; padding: 1px 5px; margin-bottom: 3px;
     }
     .tag-new      { background: rgba(0,184,176,.2);  color: var(--teal2); }
     .tag-modified { background: rgba(249,168,37,.2);  color: #b8860b; }
     .tag-open     { background: rgba(46,125,50,.2);   color: #2e7d32; }
-    .slide-item-title { font-weight: 700; color: var(--navy); margin-bottom: 2px; }
-    .slide-item-meta  { font-size: 11px; color: var(--gray4); }
-    .slide-item-dias  { font-size: 11px; font-weight: 700; color: var(--teal2); margin-top: 3px; }
+    .slide-item-title { font-weight: 700; color: var(--navy); margin-bottom: 1px; }
+    .slide-item-meta  { font-size: 10px; color: var(--gray4); }
+    .slide-item-dias  { font-size: 10px; font-weight: 700; color: var(--teal2); margin-top: 2px; }
     .slide-foot {
       background: var(--gray1);
       border-top: 1px solid var(--gray2);
-      padding: 10px 36px;
+      padding: 7px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--gray4);
+      flex-shrink: 0;
     }
-    .slide-empty { font-size: 12px; color: var(--gray3); font-style: italic; padding: 8px 0; }
+    .slide-empty { font-size: 11px; color: var(--gray3); font-style: italic; padding: 6px 0; }
 
     /* ── Benchmark panel ── */
     .benchmark-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 24px; }
@@ -430,7 +435,7 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Inteligencia</div>
-      <div class="sidebar-item" onclick="switchPanel('novedades')"><span class="icon">🗞</span> Novedades del Mes</div>
+      <div class="sidebar-item active" onclick="switchPanel('novedades')"><span class="icon">🗞</span> Novedades del Mes</div>
       <div class="sidebar-item" onclick="switchPanel('benchmark')"><span class="icon">🌍</span> Benchmark Europeo</div>
     </div>
     <div class="sidebar-section" style="margin-top:auto; padding-top:16px;">
@@ -444,10 +449,10 @@
   <!-- MAIN -->
   <main class="main">
     <div class="tabs">
+      <div class="tab active" id="tab-novedades"  onclick="switchPanel('novedades')">🗞 Novedades</div>
       <div class="tab"        id="tab-nacional"   onclick="switchPanel('nacional')">📋 Normativa Nacional</div>
       <div class="tab"        id="tab-europea"    onclick="switchPanel('europea')">🇪🇺 Normativa UE</div>
-      <div class="tab active" id="tab-consultas"  onclick="switchPanel('consultas')">📢 Consultas</div>
-      <div class="tab"        id="tab-novedades"  onclick="switchPanel('novedades')">🗞 Novedades</div>
+      <div class="tab"        id="tab-consultas"  onclick="switchPanel('consultas')">📢 Consultas</div>
       <div class="tab"        id="tab-benchmark"  onclick="switchPanel('benchmark')">🌍 Benchmark</div>
     </div>
 
@@ -482,7 +487,7 @@
     </div>
 
     <!-- PANEL CONSULTAS -->
-    <div class="panel show" id="panel-consultas">
+    <div class="panel" id="panel-consultas">
       <div class="search-bar">
         <select class="filter-select" id="filter-estado" onchange="renderConsultas()">
           <option value="">Todos los estados</option>
@@ -511,7 +516,7 @@
     </div>
 
     <!-- PANEL NOVEDADES -->
-    <div class="panel" id="panel-novedades">
+    <div class="panel show" id="panel-novedades">
       <div class="slide-wrap">
         <div class="slide-head">
           <div class="slide-head-left">
@@ -860,17 +865,17 @@ function renderNovedades() {
   const nac = DATA.nacional
     .filter(n => ['new','modified'].includes(n.tag) && refDate(n) >= hace90)
     .sort((a,b) => refDate(b) - refDate(a))
-    .slice(0, 5);
+    .slice(0, 4);
 
   const eur = DATA.europea
     .filter(n => ['new','modified'].includes(n.tag) && refDate(n) >= hace90)
     .sort((a,b) => refDate(b) - refDate(a))
-    .slice(0, 5);
+    .slice(0, 4);
 
   const cons = DATA.consultas
     .filter(c => c.estado === 'open')
     .sort((a,b) => (a.fecha_cierre||'9999').localeCompare(b.fecha_cierre||'9999'))
-    .slice(0, 6);
+    .slice(0, 5);
 
   const fmtSlide = d => d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('slide-subtitle').textContent =
