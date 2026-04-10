@@ -106,6 +106,47 @@
     .badge-week     { background: rgba(255,87,34,.25); color: #ff7043; animation: pulse-week 1.8s ease-in-out infinite; }
     @keyframes pulse-week { 0%,100%{opacity:1} 50%{opacity:.55} }
 
+    /* ── Análisis normativa ── */
+    .analisis-sep { display:flex; align-items:center; gap:10px; margin:0 0 12px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.9px; color:var(--teal2); }
+    .analisis-sep::before,.analisis-sep::after { content:''; flex:1; height:1px; background:var(--gray2); }
+    .analisis-selector { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+    .analisis-norm-card { background:var(--white); border:2px solid var(--gray2); border-radius:10px; padding:10px 14px; cursor:pointer; transition:all .15s; flex:1; min-width:220px; max-width:400px; }
+    .analisis-norm-card:hover { border-color:var(--teal); box-shadow:0 2px 10px rgba(0,184,176,.15); }
+    .analisis-norm-card.selected { border-color:var(--teal); background:rgba(0,184,176,.05); }
+    .analisis-norm-title { font-size:12px; font-weight:700; color:var(--navy); margin-bottom:6px; line-height:1.4; }
+    .analisis-norm-meta { display:flex; gap:6px; align-items:center; flex-wrap:wrap; font-size:11px; color:var(--gray4); }
+    .analisis-panel { background:var(--white); border-radius:12px; box-shadow:0 4px 20px rgba(0,43,69,.12); border:1px solid var(--gray2); margin-bottom:20px; overflow:hidden; }
+    .analisis-panel-header { background:var(--navy); color:var(--white); padding:12px 18px; display:flex; flex-direction:column; gap:4px; }
+    .analisis-panel-titulo { font-size:13px; font-weight:700; }
+    .analisis-resumen-ej { font-size:11.5px; opacity:.8; line-height:1.5; }
+    .analisis-grid { display:grid; grid-template-columns:1fr 1fr; min-height:280px; }
+    @media(max-width:720px){ .analisis-grid{ grid-template-columns:1fr; } }
+    .analisis-arts-col { border-right:1px solid var(--gray2); overflow-y:auto; max-height:500px; padding:12px; display:flex; flex-direction:column; gap:8px; }
+    .analisis-art-item { border:1.5px solid var(--gray2); border-radius:8px; padding:10px 12px; cursor:pointer; transition:all .15s; }
+    .analisis-art-item:hover { border-color:var(--teal); }
+    .analisis-art-item.active { border-color:var(--teal); background:rgba(0,184,176,.05); }
+    .analisis-art-header { display:flex; align-items:center; gap:6px; margin-bottom:5px; flex-wrap:wrap; }
+    .analisis-art-num { font-size:11px; font-weight:700; color:var(--gray4); }
+    .analisis-art-titulo { font-size:12px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+    .analisis-art-texto { font-size:11.5px; color:var(--gray4); line-height:1.5; margin-bottom:5px; }
+    .analisis-cambios { font-size:11px; background:rgba(249,168,37,.1); border-left:3px solid var(--yellow); border-radius:0 5px 5px 0; padding:5px 8px; margin-bottom:5px; color:var(--text); }
+    .analisis-temas { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+    .tema-chip { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; text-transform:uppercase; }
+    .analisis-relevancia { font-size:10px; font-weight:700; text-transform:uppercase; margin-left:auto; }
+    .analisis-relevancia.alta { color:#e53935; } .analisis-relevancia.media { color:var(--yellow); } .analisis-relevancia.baja { color:var(--gray4); }
+    .badge-nuevo      { background:rgba(0,184,176,.2);  color:var(--teal2); font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; text-transform:uppercase; }
+    .badge-modificado { background:rgba(249,168,37,.2); color:#e65100;     font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; text-transform:uppercase; }
+    .badge-derogado   { background:rgba(229,57,53,.2);  color:#b71c1c;     font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; text-transform:uppercase; }
+    .analisis-impl-col { padding:16px; overflow-y:auto; max-height:500px; display:flex; flex-direction:column; gap:12px; }
+    .analisis-impl-block { border-radius:8px; padding:11px 14px; }
+    .analisis-impl-block.os    { background:rgba(0,43,69,.05);    border-left:3px solid var(--navy); }
+    .analisis-impl-block.trans { background:rgba(0,184,176,.06);  border-left:3px solid var(--teal); }
+    .analisis-impl-block.os-global    { background:rgba(0,43,69,.03);   border-left:3px solid var(--navy); opacity:.8; }
+    .analisis-impl-block.trans-global { background:rgba(0,184,176,.03); border-left:3px solid var(--teal); opacity:.8; }
+    .analisis-impl-head { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.7px; color:var(--navy); margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+    .analisis-impl-text { font-size:12px; color:var(--text); line-height:1.6; }
+    .analisis-loading { display:flex; align-items:center; gap:12px; padding:24px; color:var(--gray4); font-size:13px; }
+
     /* ── Main ── */
     .main { display: flex; flex-direction: column; overflow: hidden; }
 
@@ -479,6 +520,31 @@
         <button class="org-btn os"             onclick="setNacOrgFilter(this,'OS')">OS · Red Eléctrica</button>
         <button class="org-btn gobierno"       onclick="setNacOrgFilter(this,'Gobierno')">Gobierno</button>
       </div>
+
+      <!-- ── Análisis IA — Normativa última semana ── -->
+      <div id="analisis-reciente-wrap" style="display:none;margin-bottom:4px">
+        <div class="analisis-sep">Análisis IA — Normativa última semana &nbsp;<span id="analisis-week-count" class="badge badge-week" style="text-transform:none;font-weight:700;font-size:11px"></span></div>
+        <div id="analisis-selector-cards" class="analisis-selector"></div>
+        <div id="analisis-panel" class="analisis-panel" style="display:none">
+          <div id="analisis-loading" class="analisis-loading">
+            <span class="spin" style="font-size:18px">⚙</span>
+            <span id="analisis-loading-msg">Analizando normativa con IA…</span>
+          </div>
+          <div id="analisis-content" style="display:none">
+            <div class="analisis-panel-header">
+              <div class="analisis-panel-titulo" id="analisis-norm-titulo"></div>
+              <div class="analisis-resumen-ej" id="analisis-resumen-ej"></div>
+            </div>
+            <div class="analisis-grid">
+              <div class="analisis-arts-col" id="analisis-arts-list"></div>
+              <div class="analisis-impl-col" id="analisis-impl-panel">
+                <p style="color:var(--gray4);font-size:12px">Selecciona un artículo para ver sus implicaciones.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="cards-grid" id="cards-nacional"></div>
     </div>
 
@@ -586,6 +652,7 @@ async function loadData() {
   DATA.benchmark  = bench         || {};
   renderStats();
   renderNacional();
+  renderAnalisisSelector();
   renderEuropea();
   renderConsultas();
   renderNovedades();
@@ -667,6 +734,154 @@ function renderNacional() {
     return db.localeCompare(da);
   });
   document.getElementById('cards-nacional').innerHTML = list.map(normCard).join('') || '<p style="color:var(--gray4)">Sin resultados.</p>';
+}
+
+// ── Análisis IA Normativa Reciente ───────────────────────────────
+let _analisisCache = {};
+
+function renderAnalisisSelector() {
+  const hace7d = new Date(Date.now() - 7 * 86400000).toISOString().slice(0,10);
+  const recientes = (DATA.nacional || []).filter(n => (n.updated || n.date || '') >= hace7d);
+  const wrap = document.getElementById('analisis-reciente-wrap');
+  if (!recientes.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const cnt = document.getElementById('analisis-week-count');
+  cnt.textContent = recientes.length + ' nueva' + (recientes.length !== 1 ? 's' : '');
+  document.getElementById('analisis-selector-cards').innerHTML = recientes.map(n => {
+    const orgCls = n.organismo ? 'org-' + n.organismo.toLowerCase().replace(/[^a-z]/g,'') : '';
+    return `<div class="analisis-norm-card" id="anorm-${n.id}"
+      onclick="seleccionarNormAnalisis(${JSON.stringify(n.id)},${JSON.stringify(n.enlace||'')},${JSON.stringify(n.title)})">
+      <div class="analisis-norm-title">${n.title}</div>
+      <div class="analisis-norm-meta">
+        <span class="type-chip">${n.type||''}</span>
+        <span>${n.date||''}</span>
+        ${n.organismo?`<span class="org-chip ${orgCls}">${n.organismo}</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function seleccionarNormAnalisis(id, url, titulo) {
+  document.querySelectorAll('.analisis-norm-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById('anorm-' + id);
+  if (card) { card.classList.add('selected'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  const panel   = document.getElementById('analisis-panel');
+  const loading = document.getElementById('analisis-loading');
+  const content = document.getElementById('analisis-content');
+  panel.style.display = 'block';
+  if (_analisisCache[id]) {
+    loading.style.display = 'none'; content.style.display = 'block';
+    renderAnalisisContent(_analisisCache[id]); return;
+  }
+  loading.style.display = 'flex'; content.style.display = 'none';
+  document.getElementById('analisis-loading-msg').textContent = 'Iniciando análisis…';
+  if (!url) {
+    loading.style.display = 'none'; content.style.display = 'block';
+    document.getElementById('analisis-arts-list').innerHTML =
+      '<p style="color:var(--gray4);padding:16px">Sin enlace BOE disponible para esta normativa.</p>';
+    document.getElementById('analisis-impl-panel').innerHTML = ''; return;
+  }
+  _streamAnalisis(id, url, titulo);
+}
+
+async function _streamAnalisis(id, url, titulo) {
+  const loading = document.getElementById('analisis-loading');
+  const content = document.getElementById('analisis-content');
+  const msg     = document.getElementById('analisis-loading-msg');
+  try {
+    const resp = await fetch('/api/analizar-normativa', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({id, url, titulo})
+    });
+    const reader = resp.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    while(true) {
+      const {done, value} = await reader.read();
+      if(done) break;
+      buf += dec.decode(value, {stream:true});
+      const parts = buf.split('\n\n'); buf = parts.pop();
+      for(const p of parts) {
+        if(!p.startsWith('data:')) continue;
+        let ev; try { ev = JSON.parse(p.slice(5).trim()); } catch { continue; }
+        if(ev.type === 'progreso') { msg.textContent = ev.msg; }
+        else if(ev.type === 'resultado') {
+          _analisisCache[id] = ev;
+          loading.style.display = 'none'; content.style.display = 'block';
+          renderAnalisisContent(ev);
+        } else if(ev.type === 'error') {
+          loading.style.display = 'none'; content.style.display = 'block';
+          document.getElementById('analisis-arts-list').innerHTML =
+            `<p style="color:#e53935;padding:16px">Error: ${ev.msg}</p>`;
+        }
+      }
+    }
+  } catch(e) {
+    loading.style.display = 'none'; content.style.display = 'block';
+    document.getElementById('analisis-arts-list').innerHTML =
+      `<p style="color:#e53935;padding:16px">Error de conexión: ${e.message}</p>`;
+  }
+}
+
+const _TEMA_L = {sector_electrico:'Sector Eléctrico',acceso_conexion:'Acceso/Conexión',control_tension:'Control Tensión',sf6:'SF6'};
+const _TEMA_C = {sector_electrico:'#607d8b',acceso_conexion:'#2e7d32',control_tension:'#1565c0',sf6:'#6a1b9a'};
+const _EST_L  = {nuevo:'NUEVO',modificado:'MODIFICADO',derogado:'DEROGADO'};
+const _EST_C  = {nuevo:'badge-nuevo',modificado:'badge-modificado',derogado:'badge-derogado'};
+
+function renderAnalisisContent(data) {
+  document.getElementById('analisis-norm-titulo').textContent = data.ambito || '';
+  document.getElementById('analisis-resumen-ej').textContent  = data.resumen_ejecutivo || '';
+  const arts = data.articulos || [];
+  if (!arts.length) {
+    document.getElementById('analisis-arts-list').innerHTML =
+      '<p style="color:var(--gray4);padding:16px">No se hallaron artículos relevantes para los temas de interés.</p>';
+    _renderImplicaciones(null, data); return;
+  }
+  document.getElementById('analisis-arts-list').innerHTML = arts.map((a,i) => `
+    <div class="analisis-art-item${i===0?' active':''}"
+         onclick="selectAnalisisArt(this,${i},${JSON.stringify(data.norm_id)})">
+      <div class="analisis-art-header">
+        <span class="${_EST_C[a.estado]||'badge'}">${_EST_L[a.estado]||a.estado}</span>
+        <span class="analisis-art-num">${a.numero||''}</span>
+        <span class="analisis-relevancia ${a.relevancia||''}">${a.relevancia||''}</span>
+      </div>
+      <div class="analisis-art-titulo">${a.titulo||''}</div>
+      <div class="analisis-art-texto">${a.texto||''}</div>
+      ${a.cambios?`<div class="analisis-cambios"><strong>Cambios:</strong> ${a.cambios}</div>`:''}
+      <div class="analisis-temas">${(a.temas||[]).map(t=>
+        `<span class="tema-chip" style="background:${_TEMA_C[t]||'#607d8b'}22;color:${_TEMA_C[t]||'#607d8b'}">${_TEMA_L[t]||t}</span>`
+      ).join('')}</div>
+    </div>`).join('');
+  _renderImplicaciones(arts[0], data);
+}
+
+function selectAnalisisArt(el, idx, normId) {
+  document.querySelectorAll('.analisis-art-item').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  const d = _analisisCache[normId];
+  if(d) _renderImplicaciones(d.articulos[idx], d);
+}
+
+function _renderImplicaciones(art, data) {
+  const panel = document.getElementById('analisis-impl-panel');
+  const gOS = data?.implicaciones_globales_os || '';
+  const gTR = data?.implicaciones_globales_transportista || '';
+  let html = art ? `
+    <div class="analisis-impl-block os">
+      <div class="analisis-impl-head">🏢 OS — Red Eléctrica</div>
+      <div class="analisis-impl-text">${art.implicaciones_os||'Sin implicaciones específicas.'}</div>
+    </div>
+    <div class="analisis-impl-block trans">
+      <div class="analisis-impl-head">⚡ Transportista</div>
+      <div class="analisis-impl-text">${art.implicaciones_transportista||'Sin implicaciones específicas.'}</div>
+    </div>` : '';
+  if(gOS||gTR) html += `
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--gray2)">
+      <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--gray4);margin-bottom:8px">Implicaciones globales</div>
+      ${gOS?`<div class="analisis-impl-block os-global"><div class="analisis-impl-head">🏢 OS (global)</div><div class="analisis-impl-text">${gOS}</div></div>`:''}
+      ${gTR?`<div class="analisis-impl-block trans-global"><div class="analisis-impl-head">⚡ Transportista (global)</div><div class="analisis-impl-text">${gTR}</div></div>`:''}
+    </div>`;
+  panel.innerHTML = html || '<p style="color:var(--gray4);font-size:12px">Selecciona un artículo.</p>';
 }
 
 function renderEuropea() {

@@ -1,5 +1,18 @@
 [
   {
+    "id": "RES-CNMC-SF6-2026",
+    "title": "Resolución CNMC 5/2026: condiciones técnicas para la sustitución de SF6 en instalaciones de red de transporte",
+    "type": "resolucion",
+    "date": "2026-04-07",
+    "updated": null,
+    "tag": "new",
+    "summary": "La CNMC establece el calendario y condiciones técnicas para la sustitución progresiva del SF6 en instalaciones de la red de transporte eléctrico, en cumplimiento del Reglamento UE 2024/573 sobre gases fluorados.",
+    "impactoREE": "Obliga a REE a presentar un plan de sustitución de SF6 antes del 31/12/2026, con inventario de equipos afectados (GIS, interruptores 400 kV) y cronograma de inversiones hasta 2035. Afecta a las interconexiones internacionales con tecnología GIS.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-7341",
+    "detail": "<p>La CNMC, en cumplimiento del Reglamento (UE) 2024/573 sobre gases fluorados, establece mediante esta resolución (BOE-A-2026-7341) las condiciones técnicas y el calendario para la sustitución progresiva del <strong>hexafluoruro de azufre (SF6)</strong> en las instalaciones de la red de transporte eléctrico española. Se exige la presentación de un plan de sustitución antes del 31/12/2026, con inventario de equipos con SF6 (aparamenta GIS, interruptores de alta tensión), evaluación de gases alternativos (g3, Novec 5110) y cronograma de inversiones hasta 2035. Se establecen límites de emisiones anuales y obligaciones de registro en el F-Gas Portal europeo.</p>",
+    "organismo": "CNMC"
+  },
+  {
     "id": "RES-CNMC-PO-2026",
     "title": "Resolución CNMC: modificación POs 3.1, 3.2 y 7.2 — estabilización de tensión en el sistema eléctrico",
     "type": "resolucion",

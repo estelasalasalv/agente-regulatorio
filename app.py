@@ -257,6 +257,116 @@ async def api_benchmark():
     return BENCHMARK_EUROPEO
 
 
+# ──────────────────────────────────────────────
+# Análisis IA de normativa (SSE streaming)
+# ──────────────────────────────────────────────
+
+PROMPT_ANALISIS_NORMATIVA = """Eres un experto jurídico en regulación del sistema eléctrico español con profundo conocimiento técnico.
+
+Analiza la normativa cuyo texto puedes obtener mediante la herramienta de búsqueda web en la URL indicada.
+
+Identifica ÚNICAMENTE los artículos o disposiciones con relevancia para estos cuatro temas:
+1. sector_electrico — sector eléctrico en general (generación, transporte, distribución, mercado)
+2. acceso_conexion — acceso y conexión a redes eléctricas (solicitudes, permisos, nudos, capacidad)
+3. control_tension — control de tensión y calidad del suministro (reactiva, estabilidad, procedimientos de operación)
+4. sf6 — SF6 y gases fluorados en equipos eléctricos de alta tensión (GIS, interruptores, transformadores)
+
+Para cada artículo relevante determina:
+- Si es NUEVO (se introduce ex novo) o MODIFICADO (modifica texto previo de otra norma) o DEROGADO
+- Si es MODIFICADO: qué ha cambiado exactamente vs la versión anterior
+- Implicaciones concretas para el Operador del Sistema (Red Eléctrica / REE-OS)
+- Implicaciones concretas para los transportistas del sistema eléctrico
+
+Responde ÚNICAMENTE con JSON válido (sin markdown, sin explicaciones):
+{
+  "resumen_ejecutivo": "string: 2-3 frases sobre objeto y alcance de la norma",
+  "ambito": "string: ámbito de aplicación",
+  "implicaciones_globales_os": "string: resumen consolidado para el OS",
+  "implicaciones_globales_transportista": "string: resumen consolidado para el transportista",
+  "articulos": [
+    {
+      "numero": "string: 'Art. 5' o 'Disposición transitoria 2ª'",
+      "titulo": "string: epígrafe del artículo",
+      "estado": "nuevo|modificado|derogado",
+      "texto": "string: resumen del contenido (máx 250 chars)",
+      "cambios": "string|null: qué ha cambiado (solo si modificado)",
+      "temas": ["sector_electrico","acceso_conexion","control_tension","sf6"],
+      "relevancia": "alta|media|baja",
+      "implicaciones_os": "string",
+      "implicaciones_transportista": "string"
+    }
+  ]
+}"""
+
+
+async def stream_analizar_normativa(norm_id: str, url: str, titulo: str) -> AsyncGenerator[str, None]:
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not api_key:
+        yield f"data: {json.dumps({'type':'error','msg':'ANTHROPIC_API_KEY no configurada.'})}\n\n"
+        return
+
+    client = anthropic.Anthropic(api_key=api_key)
+
+    yield f"data: {json.dumps({'type':'progreso','msg':'Obteniendo texto completo de la normativa desde BOE…'})}\n\n"
+    await asyncio.sleep(0)
+
+    try:
+        response = await asyncio.get_event_loop().run_in_executor(
+            None,
+            lambda: client.messages.create(
+                model="claude-opus-4-6",
+                max_tokens=8192,
+                tools=[{"type": "web_fetch_20260209", "name": "web_fetch"}],
+                messages=[{
+                    "role": "user",
+                    "content": (
+                        f"Visita esta URL del BOE, lee el texto completo de la norma y analízala según las instrucciones.\n\n"
+                        f"URL: {url}\n"
+                        f"Título: {titulo}\n\n"
+                        f"{PROMPT_ANALISIS_NORMATIVA}"
+                    )
+                }]
+            )
+        )
+
+        yield f"data: {json.dumps({'type':'progreso','msg':'Procesando análisis artículo por artículo…'})}\n\n"
+        await asyncio.sleep(0)
+
+        texto = ""
+        for block in response.content:
+            if hasattr(block, "text"):
+                texto += block.text
+
+        texto = texto.strip()
+        texto = re.sub(r"^```(?:json)?\s*", "", texto)
+        texto = re.sub(r"\s*```$", "", texto)
+
+        if texto and texto.startswith("{"):
+            analisis = json.loads(texto)
+            analisis["type"] = "resultado"
+            analisis["norm_id"] = norm_id
+            yield f"data: {json.dumps(analisis)}\n\n"
+        else:
+            yield f"data: {json.dumps({'type':'error','msg':'Respuesta inesperada del modelo: ' + texto[:200]})}\n\n"
+
+    except Exception as e:
+        yield f"data: {json.dumps({'type':'error','msg':str(e)[:250]})}\n\n"
+
+
+@app.post("/api/analizar-normativa")
+async def analizar_normativa_endpoint(request: Request):
+    """Analiza una normativa con IA y devuelve artículos relevantes via SSE."""
+    body = await request.json()
+    return StreamingResponse(
+        stream_analizar_normativa(body["id"], body["url"], body["titulo"]),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        }
+    )
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok", "date": date.today().isoformat()}
