@@ -231,6 +231,8 @@
     }
     .norm-card-link:hover { background: rgba(0,184,176,.18); }
     .norm-card-link.pte { color: var(--gray4); background: rgba(176,190,197,.12); border-color: rgba(176,190,197,.35); cursor: default; }
+    .norm-card.ejemplo { border-left: 3px solid var(--yellow); }
+    .norm-card-ejemplo { font-size: 11px; font-weight: 600; color: #b45309; background: rgba(249,168,37,.12); border-radius: 5px; padding: 4px 8px; margin-bottom: 8px; }
     .type-chip { background: var(--gray1); border: 1px solid var(--gray2); color: var(--gray4); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; flex-shrink: 0; }
 
     /* ── Consultas panel ── */
@@ -703,7 +705,11 @@ function normCard(n) {
   const enlaceBtn = n.enlace
     ? `<a class="norm-card-link" href="${n.enlace}" target="_blank" rel="noopener">↗ Ver fuente oficial</a>`
     : `<span class="norm-card-link pte" title="Enlace no disponible aún">⏳ Pte. publicación</span>`;
-  return `<div class="norm-card">
+  const ejemploBadge = n.ejemplo
+    ? `<div class="norm-card-ejemplo">⚠ Entrada de ejemplo — datos no verificados</div>`
+    : '';
+  return `<div class="norm-card${n.ejemplo?' ejemplo':''}">
+    ${ejemploBadge}
     <div class="norm-card-header">
       <div class="norm-card-title">${titulo}</div>
       <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">${weekBadge}${tag}</div>
