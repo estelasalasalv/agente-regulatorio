@@ -217,6 +217,8 @@
     .norm-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,43,69,.13); }
     .norm-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
     .norm-card-title  { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.4; }
+    .norm-card-title-link { color: var(--navy); text-decoration: none; }
+    .norm-card-title-link:hover { color: var(--teal2); text-decoration: underline; }
     .norm-card-meta   { font-size: 11px; color: var(--gray4); margin-bottom: 6px; }
     .norm-card-summary{ font-size: 12px; color: var(--gray4); line-height: 1.5; margin-bottom: 8px; }
     .norm-card-impact { font-size: 12px; color: var(--text); background: rgba(0,184,176,.07); border-radius: 6px; padding: 7px 10px; }
@@ -704,9 +706,12 @@ function normCard(n) {
   const efectiva = n.updated || n.date || '';
   const esNueva = efectiva && (Date.now() - new Date(efectiva).getTime()) < 7 * 86400000;
   const weekBadge = esNueva ? `<span class="badge badge-week">Esta semana</span>` : '';
-  return `<div class="norm-card" onclick="openDetail('${n.id}')">
+  const titulo = n.enlace
+    ? `<a class="norm-card-title-link" href="${n.enlace}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${n.title}</a>`
+    : `<span>${n.title}</span>`;
+  return `<div class="norm-card">
     <div class="norm-card-header">
-      <div class="norm-card-title">${n.title}</div>
+      <div class="norm-card-title">${titulo}</div>
       <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">${weekBadge}${tag}</div>
     </div>
     <div class="norm-card-meta">
@@ -715,7 +720,7 @@ function normCard(n) {
     </div>
     <div class="norm-card-summary">${n.summary||''}</div>
     ${n.impactoREE?`<div class="norm-card-impact"><strong>Impacto REE:</strong> ${n.impactoREE}</div>`:''}
-    ${n.enlace?`<a class="norm-card-link" href="${n.enlace}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ Ver en BOE</a>`:''}
+    ${n.enlace?`<a class="norm-card-link" href="${n.enlace}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ Ver fuente oficial</a>`:''}
   </div>`;
 }
 

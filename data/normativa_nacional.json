@@ -99,6 +99,7 @@
     "tag": "modified",
     "summary": "Marco regulatorio básico de generación, transporte, distribución, comercialización y consumo de energía eléctrica en España.",
     "impactoREE": "Define las obligaciones del operador del sistema y gestor de la red de transporte. Establece el régimen retributivo del transporte y las funciones de REE como OSS.",
+    "enlace": "https://www.boe.es/buscar/act.php?id=BOE-A-2013-13645",
     "detail": "<p>La Ley 24/2013 es la norma marco del sector eléctrico español. Regula la actividad de <strong>transporte</strong> como actividad regulada con retribución fijada por CNMC. Obliga a REE a garantizar la continuidad y seguridad del suministro, gestionar el sistema y los mercados, y coordinar con ENTSO-E.</p><p>Modificaciones recientes (2025) afectan al régimen de almacenamiento y a la figura del gestor de la red de distribución inteligente.</p>",
     "organismo": "Gobierno"
   },
@@ -111,6 +112,7 @@
     "tag": "new",
     "summary": "Regula el autoconsumo compartido en un radio de 5 km, crea la figura del gestor de autoconsumo y simplifica el régimen de almacenamiento flexible.",
     "impactoREE": "Obliga a REE a desarrollar el marco técnico para la gestión de flujos de autoconsumo compartido en la red de transporte y a coordinar con distribuidoras para la implantación del gestor de autoconsumo.",
+    "enlace": "https://www.boe.es/boe/dias/2026/02/15/",
     "detail": "<p>El RDL 7/2026 introduce tres novedades principales:</p><ul><li><strong>Autoconsumo a 5 km</strong>: permite compartir excedentes entre instalaciones situadas hasta 5 km de distancia sin necesidad de contrato de acceso adicional.</li><li><strong>Gestor de autoconsumo</strong>: nueva figura que agrega y gestiona múltiples instalaciones de autoconsumo.</li><li><strong>Almacenamiento flexible</strong>: régimen simplificado de acceso a la red para instalaciones de almacenamiento puro.</li></ul><p>REE debe adaptar los sistemas de telemedida y los procedimientos de operación (PO) antes del 1 de enero de 2027.</p>",
     "organismo": "Gobierno"
   },
@@ -123,6 +125,7 @@
     "tag": "new",
     "summary": "Facilita la repotenciación de instalaciones renovables existentes y simplifica los permisos de acceso y conexión para instalaciones de almacenamiento.",
     "impactoREE": "REE debe gestionar las solicitudes de repotenciación sin necesidad de nuevo permiso de acceso si la potencia no supera el 20% del original. Impacto en la planificación de la red de transporte.",
+    "enlace": "https://www.boe.es/boe/dias/2025/09/10/",
     "detail": "<p>El RD 997/2025 simplifica el marco de acceso y conexión para:</p><ul><li>Repotenciaciones hasta un 20% de la potencia instalada original sin nuevo permiso de acceso.</li><li>Almacenamiento standalone con acceso simplificado si usa permisos ya existentes.</li><li>Eliminación de la obligación de aval del 100% para instalaciones menores de 5 MW.</li></ul>",
     "organismo": "Gobierno"
   },
@@ -135,6 +138,7 @@
     "tag": "new",
     "summary": "Fija la Tasa de Retribución Financiera (TRF) en el 6,58% para el período regulatorio 2026-2031 y aumenta la retribución del transporte en un 12,1%.",
     "impactoREE": "Determina directamente los ingresos regulados de REE por la actividad de transporte. La TRF del 6,58% supone un incremento respecto al 5,58% anterior. El aumento del 12,1% en la retribución total refleja las inversiones en resiliencia y digitalización.",
+    "enlace": "https://www.boe.es/boe/dias/2024/11/20/",
     "detail": "<p>La Circular CNMC 2/2024 establece el marco retributivo del transporte para 2026-2031:</p><ul><li><strong>TRF: 6,58%</strong> (vs 5,58% en el período anterior)</li><li><strong>Retribución total: +12,1%</strong> respecto a 2025</li><li>Nueva partida específica para <em>ciberseguridad</em> de la red</li><li>Incentivo por disponibilidad de activos de transporte</li><li>Base regulatoria actualizada con las inversiones del Plan de Resiliencia post-apagón abril 2025</li></ul>",
     "organismo": "CNMC"
   },
@@ -147,6 +151,7 @@
     "tag": "new",
     "summary": "Aprueba el Plan de Inversiones de 7.500M€ para reforzar la resiliencia de la red de transporte tras el apagón de abril de 2025.",
     "impactoREE": "Define el programa de inversión prioritaria de REE: redundancia N-2 en nudos críticos, digitalización de subestaciones, sistemas de almacenamiento de estabilización de frecuencia y refuerzo de interconexiones.",
+    "enlace": "https://www.boe.es/boe/dias/2025/05/20/",
     "detail": "<p>El Plan de Resiliencia surge como respuesta al gran apagón peninsular de abril de 2025. Principales actuaciones:</p><ul><li><strong>7.500M€</strong> de inversión 2025-2030</li><li>Criterio N-2 en todos los nudos de 400 kV con carga superior a 500 MW</li><li>Digitalización completa de 150 subestaciones clave</li><li>500 MW de almacenamiento para servicios de regulación de frecuencia</li><li>Nuevas interconexiones con Francia y Portugal (+2.000 MW)</li></ul>",
     "organismo": "Gobierno"
   },
@@ -159,6 +164,7 @@
     "tag": "modified",
     "summary": "Fija los peajes de acceso a la red de transporte y distribución para 2025, con incremento medio del 3,2%.",
     "impactoREE": "Establece los ingresos por peajes de transporte que financian parcialmente la retribución de REE. El incremento del 3,2% refleja la actualización por IPC energético.",
+    "enlace": "https://www.boe.es/boe/dias/2024/12/28/",
     "detail": "<p>La Orden TUR/890/2024 actualiza los peajes de acceso para el ejercicio 2025. Los peajes de transporte suben un promedio del 3,2%, con mayores incrementos en los peajes de alta tensión utilizados por grandes industrias y generadores.</p>",
     "organismo": "MITECO"
   },
@@ -171,6 +177,7 @@
     "tag": "modified",
     "summary": "Objetivos vinculantes de renovables (74% electricidad en 2030) y descarbonización. Obliga a planificar la red de transporte con horizonte 2030.",
     "impactoREE": "REE debe publicar una Planificación de Red 2030 alineada con el PNIEC. La planificación es vinculante para la aprobación de inversiones reguladas. Incluye la figura del 'coordinador de la transición' para grandes proyectos de red.",
+    "enlace": "https://www.boe.es/buscar/act.php?id=BOE-A-2021-8473",
     "detail": "<p>La Ley 7/2021 y sus modificaciones posteriores establecen:</p><ul><li>74% de renovables en la generación eléctrica en 2030</li><li>Prohibición de nuevas instalaciones de generación con combustibles fósiles desde 2026</li><li>Obligación de REE de publicar una Planificación de Red 2030 cada dos años</li><li>Figura del coordinador de transición energética para proyectos de red superiores a 500 M€</li></ul>",
     "organismo": "Gobierno"
   },
@@ -183,6 +190,7 @@
     "tag": "new",
     "summary": "Establece el régimen jurídico para la producción, transporte y consumo de hidrógeno renovable y biometano en España.",
     "impactoREE": "Implica a REE en la planificación de la infraestructura eléctrica necesaria para abastecer los electrolizadores de hidrógeno. Potenciales nuevos nudos de conexión de alta potencia.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-7286",
     "detail": "<p>El RDL 4/2024 crea el marco del hidrógeno renovable en España, con impacto en la red de transporte por la necesidad de conexión de grandes electrolizadores (100-500 MW) que requerirán nuevos accesos a la red de muy alta tensión.</p>",
     "organismo": "Gobierno"
   }
