@@ -9,7 +9,8 @@
     "summary": "La CNMC modifica los procedimientos de operación eléctricos 3.1 (energía reactiva), 3.2 (restricciones técnicas) y 7.2 (calidad de suministro) para facilitar la estabilización de tensión en el sistema eléctrico peninsular.",
     "impactoREE": "Afecta directamente a la operación del sistema. REE deberá adaptar sus procedimientos internos de operación en tiempo real y los protocolos de coordinación con generadores para la gestión de la energía reactiva y control de tensión.",
     "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-1377",
-    "detail": "<p>La CNMC modifica mediante esta resolución (BOE-A-2026-1377) tres procedimientos de operación del sistema eléctrico peninsular: <strong>PO 3.1</strong> (Gestión de la energía reactiva y del control de tensión), <strong>PO 3.2</strong> (Resolución de restricciones técnicas) y <strong>PO 7.2</strong> (Control de la calidad del suministro eléctrico). Las modificaciones tienen por objeto facilitar la estabilización de tensión, mejorar los mecanismos de coordinación entre el operador del sistema y los agentes generadores, e introducir señales de precio para servicios de reactiva.</p>"
+    "detail": "<p>La CNMC modifica mediante esta resolución (BOE-A-2026-1377) tres procedimientos de operación del sistema eléctrico peninsular: <strong>PO 3.1</strong> (Gestión de la energía reactiva y del control de tensión), <strong>PO 3.2</strong> (Resolución de restricciones técnicas) y <strong>PO 7.2</strong> (Control de la calidad del suministro eléctrico). Las modificaciones tienen por objeto facilitar la estabilización de tensión, mejorar los mecanismos de coordinación entre el operador del sistema y los agentes generadores, e introducir señales de precio para servicios de reactiva.</p>",
+    "organismo": "CNMC"
   },
   {
     "id": "CONV-MITECO-CNMC-2026",
@@ -21,7 +22,8 @@
     "summary": "Convenio entre MITECO y la CNMC para la gestión de subvenciones directas del Plan de Recuperación (PRTR) destinadas a inversiones estratégicas de descarbonización en la red de transporte de energía eléctrica.",
     "impactoREE": "REE es el principal beneficiario como gestor de la red de transporte. Los fondos PRTR financian proyectos prioritarios de digitalización, interconexiones y resiliencia de la red de muy alta tensión.",
     "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-4040",
-    "detail": "<p>El convenio publicado (BOE-A-2026-4040) formaliza la colaboración entre el Ministerio para la Transición Ecológica (MITECO) y la CNMC para la gestión de subvenciones directas con cargo al Plan de Recuperación, Transformación y Resiliencia (PRTR). Los fondos se destinan a inversiones en la <strong>red de transporte de energía eléctrica</strong> orientadas a proyectos estratégicos de descarbonización, incluyendo digitalización de subestaciones, nuevas interconexiones y sistemas de almacenamiento.</p>"
+    "detail": "<p>El convenio publicado (BOE-A-2026-4040) formaliza la colaboración entre el Ministerio para la Transición Ecológica (MITECO) y la CNMC para la gestión de subvenciones directas con cargo al Plan de Recuperación, Transformación y Resiliencia (PRTR). Los fondos se destinan a inversiones en la <strong>red de transporte de energía eléctrica</strong> orientadas a proyectos estratégicos de descarbonización, incluyendo digitalización de subestaciones, nuevas interconexiones y sistemas de almacenamiento.</p>",
+    "organismo": "MITECO"
   },
   {
     "id": "RES-SEE-IBIZA-2026",
@@ -33,7 +35,8 @@
     "summary": "La Secretaría de Estado de Energía termina el procedimiento de concurrencia competitiva para el reconocimiento del régimen retributivo adicional en el subsistema eléctrico no peninsular de Ibiza-Formentera.",
     "impactoREE": "Afecta a la operación del sistema insular de Ibiza-Formentera bajo supervisión de REE como operador del sistema. Determina qué instalaciones de generación acceden al régimen retributivo adicional (prima) en los sistemas no peninsulares.",
     "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-4269",
-    "detail": "<p>La Secretaría de Estado de Energía resuelve (BOE-A-2026-4269) el procedimiento de concurrencia competitiva para el otorgamiento de la resolución favorable de compatibilidad a efectos del reconocimiento del <strong>régimen retributivo adicional</strong> en el subsistema eléctrico de los territorios no peninsulares de Ibiza-Formentera. El régimen retributivo adicional cubre la diferencia entre los costes de generación en sistemas insulares y los ingresos de mercado.</p>"
+    "detail": "<p>La Secretaría de Estado de Energía resuelve (BOE-A-2026-4269) el procedimiento de concurrencia competitiva para el otorgamiento de la resolución favorable de compatibilidad a efectos del reconocimiento del <strong>régimen retributivo adicional</strong> en el subsistema eléctrico de los territorios no peninsulares de Ibiza-Formentera. El régimen retributivo adicional cubre la diferencia entre los costes de generación en sistemas insulares y los ingresos de mercado.</p>",
+    "organismo": "MITECO"
   },
   {
     "id": "RES-DGPEM-DEFICIT-2026",
@@ -45,7 +48,8 @@
     "summary": "La Dirección General de Política Energética y Minas fija el importe pendiente de cobro a 31 de diciembre de 2025 de los derechos cedidos al Fondo de Titulización del Déficit del Sistema Eléctrico.",
     "impactoREE": "Indicador clave de la salud financiera del sistema regulado del que REE forma parte. El déficit acumulado condiciona la solvencia del marco retributivo y puede afectar a los pagos futuros de la actividad de transporte.",
     "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-4356",
-    "detail": "<p>La Dirección General de Política Energética y Minas publica anualmente (BOE-A-2026-4356) el importe pendiente de cobro de los derechos de cobro cedidos al <strong>Fondo de Titulización del Déficit del Sistema Eléctrico</strong>. Este fondo fue creado para cubrir el déficit tarifario histórico acumulado entre los ingresos por peajes y los costes reconocidos del sistema eléctrico. La resolución refleja el saldo a 31 de diciembre de 2025.</p>"
+    "detail": "<p>La Dirección General de Política Energética y Minas publica anualmente (BOE-A-2026-4356) el importe pendiente de cobro de los derechos de cobro cedidos al <strong>Fondo de Titulización del Déficit del Sistema Eléctrico</strong>. Este fondo fue creado para cubrir el déficit tarifario histórico acumulado entre los ingresos por peajes y los costes reconocidos del sistema eléctrico. La resolución refleja el saldo a 31 de diciembre de 2025.</p>",
+    "organismo": "MITECO"
   },
   {
     "id": "RES-SEE-ACCESO-RED-2026",
@@ -57,7 +61,8 @@
     "summary": "La Secretaría de Estado de Energía resuelve el concurso de capacidad de acceso de demanda en determinados nudos de la red de transporte, convocado en julio de 2025, asignando capacidad a las instalaciones seleccionadas.",
     "impactoREE": "REE gestiona como transportista los nudos objeto del concurso. La resolución determina qué instalaciones de demanda (industria, electrolizadores, centros de datos) obtienen acceso garantizado a la red de transporte, condicionando la planificación y operación de la red.",
     "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-4357",
-    "detail": "<p>La Secretaría de Estado de Energía resuelve (BOE-A-2026-4357) el concurso de capacidad de acceso de demanda en determinados nudos de la <strong>red de transporte</strong> convocado mediante Resolución de 11 de julio de 2025. El concurso asigna capacidad de acceso a instalaciones de demanda de gran consumo (industria electrointensiva, producción de hidrógeno, centros de datos) en nudos con disponibilidad de capacidad identificada por REE como operador del sistema.</p>"
+    "detail": "<p>La Secretaría de Estado de Energía resuelve (BOE-A-2026-4357) el concurso de capacidad de acceso de demanda en determinados nudos de la <strong>red de transporte</strong> convocado mediante Resolución de 11 de julio de 2025. El concurso asigna capacidad de acceso a instalaciones de demanda de gran consumo (industria electrointensiva, producción de hidrógeno, centros de datos) en nudos con disponibilidad de capacidad identificada por REE como operador del sistema.</p>",
+    "organismo": "MITECO"
   },
   {
     "id": "RES-CNMC-TRF-RECURSOS-2026",
@@ -69,7 +74,8 @@
     "summary": "La CNMC notifica la interposición de múltiples recursos contencioso-administrativos ante la Audiencia Nacional contra la Circular 9/2025, que fija la TRF en el 6,58% para el período regulatorio 2026-2031 de transporte, operación del sistema y distribución.",
     "impactoREE": "Riesgo regulatorio significativo: si prosperan los recursos, la TRF del 6,58% podría ser anulada o modificada, afectando directamente a los ingresos regulados de REE por transporte y operación del sistema para 2026-2031.",
     "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-6223",
-    "detail": "<p>La CNMC publica los emplazamientos (BOE-A-2026-6223 y siguientes) a los interesados en los recursos contencioso-administrativos interpuestos ante la Audiencia Nacional contra la <strong>Circular 9/2025</strong>, que modifica la Circular 2/2019 para fijar la <strong>tasa de retribución financiera (TRF) al 6,58%</strong> aplicable a las actividades de transporte, operación del sistema y distribución de energía eléctrica en el período regulatorio 2026-2031. Se han identificado al menos seis expedientes judiciales distintos (4/270/2026, 4/327/2026, 4/330/2026, 4/336/2026, 4/338/2026, 4/350/2026).</p>"
+    "detail": "<p>La CNMC publica los emplazamientos (BOE-A-2026-6223 y siguientes) a los interesados en los recursos contencioso-administrativos interpuestos ante la Audiencia Nacional contra la <strong>Circular 9/2025</strong>, que modifica la Circular 2/2019 para fijar la <strong>tasa de retribución financiera (TRF) al 6,58%</strong> aplicable a las actividades de transporte, operación del sistema y distribución de energía eléctrica en el período regulatorio 2026-2031. Se han identificado al menos seis expedientes judiciales distintos (4/270/2026, 4/327/2026, 4/330/2026, 4/336/2026, 4/338/2026, 4/350/2026).</p>",
+    "organismo": "CNMC"
   },
   {
     "id": "LSE-24-2013",
@@ -80,7 +86,8 @@
     "tag": "modified",
     "summary": "Marco regulatorio básico de generación, transporte, distribución, comercialización y consumo de energía eléctrica en España.",
     "impactoREE": "Define las obligaciones del operador del sistema y gestor de la red de transporte. Establece el régimen retributivo del transporte y las funciones de REE como OSS.",
-    "detail": "<p>La Ley 24/2013 es la norma marco del sector eléctrico español. Regula la actividad de <strong>transporte</strong> como actividad regulada con retribución fijada por CNMC. Obliga a REE a garantizar la continuidad y seguridad del suministro, gestionar el sistema y los mercados, y coordinar con ENTSO-E.</p><p>Modificaciones recientes (2025) afectan al régimen de almacenamiento y a la figura del gestor de la red de distribución inteligente.</p>"
+    "detail": "<p>La Ley 24/2013 es la norma marco del sector eléctrico español. Regula la actividad de <strong>transporte</strong> como actividad regulada con retribución fijada por CNMC. Obliga a REE a garantizar la continuidad y seguridad del suministro, gestionar el sistema y los mercados, y coordinar con ENTSO-E.</p><p>Modificaciones recientes (2025) afectan al régimen de almacenamiento y a la figura del gestor de la red de distribución inteligente.</p>",
+    "organismo": "Gobierno"
   },
   {
     "id": "RDL-7-2026",
@@ -91,7 +98,8 @@
     "tag": "new",
     "summary": "Regula el autoconsumo compartido en un radio de 5 km, crea la figura del gestor de autoconsumo y simplifica el régimen de almacenamiento flexible.",
     "impactoREE": "Obliga a REE a desarrollar el marco técnico para la gestión de flujos de autoconsumo compartido en la red de transporte y a coordinar con distribuidoras para la implantación del gestor de autoconsumo.",
-    "detail": "<p>El RDL 7/2026 introduce tres novedades principales:</p><ul><li><strong>Autoconsumo a 5 km</strong>: permite compartir excedentes entre instalaciones situadas hasta 5 km de distancia sin necesidad de contrato de acceso adicional.</li><li><strong>Gestor de autoconsumo</strong>: nueva figura que agrega y gestiona múltiples instalaciones de autoconsumo.</li><li><strong>Almacenamiento flexible</strong>: régimen simplificado de acceso a la red para instalaciones de almacenamiento puro.</li></ul><p>REE debe adaptar los sistemas de telemedida y los procedimientos de operación (PO) antes del 1 de enero de 2027.</p>"
+    "detail": "<p>El RDL 7/2026 introduce tres novedades principales:</p><ul><li><strong>Autoconsumo a 5 km</strong>: permite compartir excedentes entre instalaciones situadas hasta 5 km de distancia sin necesidad de contrato de acceso adicional.</li><li><strong>Gestor de autoconsumo</strong>: nueva figura que agrega y gestiona múltiples instalaciones de autoconsumo.</li><li><strong>Almacenamiento flexible</strong>: régimen simplificado de acceso a la red para instalaciones de almacenamiento puro.</li></ul><p>REE debe adaptar los sistemas de telemedida y los procedimientos de operación (PO) antes del 1 de enero de 2027.</p>",
+    "organismo": "Gobierno"
   },
   {
     "id": "RD-997-2025",
@@ -102,7 +110,8 @@
     "tag": "new",
     "summary": "Facilita la repotenciación de instalaciones renovables existentes y simplifica los permisos de acceso y conexión para instalaciones de almacenamiento.",
     "impactoREE": "REE debe gestionar las solicitudes de repotenciación sin necesidad de nuevo permiso de acceso si la potencia no supera el 20% del original. Impacto en la planificación de la red de transporte.",
-    "detail": "<p>El RD 997/2025 simplifica el marco de acceso y conexión para:</p><ul><li>Repotenciaciones hasta un 20% de la potencia instalada original sin nuevo permiso de acceso.</li><li>Almacenamiento standalone con acceso simplificado si usa permisos ya existentes.</li><li>Eliminación de la obligación de aval del 100% para instalaciones menores de 5 MW.</li></ul>"
+    "detail": "<p>El RD 997/2025 simplifica el marco de acceso y conexión para:</p><ul><li>Repotenciaciones hasta un 20% de la potencia instalada original sin nuevo permiso de acceso.</li><li>Almacenamiento standalone con acceso simplificado si usa permisos ya existentes.</li><li>Eliminación de la obligación de aval del 100% para instalaciones menores de 5 MW.</li></ul>",
+    "organismo": "Gobierno"
   },
   {
     "id": "CIRC-CNMC-2-2024",
@@ -113,7 +122,8 @@
     "tag": "new",
     "summary": "Fija la Tasa de Retribución Financiera (TRF) en el 6,58% para el período regulatorio 2026-2031 y aumenta la retribución del transporte en un 12,1%.",
     "impactoREE": "Determina directamente los ingresos regulados de REE por la actividad de transporte. La TRF del 6,58% supone un incremento respecto al 5,58% anterior. El aumento del 12,1% en la retribución total refleja las inversiones en resiliencia y digitalización.",
-    "detail": "<p>La Circular CNMC 2/2024 establece el marco retributivo del transporte para 2026-2031:</p><ul><li><strong>TRF: 6,58%</strong> (vs 5,58% en el período anterior)</li><li><strong>Retribución total: +12,1%</strong> respecto a 2025</li><li>Nueva partida específica para <em>ciberseguridad</em> de la red</li><li>Incentivo por disponibilidad de activos de transporte</li><li>Base regulatoria actualizada con las inversiones del Plan de Resiliencia post-apagón abril 2025</li></ul>"
+    "detail": "<p>La Circular CNMC 2/2024 establece el marco retributivo del transporte para 2026-2031:</p><ul><li><strong>TRF: 6,58%</strong> (vs 5,58% en el período anterior)</li><li><strong>Retribución total: +12,1%</strong> respecto a 2025</li><li>Nueva partida específica para <em>ciberseguridad</em> de la red</li><li>Incentivo por disponibilidad de activos de transporte</li><li>Base regulatoria actualizada con las inversiones del Plan de Resiliencia post-apagón abril 2025</li></ul>",
+    "organismo": "CNMC"
   },
   {
     "id": "RD-RESILIENCIA-2025",
@@ -124,7 +134,8 @@
     "tag": "new",
     "summary": "Aprueba el Plan de Inversiones de 7.500M€ para reforzar la resiliencia de la red de transporte tras el apagón de abril de 2025.",
     "impactoREE": "Define el programa de inversión prioritaria de REE: redundancia N-2 en nudos críticos, digitalización de subestaciones, sistemas de almacenamiento de estabilización de frecuencia y refuerzo de interconexiones.",
-    "detail": "<p>El Plan de Resiliencia surge como respuesta al gran apagón peninsular de abril de 2025. Principales actuaciones:</p><ul><li><strong>7.500M€</strong> de inversión 2025-2030</li><li>Criterio N-2 en todos los nudos de 400 kV con carga superior a 500 MW</li><li>Digitalización completa de 150 subestaciones clave</li><li>500 MW de almacenamiento para servicios de regulación de frecuencia</li><li>Nuevas interconexiones con Francia y Portugal (+2.000 MW)</li></ul>"
+    "detail": "<p>El Plan de Resiliencia surge como respuesta al gran apagón peninsular de abril de 2025. Principales actuaciones:</p><ul><li><strong>7.500M€</strong> de inversión 2025-2030</li><li>Criterio N-2 en todos los nudos de 400 kV con carga superior a 500 MW</li><li>Digitalización completa de 150 subestaciones clave</li><li>500 MW de almacenamiento para servicios de regulación de frecuencia</li><li>Nuevas interconexiones con Francia y Portugal (+2.000 MW)</li></ul>",
+    "organismo": "Gobierno"
   },
   {
     "id": "OM-TUR-2024",
@@ -135,7 +146,8 @@
     "tag": "modified",
     "summary": "Fija los peajes de acceso a la red de transporte y distribución para 2025, con incremento medio del 3,2%.",
     "impactoREE": "Establece los ingresos por peajes de transporte que financian parcialmente la retribución de REE. El incremento del 3,2% refleja la actualización por IPC energético.",
-    "detail": "<p>La Orden TUR/890/2024 actualiza los peajes de acceso para el ejercicio 2025. Los peajes de transporte suben un promedio del 3,2%, con mayores incrementos en los peajes de alta tensión utilizados por grandes industrias y generadores.</p>"
+    "detail": "<p>La Orden TUR/890/2024 actualiza los peajes de acceso para el ejercicio 2025. Los peajes de transporte suben un promedio del 3,2%, con mayores incrementos en los peajes de alta tensión utilizados por grandes industrias y generadores.</p>",
+    "organismo": "MITECO"
   },
   {
     "id": "LSE-MOD-2024",
@@ -146,7 +158,8 @@
     "tag": "modified",
     "summary": "Objetivos vinculantes de renovables (74% electricidad en 2030) y descarbonización. Obliga a planificar la red de transporte con horizonte 2030.",
     "impactoREE": "REE debe publicar una Planificación de Red 2030 alineada con el PNIEC. La planificación es vinculante para la aprobación de inversiones reguladas. Incluye la figura del 'coordinador de la transición' para grandes proyectos de red.",
-    "detail": "<p>La Ley 7/2021 y sus modificaciones posteriores establecen:</p><ul><li>74% de renovables en la generación eléctrica en 2030</li><li>Prohibición de nuevas instalaciones de generación con combustibles fósiles desde 2026</li><li>Obligación de REE de publicar una Planificación de Red 2030 cada dos años</li><li>Figura del coordinador de transición energética para proyectos de red superiores a 500 M€</li></ul>"
+    "detail": "<p>La Ley 7/2021 y sus modificaciones posteriores establecen:</p><ul><li>74% de renovables en la generación eléctrica en 2030</li><li>Prohibición de nuevas instalaciones de generación con combustibles fósiles desde 2026</li><li>Obligación de REE de publicar una Planificación de Red 2030 cada dos años</li><li>Figura del coordinador de transición energética para proyectos de red superiores a 500 M€</li></ul>",
+    "organismo": "Gobierno"
   },
   {
     "id": "RDL-GAS-HID-2024",
@@ -157,6 +170,7 @@
     "tag": "new",
     "summary": "Establece el régimen jurídico para la producción, transporte y consumo de hidrógeno renovable y biometano en España.",
     "impactoREE": "Implica a REE en la planificación de la infraestructura eléctrica necesaria para abastecer los electrolizadores de hidrógeno. Potenciales nuevos nudos de conexión de alta potencia.",
-    "detail": "<p>El RDL 4/2024 crea el marco del hidrógeno renovable en España, con impacto en la red de transporte por la necesidad de conexión de grandes electrolizadores (100-500 MW) que requerirán nuevos accesos a la red de muy alta tensión.</p>"
+    "detail": "<p>El RDL 4/2024 crea el marco del hidrógeno renovable en España, con impacto en la red de transporte por la necesidad de conexión de grandes electrolizadores (100-500 MW) que requerirán nuevos accesos a la red de muy alta tensión.</p>",
+    "organismo": "Gobierno"
   }
 ]

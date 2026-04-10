@@ -239,12 +239,13 @@
     }
     .org-btn:hover { border-color: var(--teal); color: var(--teal2); }
     .org-btn.active { color: var(--white); border-color: transparent; }
-    .org-btn.active.all    { background: var(--navy); }
-    .org-btn.active.cnmc   { background: var(--navy); }
-    .org-btn.active.miteco { background: #2e7d32; }
-    .org-btn.active.os     { background: var(--teal2); }
-    .org-btn.active.eu     { background: #1565c0; }
-    .org-btn.active.acer   { background: #6a1b9a; }
+    .org-btn.active.all      { background: var(--navy); }
+    .org-btn.active.cnmc     { background: var(--navy); }
+    .org-btn.active.miteco   { background: #2e7d32; }
+    .org-btn.active.os       { background: var(--teal2); }
+    .org-btn.active.eu       { background: #1565c0; }
+    .org-btn.active.acer     { background: #6a1b9a; }
+    .org-btn.active.gobierno { background: #5c3d8f; }
     .consultas-header {
       display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
@@ -469,6 +470,12 @@
           <option value="resolucion">Resolución</option>
         </select>
       </div>
+      <div class="org-btns">
+        <button class="org-btn active all"    onclick="setNacOrgFilter(this,'')">Todos</button>
+        <button class="org-btn cnmc"          onclick="setNacOrgFilter(this,'CNMC')">CNMC</button>
+        <button class="org-btn miteco"        onclick="setNacOrgFilter(this,'MITECO')">MITECO / SEE</button>
+        <button class="org-btn gobierno"       onclick="setNacOrgFilter(this,'Gobierno')">Gobierno</button>
+      </div>
       <div class="cards-grid" id="cards-nacional"></div>
     </div>
 
@@ -631,12 +638,22 @@ function normCard(n) {
   </div>`;
 }
 
+let activeNacOrg = '';
+
+function setNacOrgFilter(btn, org) {
+  activeNacOrg = org;
+  document.querySelectorAll('#panel-nacional .org-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderNacional();
+}
+
 function renderNacional() {
   const q    = (document.getElementById('search-nac').value||'').toLowerCase();
   const tipo = document.getElementById('filter-nac').value;
   const list = DATA.nacional.filter(n=>{
     if(tipo && n.type!==tipo) return false;
-    if(q) { const t=(n.title+' '+n.summary+' '+n.impactoREE).toLowerCase(); return q.split(' ').some(w=>t.includes(w)); }
+    if(activeNacOrg && n.organismo !== activeNacOrg) return false;
+    if(q) { const t=(n.title+' '+n.summary+' '+(n.impactoREE||'')).toLowerCase(); return q.split(' ').some(w=>t.includes(w)); }
     return true;
   }).slice().sort((a,b)=>{
     const da = a.updated || a.date || '';
