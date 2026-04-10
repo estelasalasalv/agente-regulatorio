@@ -230,7 +230,6 @@
       padding: 3px 9px; border-radius: 20px; transition: background .15s;
     }
     .norm-card-link:hover { background: rgba(0,184,176,.18); }
-    .norm-card-link.pte { color: var(--gray4); background: rgba(176,190,197,.12); border-color: rgba(176,190,197,.35); cursor: default; }
     .type-chip { background: var(--gray1); border: 1px solid var(--gray2); color: var(--gray4); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; flex-shrink: 0; }
 
     /* ── Consultas panel ── */
@@ -707,12 +706,8 @@ function normCard(n) {
   const efectiva = n.updated || n.date || '';
   const esNueva = efectiva && (Date.now() - new Date(efectiva).getTime()) < 7 * 86400000;
   const weekBadge = esNueva ? `<span class="badge badge-week">Esta semana</span>` : '';
-  const titulo = n.enlace
-    ? `<a class="norm-card-title-link" href="${n.enlace}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${n.title}</a>`
-    : `<span>${n.title}</span>`;
-  const enlaceBtn = n.enlace
-    ? `<a class="norm-card-link" href="${n.enlace}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ Ver fuente oficial</a>`
-    : `<span class="norm-card-link pte" title="Enlace no disponible aún">⏳ Pte. publicación</span>`;
+  const titulo = `<a class="norm-card-title-link" href="${n.enlace}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${n.title}</a>`;
+  const enlaceBtn = `<a class="norm-card-link" href="${n.enlace}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ Ver fuente oficial</a>`;
   return `<div class="norm-card">
     <div class="norm-card-header">
       <div class="norm-card-title">${titulo}</div>
