@@ -221,6 +221,13 @@
     .norm-card-summary{ font-size: 12px; color: var(--gray4); line-height: 1.5; margin-bottom: 8px; }
     .norm-card-impact { font-size: 12px; color: var(--text); background: rgba(0,184,176,.07); border-radius: 6px; padding: 7px 10px; }
     .norm-card-impact strong { color: var(--teal2); }
+    .norm-card-link {
+      display: inline-flex; align-items: center; gap: 4px; margin-top: 8px;
+      font-size: 11px; font-weight: 600; color: var(--teal2); text-decoration: none;
+      background: rgba(0,184,176,.08); border: 1px solid rgba(0,184,176,.25);
+      padding: 3px 9px; border-radius: 20px; transition: background .15s;
+    }
+    .norm-card-link:hover { background: rgba(0,184,176,.18); }
     .type-chip { background: var(--gray1); border: 1px solid var(--gray2); color: var(--gray4); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; flex-shrink: 0; }
 
     /* ── Consultas panel ── */
@@ -698,6 +705,7 @@ function normCard(n) {
     </div>
     <div class="norm-card-summary">${n.summary||''}</div>
     ${n.impactoREE?`<div class="norm-card-impact"><strong>Impacto REE:</strong> ${n.impactoREE}</div>`:''}
+    ${n.enlace?`<a class="norm-card-link" href="${n.enlace}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ Ver en BOE</a>`:''}
   </div>`;
 }
 
