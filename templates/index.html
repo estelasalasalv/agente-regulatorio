@@ -409,6 +409,8 @@
     .tag-modified { background: rgba(249,168,37,.2);  color: #b8860b; }
     .tag-open     { background: rgba(46,125,50,.2);   color: #2e7d32; }
     .slide-item-title { font-weight: 700; color: var(--navy); margin-bottom: 1px; }
+    .slide-item-link { color: var(--navy); text-decoration: none; }
+    .slide-item-link:hover { color: var(--teal2); text-decoration: underline; }
     .slide-item-meta  { font-size: 10px; color: var(--gray4); }
     .slide-item-dias  { font-size: 10px; font-weight: 700; color: var(--teal2); margin-top: 2px; }
     .slide-foot {
@@ -1158,9 +1160,12 @@ function renderNovedades() {
   function nacCard(n) {
     const d = refDate(n);
     const dateStr = d.getFullYear() > 2000 ? d.toLocaleDateString('es-ES',{month:'short',year:'numeric'}) : '';
+    const titulo = n.enlace
+      ? `<a class="slide-item-link" href="${n.enlace}" target="_blank" rel="noopener">${n.title}</a>`
+      : n.title;
     return `<div class="slide-item nac">
       ${tagHtml(n.tag)}
-      <div class="slide-item-title">${n.title}</div>
+      <div class="slide-item-title">${titulo}</div>
       <div class="slide-item-meta">${n.type ? n.type.toUpperCase() + ' · ' : ''}${dateStr}</div>
       ${n.impactoREE ? `<div class="slide-item-meta" style="margin-top:3px;color:var(--navy)">${n.impactoREE.slice(0,90)}${n.impactoREE.length>90?'…':''}</div>` : ''}
     </div>`;
@@ -1169,9 +1174,13 @@ function renderNovedades() {
   function consCard(c) {
     const dias = diasRestantes(c.fecha_cierre);
     const urgente = dias != null && dias <= 7;
+    const tituloCorto = c.titulo.length>70 ? c.titulo.slice(0,70)+'…' : c.titulo;
+    const titulo = c.enlace
+      ? `<a class="slide-item-link" href="${c.enlace}" target="_blank" rel="noopener">${tituloCorto}</a>`
+      : tituloCorto;
     return `<div class="slide-item cons" ${urgente ? 'style="border-color:var(--red)"' : ''}>
       <span class="slide-item-tag tag-open">Abierta</span>
-      <div class="slide-item-title">${c.titulo.length>70 ? c.titulo.slice(0,70)+'…' : c.titulo}</div>
+      <div class="slide-item-title">${titulo}</div>
       <div class="slide-item-meta">${c.organismo}</div>
       ${dias!=null ? `<div class="slide-item-dias" style="${urgente?'color:var(--red)':''}">⏱ ${dias} días · Cierre ${fmtFecha(c.fecha_cierre)}</div>` : ''}
     </div>`;
