@@ -428,20 +428,28 @@
     .slide-empty { font-size: 11px; color: var(--gray3); font-style: italic; padding: 6px 0; }
 
     /* ── Benchmark panel ── */
-    .benchmark-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .bench-topics-scroll {
+      display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 16px;
+      scrollbar-width: thin; scrollbar-color: var(--gray2) transparent;
+    }
+    .bench-topics-scroll::-webkit-scrollbar { height: 4px; }
+    .bench-topics-scroll::-webkit-scrollbar-track { background: transparent; }
+    .bench-topics-scroll::-webkit-scrollbar-thumb { background: var(--gray2); border-radius: 4px; }
     .bench-topic-btn {
+      flex-shrink: 0;
       background: var(--white);
-      border: 2px solid var(--gray2);
-      border-radius: var(--radius);
-      padding: 14px 16px;
+      border: 1.5px solid var(--gray2);
+      border-radius: 20px;
+      padding: 6px 14px;
       cursor: pointer;
-      text-align: left;
+      font-size: 12px; font-weight: 600; color: var(--gray4);
+      white-space: nowrap;
       transition: all .15s;
     }
-    .bench-topic-btn:hover  { border-color: var(--teal); }
-    .bench-topic-btn.active { border-color: var(--teal); background: rgba(0,184,176,.07); }
-    .bench-topic-name { font-size: 14px; font-weight: 700; color: var(--navy); }
-    .bench-topic-desc { font-size: 12px; color: var(--gray4); margin-top: 4px; }
+    .bench-topic-btn:hover  { border-color: var(--teal); color: var(--teal2); }
+    .bench-topic-btn.active { border-color: var(--teal); background: var(--teal); color: var(--white); }
+    .bench-topic-name { display: none; }
+    .bench-topic-desc { display: none; }
     .bench-table-wrap { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow-x: auto; }
     .bench-table      { width: 100%; border-collapse: collapse; font-size: 13px; }
     .bench-table th   { background: var(--navy); color: var(--white); padding: 10px 14px; text-align: left; position: sticky; top: 0; }
@@ -632,7 +640,7 @@
 
     <!-- PANEL BENCHMARK -->
     <div class="panel" id="panel-benchmark">
-      <div class="benchmark-grid" id="bench-topics"></div>
+      <div class="bench-topics-scroll" id="bench-topics"></div>
       <div class="bench-table-wrap" id="bench-table-wrap" style="display:none;"></div>
     </div>
 
@@ -1069,10 +1077,7 @@ const TOPICO_DESC = {
 function renderBenchTopics() {
   const topicos = DATA.benchmark.topicos || [];
   document.getElementById('bench-topics').innerHTML = topicos.map(t=>
-    `<button class="bench-topic-btn ${activeTopic===t.id?'active':''}" onclick="selectTopic('${t.id}')">
-      <div class="bench-topic-name">${t.nombre}</div>
-      <div class="bench-topic-desc">${TOPICO_DESC[t.id]||t.descripcion||''}</div>
-    </button>`
+    `<button class="bench-topic-btn ${activeTopic===t.id?'active':''}" onclick="selectTopic('${t.id}')" title="${TOPICO_DESC[t.id]||t.descripcion||''}">${t.nombre}</button>`
   ).join('');
 }
 
