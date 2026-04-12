@@ -598,21 +598,6 @@
         <button class="org-btn gobierno"      onclick="setNacOrgFilter(this,'Gobierno')">Gobierno</button>
       </div>
 
-      <!-- ── Análisis IA — Normativa última semana ── -->
-      <div id="analisis-reciente-wrap" style="display:none;margin-bottom:4px">
-        <div class="analisis-sep">Análisis IA — Normativa última semana &nbsp;<span id="analisis-week-count" class="badge badge-week" style="text-transform:none;font-weight:700;font-size:11px"></span></div>
-        <div id="analisis-selector-cards" class="analisis-selector"></div>
-        <div id="analisis-panel" class="analisis-panel" style="display:none">
-          <div id="analisis-loading" class="analisis-loading" style="display:none"></div>
-          <div id="analisis-content">
-            <div class="analisis-panel-header" style="padding:16px 18px">
-              <div style="font-size:13px;font-weight:700">Análisis IA no disponible en versión estática</div>
-              <div class="analisis-resumen-ej">Esta función requiere el servidor backend (app.py). Ejecuta la aplicación localmente con <code style="font-family:monospace;background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px">uvicorn app:app</code> para acceder al análisis completo con IA.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="cards-grid" id="cards-nacional"></div>
     </div>
 
@@ -726,7 +711,6 @@ async function loadData() {
   DATA.benchmark  = bench || {};
   renderStats();
   renderNacional();
-  renderAnalisisSelector();
   renderEuropea();
   renderConsultas();
   renderNovedades();
@@ -817,35 +801,6 @@ function renderNacional() {
   document.getElementById('cards-nacional').innerHTML = list.map(normCard).join('') || '<p style="color:var(--gray4)">Sin resultados.</p>';
 }
 
-// ── Análisis IA Normativa Reciente (estática: muestra selector + aviso backend) ──
-function renderAnalisisSelector() {
-  const hace7d = new Date(Date.now() - 7 * 86400000).toISOString().slice(0,10);
-  const recientes = (DATA.nacional || []).filter(n => (n.updated || n.date || '') >= hace7d);
-  const wrap = document.getElementById('analisis-reciente-wrap');
-  if (!recientes.length) { wrap.style.display = 'none'; return; }
-  wrap.style.display = 'block';
-  const cnt = document.getElementById('analisis-week-count');
-  cnt.textContent = recientes.length + ' nueva' + (recientes.length !== 1 ? 's' : '');
-  document.getElementById('analisis-selector-cards').innerHTML = recientes.map(n => {
-    const orgCls = n.organismo ? 'org-' + n.organismo.toLowerCase().replace(/[^a-z]/g,'') : '';
-    return `<div class="analisis-norm-card" id="anorm-${n.id}"
-      onclick="seleccionarNormAnalisis(${JSON.stringify(n.id)})">
-      <div class="analisis-norm-title">${n.title}</div>
-      <div class="analisis-norm-meta">
-        <span class="type-chip">${n.type||''}</span>
-        <span>${n.date||''}</span>
-        ${n.organismo?`<span class="org-chip ${orgCls}">${n.organismo}</span>`:''}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function seleccionarNormAnalisis(id) {
-  document.querySelectorAll('.analisis-norm-card').forEach(c => c.classList.remove('selected'));
-  const card = document.getElementById('anorm-' + id);
-  if (card) card.classList.add('selected');
-  document.getElementById('analisis-panel').style.display = 'block';
-}
 
 function renderEuropea() {
   const q    = (document.getElementById('search-eu').value||'').toLowerCase();
