@@ -459,16 +459,15 @@
     .stars { color: var(--teal); font-size: 13px; }
 
     /* ── Análisis normativo ── */
-    #panel-analisis { padding: 20px; }
-    .an-scroll { display:flex; flex-wrap:nowrap; gap:10px; overflow-x:auto; overflow-y:hidden;
-      padding-bottom:8px; scrollbar-width:thin; scrollbar-color:var(--gray3) transparent; }
-    .an-scroll::-webkit-scrollbar { height:4px; }
-    .an-scroll::-webkit-scrollbar-thumb { background:var(--gray3); border-radius:2px; }
-    .an-pill { flex-shrink:0; padding:7px 16px; border:1.5px solid var(--gray2);
-      border-radius:20px; font-size:12px; font-weight:600; color:var(--gray4);
-      cursor:pointer; background:var(--white); transition:all .15s; white-space:nowrap; }
-    .an-pill:hover { border-color:var(--teal); color:var(--teal); }
-    .an-pill.active { border-color:var(--teal); background:var(--teal); color:var(--white); }
+    #panel-analisis { padding:0; overflow-y:auto; }
+    .an-list-item { display:flex; align-items:center; gap:14px; padding:13px 20px;
+      border-bottom:1px solid var(--gray2); cursor:pointer; transition:background .12s; }
+    .an-list-item:hover { background:var(--gray1); }
+    .an-list-item.active { background:rgba(0,184,176,.07); border-left:3px solid var(--teal); }
+    .an-list-date { font-size:11px; color:var(--gray4); white-space:nowrap; }
+    .an-list-title { font-size:13px; font-weight:600; color:var(--navy); flex:1; line-height:1.4; }
+    .an-list-type { font-size:10px; font-weight:700; text-transform:uppercase;
+      color:var(--teal2); white-space:nowrap; }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
@@ -660,7 +659,7 @@
 
     <!-- PANEL ANÁLISIS NORMATIVO -->
     <div class="panel" id="panel-analisis">
-      <div class="an-scroll" id="an-pills"></div>
+      <div id="an-list"></div>
     </div>
 
   </main>
@@ -1131,11 +1130,14 @@ function selectTopic(id) {
 // ── Init ──────────────────────────────────────────────
 // ── Análisis normativo ─────────────────────────────────
 function renderAnPills() {
-  const el = document.getElementById('an-pills');
+  const el = document.getElementById('an-list');
   if (!el) return;
-  el.innerHTML = DATA.nacional.map(n =>
-    `<button class="an-pill" title="${n.title}">${n.title}</button>`
-  ).join('');
+  el.innerHTML = DATA.nacional.map(n => `
+    <div class="an-list-item">
+      <span class="an-list-date">${n.date||''}</span>
+      <span class="an-list-title">${n.title}</span>
+      <span class="an-list-type">${n.type||''}</span>
+    </div>`).join('');
 }
 
 loadData();
