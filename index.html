@@ -105,8 +105,9 @@
     .badge-closed   { background: rgba(255,255,255,.1); color: var(--gray3); }
     .badge-week     { background: rgba(255,87,34,.25); color: #ff7043; animation: pulse-week 1.8s ease-in-out infinite; }
     .badge-month    { background: rgba(249,168,37,.22); color: #b45309; }
-    .badge-quarter  { background: rgba(96,125,139,.18); color: #455a64; }
-    .badge-year     { background: rgba(96,125,139,.10); color: #78909c; }
+    .badge-quarter  { background: rgba(96,125,139,.22); color: #455a64; }
+    .badge-semester { background: rgba(96,125,139,.14); color: #607d8b; }
+    .badge-year     { background: rgba(96,125,139,.08); color: #90a4ae; }
     @keyframes pulse-week { 0%,100%{opacity:1} 50%{opacity:.55} }
 
     /* ── Análisis normativa ── */
@@ -410,10 +411,11 @@
       border-radius: 8px; padding: 1px 5px; margin-bottom: 3px;
     }
     .tag-new      { background: rgba(0,184,176,.2);  color: var(--teal2); }
-    .tag-week     { background: rgba(255,87,34,.2);  color: #e64a19; }
-    .tag-month    { background: rgba(249,168,37,.2); color: #b45309; }
-    .tag-quarter  { background: rgba(96,125,139,.15); color: #455a64; }
-    .tag-year     { background: rgba(96,125,139,.08); color: #78909c; }
+    .tag-week     { background: rgba(255,87,34,.2);   color: #e64a19; }
+    .tag-month    { background: rgba(249,168,37,.2);  color: #b45309; }
+    .tag-quarter  { background: rgba(96,125,139,.18); color: #455a64; }
+    .tag-semester { background: rgba(96,125,139,.11); color: #607d8b; }
+    .tag-year     { background: rgba(96,125,139,.06); color: #90a4ae; }
     .tag-modified { background: rgba(249,168,37,.2);  color: #b8860b; }
     .tag-open     { background: rgba(46,125,50,.2);   color: #2e7d32; }
     .slide-item-title { font-weight: 700; color: var(--navy); margin-bottom: 1px; }
@@ -753,6 +755,7 @@ function dateBadge(dateStr) {
   if (diff < 7)   return '<span class="badge badge-week">Esta semana</span>';
   if (diff < 30)  return '<span class="badge badge-month">Este mes</span>';
   if (diff < 90)  return '<span class="badge badge-quarter">Este trimestre</span>';
+  if (diff < 180) return '<span class="badge badge-semester">Este semestre</span>';
   if (diff < 365) return '<span class="badge badge-year">Este año</span>';
   return '';
 }
@@ -763,6 +766,7 @@ function dateBadgeSlide(dateStr) {
   if (diff < 7)   return '<span class="slide-item-tag tag-week">Esta semana</span>';
   if (diff < 30)  return '<span class="slide-item-tag tag-month">Este mes</span>';
   if (diff < 90)  return '<span class="slide-item-tag tag-quarter">Este trimestre</span>';
+  if (diff < 180) return '<span class="slide-item-tag tag-semester">Este semestre</span>';
   if (diff < 365) return '<span class="slide-item-tag tag-year">Este año</span>';
   return '';
 }
