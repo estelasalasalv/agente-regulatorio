@@ -1265,7 +1265,13 @@ function selectTopic(id) {
 function renderAnPills() {
   const el = document.getElementById('an-list');
   if (!el) return;
-  el.innerHTML = DATA.nacional.map(n => `
+  const hace7d = new Date(Date.now() - 7 * 86400000).toISOString().slice(0,10);
+  const recientes = DATA.nacional.filter(n => (n.updated || n.date || '') >= hace7d);
+  if (!recientes.length) {
+    el.innerHTML = '<p style="padding:24px;color:var(--gray4);font-size:13px">No hay normativa aprobada en los últimos 7 días.</p>';
+    return;
+  }
+  el.innerHTML = recientes.map(n => `
     <div class="an-list-item">
       <span class="an-list-date">${n.date||''}</span>
       <span class="an-list-title">${n.title}</span>
