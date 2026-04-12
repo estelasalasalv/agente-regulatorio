@@ -1207,10 +1207,11 @@ function selectAnNorm(el, id, titulo) {
     <div class="an-detail-header">
       <div class="an-detail-titulo">${titulo}</div>
     </div>
-    <div style="padding:20px;font-size:12px;color:#b45309;background:rgba(249,168,37,.08);border-left:3px solid var(--yellow)">
+    <div style="margin:16px 20px;padding:14px 16px;font-size:12px;color:#b45309;background:rgba(249,168,37,.08);border-left:3px solid var(--yellow);border-radius:0 6px 6px 0">
       ⚠️ El análisis artículo por artículo requiere el servidor backend. Usa la versión local (<code>uvicorn app:app</code>) para acceder al análisis completo con IA.
     </div>`;
-  detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+  const panel = document.getElementById('panel-analisis');
+  if (panel) panel.scrollTop = detail.offsetTop;
 }
 
 loadData();

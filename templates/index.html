@@ -1354,13 +1354,14 @@ function selectAnNorm(clicked, id, url, titulo) {
   detail.style.display = 'block';
   detail.innerHTML = `
     <div class="an-detail-header">
-      <span class="an-detail-titulo">${titulo}</span>
+      <div class="an-detail-titulo">${titulo}</div>
     </div>
     <div class="an-detail-loading">
-      <span style="font-size:18px;animation:spin 1s linear infinite">⚙</span>
+      <span style="font-size:18px">⚙</span>
       <span id="an-detail-msg">Obteniendo y analizando la normativa…</span>
     </div>`;
-  detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+  const panel = document.getElementById('panel-analisis');
+  if (panel) panel.scrollTop = detail.offsetTop;
   if (_anCache[id]) { _renderAnTable(_anCache[id], titulo); return; }
   _streamAnNorm(id, url, titulo);
 }
