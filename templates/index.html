@@ -1408,30 +1408,32 @@ function _renderAnTable(data, titulo) {
   const rows = arts.length ? arts.map(a => {
     const badge = `<span class="an-badge ${a.estado||''}">${(a.estado||'').toUpperCase()}</span>`;
     const ref = a.normativa_referencia
-      ? `<div class="an-ref"><strong>Norma previa:</strong> ${a.normativa_referencia}</div>` : '';
+      ? `<div class="an-ref" style="margin-top:5px"><strong>Norma anterior:</strong> ${a.normativa_referencia}</div>` : '';
     const cambios = a.cambios
       ? `<div class="an-ref" style="margin-top:4px"><strong>Cambios:</strong> ${a.cambios}</div>` : '';
-    const os = a.implicaciones_os
-      ? `<div class="an-impl-os"><div class="an-impl-label">🏢 OS</div>${a.implicaciones_os}</div>` : '';
-    const tr = a.implicaciones_transportista
-      ? `<div class="an-impl-tr"><div class="an-impl-label">⚡ Transportista</div>${a.implicaciones_transportista}</div>` : '';
+    const impl = a.implicaciones_ree
+      ? `<div class="an-impl-os">${a.implicaciones_ree}</div>`
+      : `<span style="color:var(--gray4);font-size:11px">Sin impacto directo</span>`;
     return `<tr>
-      <td><strong>${a.numero||''}</strong><br><span style="color:var(--navy);font-weight:600">${a.titulo||''}</span><br><span style="color:var(--gray4)">${a.texto||''}</span></td>
+      <td style="white-space:nowrap;font-weight:700;color:var(--navy)">${a.numero||''}</td>
+      <td style="font-weight:600;color:var(--navy)">${a.titulo||''}<br><span style="font-weight:400;color:var(--gray4);font-size:11px">${a.texto||''}</span></td>
       <td>${badge}${ref}${cambios}</td>
-      <td>${os}${tr}${(!os&&!tr)?'<span style="color:var(--gray4)">Sin implicaciones identificadas.</span>':''}</td>
+      <td>${impl}</td>
     </tr>`;
-  }).join('') : `<tr><td colspan="3" style="color:var(--gray4);text-align:center;padding:20px">No se encontraron artículos relevantes.</td></tr>`;
+  }).join('') : `<tr><td colspan="4" style="color:var(--gray4);text-align:center;padding:20px">No se encontraron apartados.</td></tr>`;
 
   detail.innerHTML = `
     <div class="an-detail-header">
-      <span class="an-detail-titulo">${titulo}</span>
-      ${data.resumen_ejecutivo ? `<span style="font-size:11px;color:var(--gray4)">${data.resumen_ejecutivo}</span>` : ''}
+      <div class="an-detail-titulo">${titulo}</div>
+      ${data.resumen_ejecutivo ? `<div style="font-size:11px;color:var(--gray4);margin-top:4px">${data.resumen_ejecutivo}</div>` : ''}
+      ${data.implicaciones_globales_os ? `<div style="font-size:11px;margin-top:6px;padding:6px 10px;background:rgba(0,43,69,.05);border-left:3px solid var(--navy);border-radius:0 4px 4px 0"><strong>Impacto global Red Eléctrica:</strong> ${data.implicaciones_globales_os}</div>` : ''}
     </div>
     <div class="an-table-wrap">
       <table class="an-table">
         <thead><tr>
-          <th style="width:30%">Artículo</th>
-          <th style="width:35%">Estado y normativa de referencia</th>
+          <th style="width:10%">Apartado</th>
+          <th style="width:30%">Título y contenido</th>
+          <th style="width:25%">Estado y referencia normativa</th>
           <th style="width:35%">Implicaciones para Red Eléctrica</th>
         </tr></thead>
         <tbody>${rows}</tbody>

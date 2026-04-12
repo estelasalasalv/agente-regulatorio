@@ -263,37 +263,29 @@ async def api_benchmark():
 
 PROMPT_ANALISIS_NORMATIVA = """Eres un experto jurídico en regulación del sistema eléctrico español con profundo conocimiento técnico.
 
-Analiza la normativa cuyo texto puedes obtener mediante la herramienta de búsqueda web en la URL indicada.
+Visita la URL indicada y lee el texto completo de la norma.
 
-Identifica ÚNICAMENTE los artículos o disposiciones con relevancia para estos cuatro temas:
-1. sector_electrico — sector eléctrico en general (generación, transporte, distribución, mercado)
-2. acceso_conexion — acceso y conexión a redes eléctricas (solicitudes, permisos, nudos, capacidad)
-3. control_tension — control de tensión y calidad del suministro (reactiva, estabilidad, procedimientos de operación)
-4. sf6 — SF6 y gases fluorados en equipos eléctricos de alta tensión (GIS, interruptores, transformadores)
+Lista TODOS los artículos y disposiciones de la norma (artículos, disposiciones adicionales, transitorias, derogatorias y finales), sin omitir ninguno.
 
-Para cada artículo relevante determina:
+Para cada apartado determina:
 - Si es NUEVO (se introduce ex novo) o MODIFICADO (modifica texto previo de otra norma) o DEROGADO
-- Si es MODIFICADO: qué ha cambiado exactamente vs la versión anterior
-- Implicaciones concretas para el Operador del Sistema (Red Eléctrica / REE-OS)
-- Implicaciones concretas para los transportistas del sistema eléctrico
+- Si es MODIFICADO: qué normativa previa modifica y qué ha cambiado exactamente
+- Implicaciones concretas para Red Eléctrica como Operador del Sistema (REE-OS) y como transportista (si aplica; null si no hay impacto directo)
 
 Responde ÚNICAMENTE con JSON válido (sin markdown, sin explicaciones):
 {
   "resumen_ejecutivo": "string: 2-3 frases sobre objeto y alcance de la norma",
   "ambito": "string: ámbito de aplicación",
-  "implicaciones_globales_os": "string: resumen consolidado para el OS",
-  "implicaciones_globales_transportista": "string: resumen consolidado para el transportista",
+  "implicaciones_globales_os": "string: resumen consolidado del impacto para Red Eléctrica",
   "articulos": [
     {
-      "numero": "string: 'Art. 5' o 'Disposición transitoria 2ª'",
-      "titulo": "string: epígrafe del artículo",
+      "numero": "string: 'Art. 5' / 'Disposición adicional 1ª' / 'Disposición final 3ª'",
+      "titulo": "string: epígrafe del apartado",
       "estado": "nuevo|modificado|derogado",
-      "texto": "string: resumen del contenido (máx 250 chars)",
-      "cambios": "string|null: qué ha cambiado (solo si modificado)",
-      "temas": ["sector_electrico","acceso_conexion","control_tension","sf6"],
-      "relevancia": "alta|media|baja",
-      "implicaciones_os": "string",
-      "implicaciones_transportista": "string"
+      "texto": "string: resumen del contenido (máx 200 chars)",
+      "normativa_referencia": "string|null: norma previa que modifica o deroga (solo si modificado/derogado)",
+      "cambios": "string|null: descripción del cambio respecto a la norma anterior (solo si modificado)",
+      "implicaciones_ree": "string|null: implicaciones concretas para Red Eléctrica; null si no hay impacto directo"
     }
   ]
 }"""
