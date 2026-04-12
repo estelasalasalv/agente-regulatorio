@@ -458,6 +458,18 @@
     .bench-table tr.spain-row td { background: rgba(0,184,176,.06); font-weight: 600; }
     .stars { color: var(--teal); font-size: 13px; }
 
+    /* ── Análisis normativo ── */
+    #panel-analisis { padding: 20px; }
+    .an-scroll { display:flex; gap:10px; overflow-x:auto; padding-bottom:8px;
+      scrollbar-width:thin; scrollbar-color:var(--gray3) transparent; }
+    .an-scroll::-webkit-scrollbar { height:4px; }
+    .an-scroll::-webkit-scrollbar-thumb { background:var(--gray3); border-radius:2px; }
+    .an-pill { flex-shrink:0; padding:7px 16px; border:1.5px solid var(--gray2);
+      border-radius:20px; font-size:12px; font-weight:600; color:var(--gray4);
+      cursor:pointer; background:var(--white); transition:all .15s; white-space:nowrap; }
+    .an-pill:hover { border-color:var(--teal); color:var(--teal); }
+    .an-pill.active { border-color:var(--teal); background:var(--teal); color:var(--white); }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .layout { grid-template-columns: 1fr; }
@@ -647,7 +659,9 @@
     </div>
 
     <!-- PANEL ANÁLISIS NORMATIVO -->
-    <div class="panel" id="panel-analisis"></div>
+    <div class="panel" id="panel-analisis">
+      <div class="an-scroll" id="an-pills"></div>
+    </div>
 
   </main>
 </div>
@@ -675,6 +689,7 @@ async function loadData() {
   renderConsultas();
   renderNovedades();
   renderBenchTopics();
+  renderAnPills();
 }
 
 // ── Fecha ───────────────────────────────────────────
@@ -1114,6 +1129,15 @@ function selectTopic(id) {
 }
 
 // ── Init ──────────────────────────────────────────────
+// ── Análisis normativo ─────────────────────────────────
+function renderAnPills() {
+  const el = document.getElementById('an-pills');
+  if (!el) return;
+  el.innerHTML = DATA.nacional.map(n =>
+    `<button class="an-pill" title="${n.title}">${n.title}</button>`
+  ).join('');
+}
+
 loadData();
 </script>
 </body>
