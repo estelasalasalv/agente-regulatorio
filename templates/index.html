@@ -457,68 +457,6 @@
     .bench-table tr.spain-row td { background: rgba(0,184,176,.06); font-weight: 600; }
     .stars { color: var(--teal); font-size: 13px; }
 
-    /* ── Análisis normativo panel ── */
-    #panel-analisis { display:flex; flex-direction:column; gap:0; padding:0; overflow:hidden; }
-    .an-selector {
-      display:flex; gap:8px; overflow-x:auto; padding:14px 20px 10px; flex-shrink:0;
-      border-bottom:1px solid var(--gray2); background:var(--white);
-      scrollbar-width:thin; scrollbar-color:var(--gray2) transparent;
-    }
-    .an-selector::-webkit-scrollbar { height:4px; }
-    .an-selector::-webkit-scrollbar-thumb { background:var(--gray2); border-radius:4px; }
-    .an-pill {
-      flex-shrink:0; white-space:nowrap; padding:6px 14px;
-      border:1.5px solid var(--gray2); border-radius:20px;
-      font-size:12px; font-weight:600; color:var(--gray4);
-      background:var(--white); cursor:pointer; transition:all .15s;
-    }
-    .an-pill:hover  { border-color:var(--teal); color:var(--teal2); }
-    .an-pill.active { border-color:var(--teal); background:var(--teal); color:var(--white); }
-    .an-body { display:grid; grid-template-columns:220px 1fr 1fr; flex:1; min-height:0; overflow:hidden; }
-    @media(max-width:900px){ .an-body{ grid-template-columns:1fr; overflow-y:auto; } }
-    .an-col { display:flex; flex-direction:column; border-right:1px solid var(--gray2); overflow:hidden; }
-    .an-col:last-child { border-right:none; }
-    .an-col-head {
-      padding:10px 16px; font-size:10px; font-weight:800; text-transform:uppercase;
-      letter-spacing:.8px; border-bottom:2px solid var(--gray2); flex-shrink:0;
-      background:var(--gray1); color:var(--gray4);
-    }
-    .an-art-list { overflow-y:auto; flex:1; }
-    .an-art-list::-webkit-scrollbar,.an-art-body::-webkit-scrollbar { width:4px; }
-    .an-art-list::-webkit-scrollbar-thumb,.an-art-body::-webkit-scrollbar-thumb { background:var(--gray2); border-radius:4px; }
-    .an-art-row {
-      padding:10px 14px; border-bottom:1px solid var(--gray2); cursor:pointer;
-      display:flex; flex-direction:column; gap:3px; transition:background .1s;
-    }
-    .an-art-row:hover   { background:var(--gray1); }
-    .an-art-row.active  { background:rgba(0,184,176,.07); border-left:3px solid var(--teal); }
-    .an-art-num   { font-size:10px; font-weight:700; color:var(--gray4); }
-    .an-art-title { font-size:12px; font-weight:700; color:var(--navy); line-height:1.3; }
-    .an-art-body  { overflow-y:auto; flex:1; padding:16px; font-size:12px; line-height:1.7; color:var(--text); }
-    .an-estado-badge {
-      display:inline-flex; align-items:center; gap:5px;
-      font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px;
-      padding:3px 9px; border-radius:10px; margin-bottom:10px;
-    }
-    .an-estado-nuevo     { background:rgba(0,184,176,.15); color:var(--teal2); }
-    .an-estado-modificado{ background:rgba(249,168,37,.15); color:#b45309; }
-    .an-estado-derogado  { background:rgba(229,57,53,.15);  color:#b71c1c; }
-    .an-ref-box {
-      background:rgba(249,168,37,.07); border-left:3px solid var(--yellow);
-      border-radius:0 6px 6px 0; padding:8px 12px; margin-top:8px;
-      font-size:11.5px; color:var(--text);
-    }
-    .an-ref-box strong { color:#b45309; }
-    .an-impl-os    { background:rgba(0,43,69,.04);   border-left:3px solid var(--navy); border-radius:0 6px 6px 0; padding:10px 12px; margin-bottom:10px; }
-    .an-impl-trans { background:rgba(0,184,176,.05); border-left:3px solid var(--teal); border-radius:0 6px 6px 0; padding:10px 12px; margin-bottom:10px; }
-    .an-impl-head  { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.6px; color:var(--navy); margin-bottom:5px; }
-    .an-temas { display:flex; flex-wrap:wrap; gap:4px; margin-top:10px; }
-    .an-loading { display:flex; align-items:center; gap:12px; padding:24px 16px; color:var(--gray4); font-size:13px; grid-column:1/-1; }
-    .an-empty   { padding:24px 16px; color:var(--gray4); font-size:13px; font-style:italic; grid-column:1/-1; }
-    .an-relevancia.alta  { color:var(--red); font-weight:700; }
-    .an-relevancia.media { color:var(--yellow); font-weight:700; }
-    .an-relevancia.baja  { color:var(--gray4); }
-
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .layout { grid-template-columns: 1fr; }
@@ -565,7 +503,6 @@
       <div class="sidebar-label">Inteligencia</div>
       <div class="sidebar-item active" onclick="switchPanel('novedades')"><span class="icon">🗞</span> Novedades del Mes</div>
       <div class="sidebar-item" onclick="switchPanel('benchmark')"><span class="icon">🌍</span> Benchmark Europeo</div>
-      <div class="sidebar-item" onclick="switchPanel('analisis')"><span class="icon">🔬</span> Análisis Normativo</div>
     </div>
     <div class="sidebar-section" style="margin-top:auto; padding-top:16px;">
       <div class="sidebar-label">Estadísticas</div>
@@ -583,7 +520,6 @@
       <div class="tab"        id="tab-europea"    onclick="switchPanel('europea')">🇪🇺 Normativa UE</div>
       <div class="tab"        id="tab-consultas"  onclick="switchPanel('consultas')">📢 Consultas</div>
       <div class="tab"        id="tab-benchmark"  onclick="switchPanel('benchmark')">🌍 Benchmark</div>
-      <div class="tab"        id="tab-analisis"   onclick="switchPanel('analisis')">🔬 Análisis</div>
     </div>
 
     <!-- PANEL NORMATIVA NACIONAL -->
@@ -606,6 +542,30 @@
         <button class="org-btn miteco"        onclick="setNacOrgFilter(this,'MITECO')">MITECO / SEE</button>
         <button class="org-btn os"             onclick="setNacOrgFilter(this,'OS')">OS · Red Eléctrica</button>
         <button class="org-btn gobierno"       onclick="setNacOrgFilter(this,'Gobierno')">Gobierno</button>
+      </div>
+
+      <!-- ── Análisis IA — Normativa última semana ── -->
+      <div id="analisis-reciente-wrap" style="display:none;margin-bottom:4px">
+        <div class="analisis-sep">Análisis IA — Normativa última semana &nbsp;<span id="analisis-week-count" class="badge badge-week" style="text-transform:none;font-weight:700;font-size:11px"></span></div>
+        <div id="analisis-selector-cards" class="analisis-selector"></div>
+        <div id="analisis-panel" class="analisis-panel" style="display:none">
+          <div id="analisis-loading" class="analisis-loading">
+            <span class="spin" style="font-size:18px">⚙</span>
+            <span id="analisis-loading-msg">Analizando normativa con IA…</span>
+          </div>
+          <div id="analisis-content" style="display:none">
+            <div class="analisis-panel-header">
+              <div class="analisis-panel-titulo" id="analisis-norm-titulo"></div>
+              <div class="analisis-resumen-ej" id="analisis-resumen-ej"></div>
+            </div>
+            <div class="analisis-grid">
+              <div class="analisis-arts-col" id="analisis-arts-list"></div>
+              <div class="analisis-impl-col" id="analisis-impl-panel">
+                <p style="color:var(--gray4);font-size:12px">Selecciona un artículo para ver sus implicaciones.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="cards-grid" id="cards-nacional"></div>
@@ -695,16 +655,6 @@
       <div class="bench-table-wrap" id="bench-table-wrap" style="display:none;"></div>
     </div>
 
-    <!-- PANEL ANÁLISIS NORMATIVO -->
-    <div class="panel" id="panel-analisis">
-      <!-- scroll selector -->
-      <div class="an-selector" id="an-pills"></div>
-      <!-- 3-column body -->
-      <div class="an-body" id="an-body">
-        <div class="an-empty" style="padding:40px 24px">Selecciona una normativa para ver el análisis artículo por artículo.</div>
-      </div>
-    </div>
-
   </main>
 </div>
 
@@ -725,11 +675,11 @@ async function loadData() {
   DATA.benchmark  = bench         || {};
   renderStats();
   renderNacional();
+  renderAnalisisSelector();
   renderEuropea();
   renderConsultas();
   renderNovedades();
   renderBenchTopics();
-  renderAnalisisNormPills();
 }
 
 // ── Fecha ───────────────────────────────────────────
@@ -815,6 +765,153 @@ function renderNacional() {
   document.getElementById('cards-nacional').innerHTML = list.map(normCard).join('') || '<p style="color:var(--gray4)">Sin resultados.</p>';
 }
 
+// ── Análisis IA Normativa Reciente ───────────────────────────────
+let _analisisCache = {};
+
+function renderAnalisisSelector() {
+  const hace7d = new Date(Date.now() - 7 * 86400000).toISOString().slice(0,10);
+  const recientes = (DATA.nacional || []).filter(n => (n.updated || n.date || '') >= hace7d);
+  const wrap = document.getElementById('analisis-reciente-wrap');
+  if (!recientes.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const cnt = document.getElementById('analisis-week-count');
+  cnt.textContent = recientes.length + ' nueva' + (recientes.length !== 1 ? 's' : '');
+  document.getElementById('analisis-selector-cards').innerHTML = recientes.map(n => {
+    const orgCls = n.organismo ? 'org-' + n.organismo.toLowerCase().replace(/[^a-z]/g,'') : '';
+    return `<div class="analisis-norm-card" id="anorm-${n.id}"
+      onclick="seleccionarNormAnalisis(${JSON.stringify(n.id)},${JSON.stringify(n.enlace||'')},${JSON.stringify(n.title)})">
+      <div class="analisis-norm-title">${n.title}</div>
+      <div class="analisis-norm-meta">
+        <span class="type-chip">${n.type||''}</span>
+        <span>${n.date||''}</span>
+        ${n.organismo?`<span class="org-chip ${orgCls}">${n.organismo}</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function seleccionarNormAnalisis(id, url, titulo) {
+  document.querySelectorAll('.analisis-norm-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById('anorm-' + id);
+  if (card) { card.classList.add('selected'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  const panel   = document.getElementById('analisis-panel');
+  const loading = document.getElementById('analisis-loading');
+  const content = document.getElementById('analisis-content');
+  panel.style.display = 'block';
+  if (_analisisCache[id]) {
+    loading.style.display = 'none'; content.style.display = 'block';
+    renderAnalisisContent(_analisisCache[id]); return;
+  }
+  loading.style.display = 'flex'; content.style.display = 'none';
+  document.getElementById('analisis-loading-msg').textContent = 'Iniciando análisis…';
+  if (!url) {
+    loading.style.display = 'none'; content.style.display = 'block';
+    document.getElementById('analisis-arts-list').innerHTML =
+      '<p style="color:var(--gray4);padding:16px">Sin enlace BOE disponible para esta normativa.</p>';
+    document.getElementById('analisis-impl-panel').innerHTML = ''; return;
+  }
+  _streamAnalisis(id, url, titulo);
+}
+
+async function _streamAnalisis(id, url, titulo) {
+  const loading = document.getElementById('analisis-loading');
+  const content = document.getElementById('analisis-content');
+  const msg     = document.getElementById('analisis-loading-msg');
+  try {
+    const resp = await fetch('/api/analizar-normativa', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({id, url, titulo})
+    });
+    const reader = resp.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    while(true) {
+      const {done, value} = await reader.read();
+      if(done) break;
+      buf += dec.decode(value, {stream:true});
+      const parts = buf.split('\n\n'); buf = parts.pop();
+      for(const p of parts) {
+        if(!p.startsWith('data:')) continue;
+        let ev; try { ev = JSON.parse(p.slice(5).trim()); } catch { continue; }
+        if(ev.type === 'progreso') { msg.textContent = ev.msg; }
+        else if(ev.type === 'resultado') {
+          _analisisCache[id] = ev;
+          loading.style.display = 'none'; content.style.display = 'block';
+          renderAnalisisContent(ev);
+        } else if(ev.type === 'error') {
+          loading.style.display = 'none'; content.style.display = 'block';
+          document.getElementById('analisis-arts-list').innerHTML =
+            `<p style="color:#e53935;padding:16px">Error: ${ev.msg}</p>`;
+        }
+      }
+    }
+  } catch(e) {
+    loading.style.display = 'none'; content.style.display = 'block';
+    document.getElementById('analisis-arts-list').innerHTML =
+      `<p style="color:#e53935;padding:16px">Error de conexión: ${e.message}</p>`;
+  }
+}
+
+const _TEMA_L = {sector_electrico:'Sector Eléctrico',acceso_conexion:'Acceso/Conexión',control_tension:'Control Tensión',sf6:'SF6'};
+const _TEMA_C = {sector_electrico:'#607d8b',acceso_conexion:'#2e7d32',control_tension:'#1565c0',sf6:'#6a1b9a'};
+const _EST_L  = {nuevo:'NUEVO',modificado:'MODIFICADO',derogado:'DEROGADO'};
+const _EST_C  = {nuevo:'badge-nuevo',modificado:'badge-modificado',derogado:'badge-derogado'};
+
+function renderAnalisisContent(data) {
+  document.getElementById('analisis-norm-titulo').textContent = data.ambito || '';
+  document.getElementById('analisis-resumen-ej').textContent  = data.resumen_ejecutivo || '';
+  const arts = data.articulos || [];
+  if (!arts.length) {
+    document.getElementById('analisis-arts-list').innerHTML =
+      '<p style="color:var(--gray4);padding:16px">No se hallaron artículos relevantes para los temas de interés.</p>';
+    _renderImplicaciones(null, data); return;
+  }
+  document.getElementById('analisis-arts-list').innerHTML = arts.map((a,i) => `
+    <div class="analisis-art-item${i===0?' active':''}"
+         onclick="selectAnalisisArt(this,${i},${JSON.stringify(data.norm_id)})">
+      <div class="analisis-art-header">
+        <span class="${_EST_C[a.estado]||'badge'}">${_EST_L[a.estado]||a.estado}</span>
+        <span class="analisis-art-num">${a.numero||''}</span>
+        <span class="analisis-relevancia ${a.relevancia||''}">${a.relevancia||''}</span>
+      </div>
+      <div class="analisis-art-titulo">${a.titulo||''}</div>
+      <div class="analisis-art-texto">${a.texto||''}</div>
+      ${a.cambios?`<div class="analisis-cambios"><strong>Cambios:</strong> ${a.cambios}</div>`:''}
+      <div class="analisis-temas">${(a.temas||[]).map(t=>
+        `<span class="tema-chip" style="background:${_TEMA_C[t]||'#607d8b'}22;color:${_TEMA_C[t]||'#607d8b'}">${_TEMA_L[t]||t}</span>`
+      ).join('')}</div>
+    </div>`).join('');
+  _renderImplicaciones(arts[0], data);
+}
+
+function selectAnalisisArt(el, idx, normId) {
+  document.querySelectorAll('.analisis-art-item').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  const d = _analisisCache[normId];
+  if(d) _renderImplicaciones(d.articulos[idx], d);
+}
+
+function _renderImplicaciones(art, data) {
+  const panel = document.getElementById('analisis-impl-panel');
+  const gOS = data?.implicaciones_globales_os || '';
+  const gTR = data?.implicaciones_globales_transportista || '';
+  let html = art ? `
+    <div class="analisis-impl-block os">
+      <div class="analisis-impl-head">🏢 OS — Red Eléctrica</div>
+      <div class="analisis-impl-text">${art.implicaciones_os||'Sin implicaciones específicas.'}</div>
+    </div>
+    <div class="analisis-impl-block trans">
+      <div class="analisis-impl-head">⚡ Transportista</div>
+      <div class="analisis-impl-text">${art.implicaciones_transportista||'Sin implicaciones específicas.'}</div>
+    </div>` : '';
+  if(gOS||gTR) html += `
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--gray2)">
+      <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--gray4);margin-bottom:8px">Implicaciones globales</div>
+      ${gOS?`<div class="analisis-impl-block os-global"><div class="analisis-impl-head">🏢 OS (global)</div><div class="analisis-impl-text">${gOS}</div></div>`:''}
+      ${gTR?`<div class="analisis-impl-block trans-global"><div class="analisis-impl-head">⚡ Transportista (global)</div><div class="analisis-impl-text">${gTR}</div></div>`:''}
+    </div>`;
+  panel.innerHTML = html || '<p style="color:var(--gray4);font-size:12px">Selecciona un artículo.</p>';
+}
 
 function renderEuropea() {
   const q    = (document.getElementById('search-eu').value||'').toLowerCase();
@@ -1142,135 +1239,6 @@ function selectTopic(id) {
       <thead><tr><th>País</th>${colHeaders}<th>Rating</th><th>Notas</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
-}
-
-// ── Análisis Normativo ───────────────────────────────
-let _anCache  = {};   // id → análisis completo
-let _anActivo = null; // id seleccionado
-let _anArtIdx = 0;    // índice artículo activo
-
-const _AN_TEMA_L = {sector_electrico:'Sector Eléctrico',acceso_conexion:'Acceso/Conexión',control_tension:'Control Tensión',sf6:'SF6'};
-const _AN_TEMA_C = {sector_electrico:'#607d8b',acceso_conexion:'#2e7d32',control_tension:'#1565c0',sf6:'#6a1b9a'};
-
-function renderAnalisisNormPills() {
-  const pills = document.getElementById('an-pills');
-  if (!pills) return;
-  const nac = DATA.nacional || [];
-  pills.innerHTML = nac.map(n => `
-    <button class="an-pill${_anActivo===n.id?' active':''}"
-      onclick="selectNormAnalisis('${n.id}','${(n.enlace||'').replace(/'/g,'\\x27')}',${JSON.stringify(n.title)})"
-      title="${n.date||''}">
-      ${n.title.length > 55 ? n.title.slice(0,55)+'…' : n.title}
-    </button>`).join('');
-}
-
-function selectNormAnalisis(id, url, titulo) {
-  _anActivo = id; _anArtIdx = 0;
-  renderAnalisisNormPills();
-  const body = document.getElementById('an-body');
-  if (_anCache[id]) { _renderAnBody(_anCache[id]); return; }
-  body.innerHTML = `
-    <div class="an-loading">
-      <span class="spin" style="font-size:20px;display:inline-block;animation:rotar 1s linear infinite">⚙</span>
-      <span id="an-loading-msg">Obteniendo texto de la normativa…</span>
-    </div>`;
-  if (!url) {
-    body.innerHTML = '<div class="an-empty">Sin enlace BOE disponible para esta normativa.</div>';
-    return;
-  }
-  _streamAnAnalisis(id, url, titulo);
-}
-
-async function _streamAnAnalisis(id, url, titulo) {
-  const body = document.getElementById('an-body');
-  try {
-    const resp = await fetch('/api/analizar-normativa', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({id, url, titulo})
-    });
-    const reader = resp.body.getReader();
-    const dec = new TextDecoder();
-    let buf = '';
-    while(true) {
-      const {done, value} = await reader.read();
-      if(done) break;
-      buf += dec.decode(value, {stream:true});
-      const parts = buf.split('\n\n'); buf = parts.pop();
-      for(const p of parts) {
-        if(!p.startsWith('data:')) continue;
-        let ev; try { ev = JSON.parse(p.slice(5).trim()); } catch { continue; }
-        if(ev.type==='progreso') {
-          const el = document.getElementById('an-loading-msg');
-          if(el) el.textContent = ev.msg;
-        } else if(ev.type==='resultado') {
-          _anCache[id] = ev;
-          _renderAnBody(ev);
-        } else if(ev.type==='error') {
-          body.innerHTML = `<div class="an-empty" style="color:var(--red)">Error: ${ev.msg}</div>`;
-        }
-      }
-    }
-  } catch(e) {
-    document.getElementById('an-body').innerHTML =
-      `<div class="an-empty" style="color:var(--red)">Error de conexión: ${e.message}</div>`;
-  }
-}
-
-function _renderAnBody(data) {
-  const arts = data.articulos || [];
-  const body = document.getElementById('an-body');
-  if (!arts.length) {
-    body.innerHTML = '<div class="an-empty">No se encontraron artículos relevantes para los temas de interés.</div>';
-    return;
-  }
-  body.innerHTML = `
-    <div class="an-col">
-      <div class="an-col-head">Artículos</div>
-      <div class="an-art-list" id="an-art-list">
-        ${arts.map((a,i)=>`
-          <div class="an-art-row${i===_anArtIdx?' active':''}" onclick="selectAnArt(${i},'${_anActivo}')">
-            <span class="an-art-num">${a.numero||''} <span class="an-relevancia ${a.relevancia||''}">${a.relevancia||''}</span></span>
-            <span class="an-art-title">${a.titulo||''}</span>
-          </div>`).join('')}
-      </div>
-    </div>
-    <div class="an-col">
-      <div class="an-col-head">Estado y referencia normativa</div>
-      <div class="an-art-body" id="an-col-estado"></div>
-    </div>
-    <div class="an-col">
-      <div class="an-col-head">Análisis de afecciones — REE</div>
-      <div class="an-art-body" id="an-col-impl"></div>
-    </div>`;
-  _renderAnArt(arts[_anArtIdx]);
-}
-
-function selectAnArt(idx, normId) {
-  _anArtIdx = idx;
-  document.querySelectorAll('#an-art-list .an-art-row').forEach((r,i)=>r.classList.toggle('active',i===idx));
-  const data = _anCache[normId];
-  if (data) _renderAnArt(data.articulos[idx]);
-}
-
-const _AN_EST_L = {nuevo:'NUEVO',modificado:'MODIFICADO',derogado:'DEROGADO'};
-const _AN_EST_C = {nuevo:'an-estado-nuevo',modificado:'an-estado-modificado',derogado:'an-estado-derogado'};
-
-function _renderAnArt(a) {
-  const temas = (a.temas||[]).map(t=>
-    `<span class="tema-chip" style="background:${_AN_TEMA_C[t]||'#607d8b'}22;color:${_AN_TEMA_C[t]||'#607d8b'}">${_AN_TEMA_L[t]||t}</span>`
-  ).join('');
-  // Columna 2: estado + referencia
-  document.getElementById('an-col-estado').innerHTML = `
-    <span class="an-estado-badge ${_AN_EST_C[a.estado]||''}">${_AN_EST_L[a.estado]||a.estado||'—'}</span>
-    <p style="margin-bottom:8px">${a.texto||''}</p>
-    ${a.cambios ? `<div class="an-ref-box"><strong>Cambio respecto a norma anterior:</strong><br>${a.cambios}</div>` : ''}
-    ${a.normativa_referencia ? `<div class="an-ref-box" style="margin-top:8px"><strong>Norma de referencia:</strong><br>${a.normativa_referencia}</div>` : ''}
-    ${temas ? `<div class="an-temas" style="margin-top:12px">${temas}</div>` : ''}`;
-  // Columna 3: implicaciones empresa
-  document.getElementById('an-col-impl').innerHTML = `
-    ${a.implicaciones_os ? `<div class="an-impl-os"><div class="an-impl-head">🏢 Operador del Sistema</div>${a.implicaciones_os}</div>` : ''}
-    ${a.implicaciones_transportista ? `<div class="an-impl-trans"><div class="an-impl-head">⚡ Transportista</div>${a.implicaciones_transportista}</div>` : ''}
-    ${(!a.implicaciones_os && !a.implicaciones_transportista) ? '<p style="color:var(--gray4)">Sin implicaciones identificadas.</p>' : ''}`;
 }
 
 // ── Init ──────────────────────────────────────────────
