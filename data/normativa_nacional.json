@@ -1,5 +1,18 @@
 [
   {
+    "id": "AUTH-400KV-GRADO-CARDOSO-2026",
+    "title": "Autorización línea aérea 400 kV Grado-Cardoso — Red Eléctrica de España",
+    "type": "resolucion",
+    "date": "2026-04-01",
+    "updated": null,
+    "tag": "new",
+    "summary": "La DGPEM otorga a Red Eléctrica de España autorización administrativa previa y de construcción para la línea aérea de transporte de energía eléctrica a 400 kV entre las subestaciones de Grado y Cardoso (Carreño, Asturias), declarada de utilidad pública.",
+    "impactoREE": "REE es el beneficiario directo. La resolución autoriza la construcción de una nueva infraestructura de 400 kV en la red de transporte peninsular, reforzando la capacidad de evacuación en Asturias.",
+    "enlace": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-7427",
+    "detail": "<p>La Dirección General de Política Energética y Minas (BOE-A-2026-7427) otorga a <strong>Red Eléctrica de España, SAU</strong> la autorización administrativa previa y de construcción de una <strong>línea aérea de transporte a 400 kV</strong> de simple circuito entre las subestaciones de Grado y Cardoso, en el municipio de Carreño (Asturias). La instalación, de 0,429 km de longitud, forma parte del plan de desarrollo de la red de transporte. La resolución declara el proyecto de utilidad pública.</p>",
+    "organismo": "MITECO"
+  },
+  {
     "id": "RDL-7-2026",
     "title": "RDL 7/2026 — Plan Integral de Respuesta a la Crisis en Oriente Medio",
     "type": "rdl",
