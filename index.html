@@ -458,6 +458,57 @@
     .bench-table tr.spain-row td { background: rgba(0,184,176,.06); font-weight: 600; }
     .stars { color: var(--teal); font-size: 13px; }
 
+    /* ── Análisis normativo panel ── */
+    #panel-analisis { display:flex; flex-direction:column; gap:0; padding:0; overflow:hidden; }
+    .an-selector { display:flex; gap:8px; overflow-x:auto; padding:14px 20px 10px; flex-shrink:0;
+      border-bottom:1px solid var(--gray2); background:var(--white);
+      scrollbar-width:thin; scrollbar-color:var(--gray3) transparent; }
+    .an-pill { flex-shrink:0; white-space:nowrap; padding:6px 14px;
+      border:1.5px solid var(--gray2); border-radius:20px; font-size:12px;
+      font-weight:600; color:var(--gray4); cursor:pointer; background:var(--white);
+      transition:all .15s; }
+    .an-pill:hover { border-color:var(--teal); color:var(--teal); }
+    .an-pill.active { border-color:var(--teal); background:var(--teal); color:var(--white); }
+    .an-body { display:grid; grid-template-columns:220px 1fr 1fr; flex:1; min-height:0; overflow:hidden; }
+    @media(max-width:900px){ .an-body{ grid-template-columns:1fr; overflow-y:auto; } }
+    .an-col { display:flex; flex-direction:column; border-right:1px solid var(--gray2); overflow:hidden; }
+    .an-col:last-child { border-right:none; }
+    .an-col-head { padding:10px 16px; font-size:10px; font-weight:800; text-transform:uppercase;
+      letter-spacing:.9px; color:var(--teal2); border-bottom:1px solid var(--gray2);
+      background:var(--gray1); flex-shrink:0; }
+    .an-art-list { overflow-y:auto; flex:1; }
+    .an-art-row { padding:10px 14px; border-bottom:1px solid var(--gray2); cursor:pointer;
+      transition:background .12s; }
+    .an-art-row:hover { background:var(--gray1); }
+    .an-art-row.active { background:rgba(0,184,176,.07); border-left:3px solid var(--teal); }
+    .an-art-num { display:block; font-size:10px; font-weight:800; color:var(--gray4);
+      text-transform:uppercase; margin-bottom:2px; }
+    .an-relevancia { font-weight:700; font-size:10px; margin-left:6px; }
+    .an-relevancia.alta { color:#e53935; } .an-relevancia.media { color:#f9a825; } .an-relevancia.baja { color:var(--gray4); }
+    .an-art-title { font-size:11.5px; color:var(--navy); font-weight:600; line-height:1.4; }
+    .an-art-body { overflow-y:auto; flex:1; padding:16px; font-size:12px; line-height:1.6; }
+    .an-estado-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:10px;
+      font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:10px; }
+    .an-estado-nuevo { background:rgba(0,184,176,.15); color:var(--teal2); }
+    .an-estado-modificado { background:rgba(249,168,37,.15); color:#b45309; }
+    .an-estado-derogado { background:rgba(229,57,53,.12); color:#c62828; }
+    .an-ref-box { background:rgba(249,168,37,.07); border-left:3px solid var(--yellow);
+      border-radius:0 6px 6px 0; padding:8px 12px; margin-bottom:8px; font-size:11.5px; }
+    .an-impl-os { background:rgba(0,43,69,.04); border-left:3px solid var(--navy);
+      border-radius:0 6px 6px 0; padding:10px 14px; margin-bottom:10px; }
+    .an-impl-trans { background:rgba(0,184,176,.05); border-left:3px solid var(--teal);
+      border-radius:0 6px 6px 0; padding:10px 14px; margin-bottom:10px; }
+    .an-impl-head { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.7px;
+      color:var(--navy); margin-bottom:6px; }
+    .an-temas { display:flex; flex-wrap:wrap; gap:4px; margin-top:12px; }
+    .an-tema-chip { font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; }
+    .an-loading { display:flex; align-items:center; gap:12px; padding:24px; color:var(--gray4); font-size:13px; }
+    .an-empty { padding:40px; text-align:center; color:var(--gray4); font-size:13px;
+      align-self:center; grid-column:1/-1; }
+    .an-error { padding:24px; color:#c62828; font-size:12px; }
+    .an-notice { background:rgba(249,168,37,.1); border:1px solid var(--yellow); border-radius:8px;
+      padding:12px 16px; margin:20px; font-size:12px; color:#b45309; }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .layout { grid-template-columns: 1fr; }
@@ -504,6 +555,7 @@
       <div class="sidebar-label">Inteligencia</div>
       <div class="sidebar-item active" onclick="switchPanel('novedades')"><span class="icon">🗞</span> Novedades del Mes</div>
       <div class="sidebar-item" onclick="switchPanel('benchmark')"><span class="icon">🌍</span> Benchmark Europeo</div>
+      <div class="sidebar-item" onclick="switchPanel('analisis')"><span class="icon">🔬</span> Análisis Normativo</div>
     </div>
     <div class="sidebar-section" style="margin-top:auto; padding-top:16px;">
       <div class="sidebar-label">Estadísticas</div>
@@ -521,6 +573,7 @@
       <div class="tab"        id="tab-europea"    onclick="switchPanel('europea')">🇪🇺 Normativa UE</div>
       <div class="tab"        id="tab-consultas"  onclick="switchPanel('consultas')">📢 Consultas</div>
       <div class="tab"        id="tab-benchmark"  onclick="switchPanel('benchmark')">🌍 Benchmark</div>
+      <div class="tab"        id="tab-analisis"   onclick="switchPanel('analisis')">🔬 Análisis</div>
     </div>
 
     <!-- PANEL NORMATIVA NACIONAL -->
@@ -644,6 +697,14 @@
       <div class="bench-table-wrap" id="bench-table-wrap" style="display:none;"></div>
     </div>
 
+    <!-- PANEL ANÁLISIS NORMATIVO -->
+    <div class="panel" id="panel-analisis">
+      <div class="an-selector" id="an-pills"></div>
+      <div class="an-body" id="an-body">
+        <div class="an-empty">Selecciona una normativa para ver el análisis artículo por artículo.</div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -670,6 +731,7 @@ async function loadData() {
   renderConsultas();
   renderNovedades();
   renderBenchTopics();
+  renderAnalisisNormPills();
 }
 
 // ── Fecha ───────────────────────────────────────────
@@ -1106,6 +1168,42 @@ function selectTopic(id) {
       <thead><tr><th>País</th>${colHeaders}<th>Rating</th><th>Notas</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
+}
+
+// ── Análisis Normativo ─────────────────────────────────
+let _anCache = {};
+let _anActivo = null;
+let _anArtIdx = 0;
+
+const _AN_TEMA_L = {
+  sector_electrico:'Sector Eléctrico', acceso_conexion:'Acceso y Conexión',
+  control_tension:'Control de Tensión', sf6:'SF6'
+};
+const _AN_TEMA_C = {
+  sector_electrico:'#0277BD', acceso_conexion:'#2E7D32',
+  control_tension:'#6A1B9A', sf6:'#BF360C'
+};
+
+function renderAnalisisNormPills() {
+  const pills = document.getElementById('an-pills');
+  if (!pills) return;
+  pills.innerHTML = DATA.nacional.map(n =>
+    `<button class="an-pill${_anActivo===n.id?' active':''}" title="${n.title}"
+      onclick="selectNormAnalisis('${n.id}','${(n.enlace||'').replace(/'/g,'\\x27')}',${JSON.stringify(n.title)})"
+     >${n.title}</button>`
+  ).join('');
+}
+
+function selectNormAnalisis(id, url, titulo) {
+  _anActivo = id;
+  _anArtIdx = 0;
+  renderAnalisisNormPills();
+  const body = document.getElementById('an-body');
+  body.innerHTML = `<div class="an-notice">⚠️ El análisis IA artículo por artículo requiere el servidor backend. Esta versión estática muestra únicamente la normativa. Para el análisis completo usa la versión con servidor.</div>
+    <div style="padding:20px;font-size:13px;color:var(--navy)">
+      <strong>${titulo}</strong><br>
+      <a href="${url}" target="_blank" rel="noopener" style="color:var(--teal);font-size:12px">↗ Ver fuente oficial</a>
+    </div>`;
 }
 
 // ── Init ──────────────────────────────────────────────

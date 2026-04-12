@@ -290,6 +290,7 @@ Responde ÚNICAMENTE con JSON válido (sin markdown, sin explicaciones):
       "estado": "nuevo|modificado|derogado",
       "texto": "string: resumen del contenido (máx 250 chars)",
       "cambios": "string|null: qué ha cambiado (solo si modificado)",
+      "normativa_referencia": "string|null: si el contenido procede de o modifica otra norma previa, indica cuál (p.ej. 'PO 3.1, aprobado por Resolución de 6 de octubre de 2000'). Solo si aplica.",
       "temas": ["sector_electrico","acceso_conexion","control_tension","sf6"],
       "relevancia": "alta|media|baja",
       "implicaciones_os": "string",
