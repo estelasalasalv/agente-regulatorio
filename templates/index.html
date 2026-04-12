@@ -824,10 +824,13 @@ function setNacOrgFilter(btn, org) {
   renderNacional();
 }
 
+const _hace2a = new Date(Date.now() - 730 * 86400000).toISOString().slice(0,10);
+
 function renderNacional() {
   const q    = (document.getElementById('search-nac').value||'').toLowerCase();
   const tipo = document.getElementById('filter-nac').value;
   const list = DATA.nacional.filter(n=>{
+    if((n.updated || n.date || '') < _hace2a) return false;
     if(tipo && n.type!==tipo) return false;
     if(activeNacOrg && n.organismo !== activeNacOrg) return false;
     if(q) { const t=(n.title+' '+n.summary+' '+(n.impactoREE||'')).toLowerCase(); return q.split(' ').some(w=>t.includes(w)); }
@@ -992,6 +995,7 @@ function renderEuropea() {
   const q    = (document.getElementById('search-eu').value||'').toLowerCase();
   const tipo = document.getElementById('filter-eu').value;
   const list = DATA.europea.filter(n=>{
+    if((n.updated || n.date || '') < _hace2a) return false;
     if(tipo && n.type!==tipo) return false;
     if(q) { const t=(n.title+' '+n.summary+' '+n.impactoREE).toLowerCase(); return q.split(' ').some(w=>t.includes(w)); }
     return true;
@@ -1044,6 +1048,7 @@ function renderConsultas() {
   const estado = document.getElementById('filter-estado').value;
 
   let list = DATA.consultas.filter(c=>{
+    if((c.fecha_publicacion || '') < _hace2a) return false;
     if(estado && c.estado!==estado) return false;
     if(activeOrg && !c.organismo.includes(activeOrg)) return false;
     return true;
