@@ -104,6 +104,9 @@
     .badge-upcoming { background: rgba(249,168,37,.2); color: #ffd54f; }
     .badge-closed   { background: rgba(255,255,255,.1); color: var(--gray3); }
     .badge-week     { background: rgba(255,87,34,.25); color: #ff7043; animation: pulse-week 1.8s ease-in-out infinite; }
+    .badge-month    { background: rgba(249,168,37,.22); color: #b45309; }
+    .badge-quarter  { background: rgba(96,125,139,.18); color: #455a64; }
+    .badge-year     { background: rgba(96,125,139,.10); color: #78909c; }
     @keyframes pulse-week { 0%,100%{opacity:1} 50%{opacity:.55} }
 
     /* ── Análisis normativa ── */
@@ -407,6 +410,10 @@
       border-radius: 8px; padding: 1px 5px; margin-bottom: 3px;
     }
     .tag-new      { background: rgba(0,184,176,.2);  color: var(--teal2); }
+    .tag-week     { background: rgba(255,87,34,.2);  color: #e64a19; }
+    .tag-month    { background: rgba(249,168,37,.2); color: #b45309; }
+    .tag-quarter  { background: rgba(96,125,139,.15); color: #455a64; }
+    .tag-year     { background: rgba(96,125,139,.08); color: #78909c; }
     .tag-modified { background: rgba(249,168,37,.2);  color: #b8860b; }
     .tag-open     { background: rgba(46,125,50,.2);   color: #2e7d32; }
     .slide-item-title { font-weight: 700; color: var(--navy); margin-bottom: 1px; }
@@ -737,14 +744,33 @@ function switchPanel(id) {
 }
 
 // ── Normativa cards ──────────────────────────────────
-const TAG_LABEL = {new:'Nuevo', modified:'Modificado', eu:'UE'};
-const TAG_COLOR = {new:'badge-new', modified:'badge-open', eu:'badge-upcoming'};
+const TAG_LABEL = {modified:'Modificado', eu:'UE'};
+const TAG_COLOR = {modified:'badge-open', eu:'badge-upcoming'};
+
+function dateBadge(dateStr) {
+  if (!dateStr) return '';
+  const diff = (Date.now() - new Date(dateStr).getTime()) / 86400000;
+  if (diff < 7)   return '<span class="badge badge-week">Esta semana</span>';
+  if (diff < 30)  return '<span class="badge badge-month">Este mes</span>';
+  if (diff < 90)  return '<span class="badge badge-quarter">Este trimestre</span>';
+  if (diff < 365) return '<span class="badge badge-year">Este año</span>';
+  return '';
+}
+
+function dateBadgeSlide(dateStr) {
+  if (!dateStr) return '';
+  const diff = (Date.now() - new Date(dateStr).getTime()) / 86400000;
+  if (diff < 7)   return '<span class="slide-item-tag tag-week">Esta semana</span>';
+  if (diff < 30)  return '<span class="slide-item-tag tag-month">Este mes</span>';
+  if (diff < 90)  return '<span class="slide-item-tag tag-quarter">Este trimestre</span>';
+  if (diff < 365) return '<span class="slide-item-tag tag-year">Este año</span>';
+  return '';
+}
 
 function normCard(n) {
-  const tag = n.tag ? `<span class="badge ${TAG_COLOR[n.tag]||''}">${TAG_LABEL[n.tag]||n.tag}</span>` : '';
+  const tag = (n.tag && n.tag !== 'new') ? `<span class="badge ${TAG_COLOR[n.tag]||''}">${TAG_LABEL[n.tag]||n.tag}</span>` : '';
   const efectiva = n.updated || n.date || '';
-  const esNueva = efectiva && (Date.now() - new Date(efectiva).getTime()) < 7 * 86400000;
-  const weekBadge = esNueva ? `<span class="badge badge-week">Esta semana</span>` : '';
+  const timeBadge = dateBadge(efectiva);
   const titulo = `<a class="norm-card-title-link" href="${n.enlace}" target="_blank" rel="noopener">${n.title}</a>`;
   const enlaceBtn = `<a class="norm-card-link" href="${n.enlace}" target="_blank" rel="noopener">↗ Ver fuente oficial</a>`;
   const enlaceOriginal = n.enlace_original
@@ -753,7 +779,7 @@ function normCard(n) {
   return `<div class="norm-card">
     <div class="norm-card-header">
       <div class="norm-card-title">${titulo}</div>
-      <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">${weekBadge}${tag}</div>
+      <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">${timeBadge}${tag}</div>
     </div>
     <div class="norm-card-meta">
       <span class="type-chip">${n.type||''}</span>
@@ -1061,9 +1087,10 @@ function renderNovedades() {
   document.getElementById('slide-foot-date').textContent =
     hoy.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  const tagHtml = t => {
-    if(t==='new')      return '<span class="slide-item-tag tag-new">Nuevo</span>';
-    if(t==='modified') return '<span class="slide-item-tag tag-modified">Actualizado</span>';
+  const tagHtml = n => {
+    const dateSlide = dateBadgeSlide(n.updated || n.date || '');
+    if (dateSlide) return dateSlide;
+    if (n.tag === 'modified') return '<span class="slide-item-tag tag-modified">Actualizado</span>';
     return '';
   };
 
@@ -1074,7 +1101,7 @@ function renderNovedades() {
       ? `<a class="slide-item-link" href="${n.enlace}" target="_blank" rel="noopener">${n.title}</a>`
       : n.title;
     return `<div class="slide-item nac">
-      ${tagHtml(n.tag)}
+      ${tagHtml(n)}
       <div class="slide-item-title">${titulo}</div>
       <div class="slide-item-meta">${n.type ? n.type.toUpperCase() + ' · ' : ''}${dateStr}${n.organismo ? ' · ' + n.organismo : ''}</div>
     </div>`;
