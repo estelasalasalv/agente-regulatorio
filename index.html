@@ -463,11 +463,26 @@
     .an-list-item { display:flex; align-items:center; gap:14px; padding:13px 20px;
       border-bottom:1px solid var(--gray2); cursor:pointer; transition:background .12s; }
     .an-list-item:hover { background:var(--gray1); }
-    .an-list-item.active { background:rgba(0,184,176,.07); border-left:3px solid var(--teal); }
+    .an-list-item.active { background:rgba(0,184,176,.07); border-left:3px solid var(--teal); padding-left:17px; }
     .an-list-date { font-size:11px; color:var(--gray4); white-space:nowrap; }
     .an-list-title { font-size:13px; font-weight:600; color:var(--navy); flex:1; line-height:1.4; }
     .an-list-type { font-size:10px; font-weight:700; text-transform:uppercase;
       color:var(--teal2); white-space:nowrap; }
+    #an-detail { border-top:2px solid var(--teal); background:var(--gray1); }
+    .an-detail-header { padding:14px 20px 10px; background:var(--white); border-bottom:1px solid var(--gray2); }
+    .an-detail-titulo { font-size:13px; font-weight:700; color:var(--navy); }
+    .an-table-wrap { overflow-x:auto; padding:16px 20px 24px; }
+    .an-table { width:100%; border-collapse:collapse; font-size:12px; background:var(--white);
+      border-radius:10px; overflow:hidden; box-shadow:0 2px 12px rgba(0,43,69,.08); }
+    .an-table th { background:var(--navy); color:var(--white); padding:10px 14px;
+      font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; }
+    .an-table td { padding:11px 14px; border-bottom:1px solid var(--gray2); vertical-align:top; line-height:1.55; }
+    .an-table tr:last-child td { border-bottom:none; }
+    .an-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px;
+      font-weight:800; text-transform:uppercase; margin-bottom:4px; }
+    .an-badge.nuevo { background:rgba(0,184,176,.15); color:var(--teal2); }
+    .an-badge.modificado { background:rgba(249,168,37,.18); color:#b45309; }
+    .an-badge.derogado { background:rgba(229,57,53,.12); color:#c62828; }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
@@ -660,6 +675,7 @@
     <!-- PANEL ANÁLISIS NORMATIVO -->
     <div class="panel" id="panel-analisis">
       <div id="an-list"></div>
+      <div id="an-detail" style="display:none"></div>
     </div>
 
   </main>
@@ -1139,11 +1155,26 @@ function renderAnPills() {
     return;
   }
   el.innerHTML = recientes.map(n => `
-    <div class="an-list-item">
+    <div class="an-list-item" onclick="selectAnNorm(this,'${n.id}',${JSON.stringify(n.title)})">
       <span class="an-list-date">${n.date||''}</span>
       <span class="an-list-title">${n.title}</span>
       <span class="an-list-type">${n.type||''}</span>
     </div>`).join('');
+}
+
+function selectAnNorm(el, id, titulo) {
+  document.querySelectorAll('#an-list .an-list-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const detail = document.getElementById('an-detail');
+  detail.style.display = 'block';
+  detail.innerHTML = `
+    <div class="an-detail-header">
+      <div class="an-detail-titulo">${titulo}</div>
+    </div>
+    <div style="padding:20px;font-size:12px;color:#b45309;background:rgba(249,168,37,.08);border-left:3px solid var(--yellow)">
+      ⚠️ El análisis artículo por artículo requiere el servidor backend. Usa la versión local (<code>uvicorn app:app</code>) para acceder al análisis completo con IA.
+    </div>`;
+  detail.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 loadData();

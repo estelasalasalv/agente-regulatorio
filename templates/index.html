@@ -462,11 +462,40 @@
     .an-list-item { display:flex; align-items:center; gap:14px; padding:13px 20px;
       border-bottom:1px solid var(--gray2); cursor:pointer; transition:background .12s; }
     .an-list-item:hover { background:var(--gray1); }
-    .an-list-item.active { background:rgba(0,184,176,.07); border-left:3px solid var(--teal); }
+    .an-list-item.active { background:rgba(0,184,176,.07); border-left:3px solid var(--teal); padding-left:17px; }
     .an-list-date { font-size:11px; color:var(--gray4); white-space:nowrap; }
     .an-list-title { font-size:13px; font-weight:600; color:var(--navy); flex:1; line-height:1.4; }
     .an-list-type { font-size:10px; font-weight:700; text-transform:uppercase;
       color:var(--teal2); white-space:nowrap; }
+    #an-detail { border-top:2px solid var(--teal); background:var(--gray1); }
+    .an-detail-header { padding:14px 20px 10px; display:flex; align-items:baseline; gap:10px;
+      background:var(--white); border-bottom:1px solid var(--gray2); }
+    .an-detail-titulo { font-size:13px; font-weight:700; color:var(--navy); flex:1; }
+    .an-detail-loading { display:flex; align-items:center; gap:10px; padding:28px 20px;
+      color:var(--gray4); font-size:13px; }
+    .an-table-wrap { overflow-x:auto; padding:16px 20px 24px; }
+    .an-table { width:100%; border-collapse:collapse; font-size:12px; background:var(--white);
+      border-radius:10px; overflow:hidden; box-shadow:0 2px 12px rgba(0,43,69,.08); }
+    .an-table th { background:var(--navy); color:var(--white); padding:10px 14px;
+      text-align:left; font-size:11px; font-weight:700; text-transform:uppercase;
+      letter-spacing:.6px; white-space:nowrap; }
+    .an-table td { padding:11px 14px; border-bottom:1px solid var(--gray2);
+      vertical-align:top; line-height:1.55; }
+    .an-table tr:last-child td { border-bottom:none; }
+    .an-table tr:hover td { background:rgba(0,184,176,.04); }
+    .an-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px;
+      font-weight:800; text-transform:uppercase; letter-spacing:.6px; margin-bottom:5px; }
+    .an-badge.nuevo { background:rgba(0,184,176,.15); color:var(--teal2); }
+    .an-badge.modificado { background:rgba(249,168,37,.18); color:#b45309; }
+    .an-badge.derogado { background:rgba(229,57,53,.12); color:#c62828; }
+    .an-ref { background:rgba(249,168,37,.08); border-left:2px solid var(--yellow);
+      padding:5px 9px; margin-top:5px; font-size:11px; border-radius:0 4px 4px 0; }
+    .an-impl-os { background:rgba(0,43,69,.05); border-left:2px solid var(--navy);
+      padding:5px 9px; margin-bottom:5px; border-radius:0 4px 4px 0; }
+    .an-impl-tr { background:rgba(0,184,176,.06); border-left:2px solid var(--teal);
+      padding:5px 9px; border-radius:0 4px 4px 0; }
+    .an-impl-label { font-size:10px; font-weight:800; text-transform:uppercase;
+      letter-spacing:.5px; margin-bottom:2px; color:var(--navy); }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
@@ -671,6 +700,7 @@
     <!-- PANEL ANÁLISIS NORMATIVO -->
     <div class="panel" id="panel-analisis">
       <div id="an-list"></div>
+      <div id="an-detail" style="display:none"></div>
     </div>
 
   </main>
@@ -1262,6 +1292,8 @@ function selectTopic(id) {
 
 // ── Init ──────────────────────────────────────────────
 // ── Análisis normativo ─────────────────────────────────
+let _anCache = {};
+
 function renderAnPills() {
   const el = document.getElementById('an-list');
   if (!el) return;
@@ -1272,11 +1304,103 @@ function renderAnPills() {
     return;
   }
   el.innerHTML = recientes.map(n => `
-    <div class="an-list-item">
+    <div class="an-list-item" onclick="selectAnNorm('${n.id}','${(n.enlace||'').replace(/'/g,'\\x27')}',${JSON.stringify(n.title)})">
       <span class="an-list-date">${n.date||''}</span>
       <span class="an-list-title">${n.title}</span>
       <span class="an-list-type">${n.type||''}</span>
     </div>`).join('');
+}
+
+function selectAnNorm(id, url, titulo) {
+  document.querySelectorAll('#an-list .an-list-item').forEach(el => el.classList.remove('active'));
+  const clicked = event.currentTarget;
+  clicked.classList.add('active');
+  const detail = document.getElementById('an-detail');
+  detail.style.display = 'block';
+  detail.innerHTML = `
+    <div class="an-detail-header">
+      <span class="an-detail-titulo">${titulo}</span>
+    </div>
+    <div class="an-detail-loading">
+      <span style="font-size:18px;animation:spin 1s linear infinite">⚙</span>
+      <span id="an-detail-msg">Obteniendo y analizando la normativa…</span>
+    </div>`;
+  detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+  if (_anCache[id]) { _renderAnTable(_anCache[id], titulo); return; }
+  _streamAnNorm(id, url, titulo);
+}
+
+async function _streamAnNorm(id, url, titulo) {
+  try {
+    const resp = await fetch('/api/analizar-normativa', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({id, url, titulo})
+    });
+    const reader = resp.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, {stream:true});
+      const parts = buf.split('\n\n'); buf = parts.pop();
+      for (const p of parts) {
+        if (!p.startsWith('data:')) continue;
+        let ev; try { ev = JSON.parse(p.slice(5).trim()); } catch { continue; }
+        if (ev.type === 'progreso') {
+          const m = document.getElementById('an-detail-msg');
+          if (m) m.textContent = ev.msg;
+        } else if (ev.type === 'resultado') {
+          _anCache[id] = ev;
+          _renderAnTable(ev, titulo);
+        } else if (ev.type === 'error') {
+          document.getElementById('an-detail').innerHTML +=
+            `<p style="padding:16px;color:#c62828">Error: ${ev.msg}</p>`;
+        }
+      }
+    }
+  } catch(e) {
+    const d = document.getElementById('an-detail');
+    if (d) d.innerHTML += `<p style="padding:16px;color:#c62828">Error de conexión: ${e.message}</p>`;
+  }
+}
+
+function _renderAnTable(data, titulo) {
+  const arts = data.articulos || [];
+  const detail = document.getElementById('an-detail');
+  if (!detail) return;
+  const rows = arts.length ? arts.map(a => {
+    const badge = `<span class="an-badge ${a.estado||''}">${(a.estado||'').toUpperCase()}</span>`;
+    const ref = a.normativa_referencia
+      ? `<div class="an-ref"><strong>Norma previa:</strong> ${a.normativa_referencia}</div>` : '';
+    const cambios = a.cambios
+      ? `<div class="an-ref" style="margin-top:4px"><strong>Cambios:</strong> ${a.cambios}</div>` : '';
+    const os = a.implicaciones_os
+      ? `<div class="an-impl-os"><div class="an-impl-label">🏢 OS</div>${a.implicaciones_os}</div>` : '';
+    const tr = a.implicaciones_transportista
+      ? `<div class="an-impl-tr"><div class="an-impl-label">⚡ Transportista</div>${a.implicaciones_transportista}</div>` : '';
+    return `<tr>
+      <td><strong>${a.numero||''}</strong><br><span style="color:var(--navy);font-weight:600">${a.titulo||''}</span><br><span style="color:var(--gray4)">${a.texto||''}</span></td>
+      <td>${badge}${ref}${cambios}</td>
+      <td>${os}${tr}${(!os&&!tr)?'<span style="color:var(--gray4)">Sin implicaciones identificadas.</span>':''}</td>
+    </tr>`;
+  }).join('') : `<tr><td colspan="3" style="color:var(--gray4);text-align:center;padding:20px">No se encontraron artículos relevantes.</td></tr>`;
+
+  detail.innerHTML = `
+    <div class="an-detail-header">
+      <span class="an-detail-titulo">${titulo}</span>
+      ${data.resumen_ejecutivo ? `<span style="font-size:11px;color:var(--gray4)">${data.resumen_ejecutivo}</span>` : ''}
+    </div>
+    <div class="an-table-wrap">
+      <table class="an-table">
+        <thead><tr>
+          <th style="width:30%">Artículo</th>
+          <th style="width:35%">Estado y normativa de referencia</th>
+          <th style="width:35%">Implicaciones para Red Eléctrica</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 loadData();
