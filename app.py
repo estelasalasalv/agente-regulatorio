@@ -261,31 +261,38 @@ async def api_benchmark():
 # Análisis IA de normativa (SSE streaming)
 # ──────────────────────────────────────────────
 
-PROMPT_ANALISIS_NORMATIVA = """Eres un experto jurídico en regulación del sistema eléctrico español con profundo conocimiento técnico.
+PROMPT_ANALISIS_NORMATIVA = """Eres un experto jurídico en regulación del sector eléctrico español.
 
-Visita la URL indicada y lee el texto completo de la norma.
+Visita la URL y lee el texto COMPLETO de la norma.
 
-Lista TODOS los artículos y disposiciones de la norma (artículos, disposiciones adicionales, transitorias, derogatorias y finales), sin omitir ninguno.
+TAREA: devuelve una entrada por cada ARTÍCULO INDIVIDUAL y por cada DISPOSICIÓN INDIVIDUAL (adicional, transitoria, derogatoria y final). NO agrupes por títulos ni capítulos. Cada artículo va en su propia entrada.
 
-Para cada apartado determina:
-- Si es NUEVO (se introduce ex novo) o MODIFICADO (modifica texto previo de otra norma) o DEROGADO
-- Si es MODIFICADO: qué normativa previa modifica y qué ha cambiado exactamente
-- Implicaciones concretas para Red Eléctrica como Operador del Sistema (REE-OS) y como transportista (si aplica; null si no hay impacto directo)
+Ejemplo correcto para una norma con Art. 1 al Art. 64 + 14 DA + 6 DT + 21 DF:
+- Entrada "Art. 1", Entrada "Art. 2", ..., Entrada "Art. 64"
+- Entrada "Disp. adicional 1ª", ..., Entrada "Disp. adicional 14ª"
+- Entrada "Disp. transitoria 1ª", ..., Entrada "Disp. transitoria 6ª"
+- Entrada "Disp. final 1ª", ..., Entrada "Disp. final 21ª"
 
-Responde ÚNICAMENTE con JSON válido (sin markdown, sin explicaciones):
+Sé MUY CONCISO (la respuesta debe caber en tokens limitados):
+- "titulo": máx 70 chars (epígrafe oficial del artículo)
+- "texto": máx 100 chars (objeto del artículo en una frase)
+- "normativa_referencia": solo nombre corto ("RD 1048/2013") o null
+- "cambios": máx 80 chars o null
+- "implicaciones_ree": máx 100 chars, solo si afecta a Red Eléctrica como OS o transportista; si no, null
+
+Responde ÚNICAMENTE con JSON válido sin markdown:
 {
-  "resumen_ejecutivo": "string: 2-3 frases sobre objeto y alcance de la norma",
-  "ambito": "string: ámbito de aplicación",
-  "implicaciones_globales_os": "string: resumen consolidado del impacto para Red Eléctrica",
+  "resumen_ejecutivo": "máx 250 chars",
+  "implicaciones_globales_os": "máx 250 chars",
   "articulos": [
     {
-      "numero": "string: 'Art. 5' / 'Disposición adicional 1ª' / 'Disposición final 3ª'",
-      "titulo": "string: epígrafe del apartado",
+      "numero": "Art. 1",
+      "titulo": "string",
       "estado": "nuevo|modificado|derogado",
-      "texto": "string: resumen del contenido (máx 200 chars)",
-      "normativa_referencia": "string|null: norma previa que modifica o deroga (solo si modificado/derogado)",
-      "cambios": "string|null: descripción del cambio respecto a la norma anterior (solo si modificado)",
-      "implicaciones_ree": "string|null: implicaciones concretas para Red Eléctrica; null si no hay impacto directo"
+      "texto": "string",
+      "normativa_referencia": "string|null",
+      "cambios": "string|null",
+      "implicaciones_ree": "string|null"
     }
   ]
 }"""
@@ -307,7 +314,7 @@ async def stream_analizar_normativa(norm_id: str, url: str, titulo: str) -> Asyn
             None,
             lambda: client.messages.create(
                 model="claude-opus-4-6",
-                max_tokens=8192,
+                max_tokens=16000,
                 tools=[{"type": "web_fetch_20260209", "name": "web_fetch"}],
                 messages=[{
                     "role": "user",

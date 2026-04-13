@@ -1351,6 +1351,9 @@ function selectAnNorm(clicked, id, url, titulo) {
   document.querySelectorAll('#an-list .an-list-item').forEach(el => el.classList.remove('active'));
   clicked.classList.add('active');
 
+  // Siempre borrar caché para forzar análisis fresco
+  delete _anCache[id];
+
   // Abrir nueva ventana
   const win = window.open('', '_blank',
     'width=1200,height=750,scrollbars=yes,resizable=yes,toolbar=no,menubar=no');
