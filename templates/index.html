@@ -709,7 +709,6 @@
     <!-- PANEL ANÁLISIS NORMATIVO -->
     <div class="panel" id="panel-analisis">
       <div id="an-list"></div>
-      <div id="an-detail" style="display:none"></div>
     </div>
 
   </main>
@@ -1333,40 +1332,84 @@ let _anCache = {};
 function renderAnPills() {
   const el = document.getElementById('an-list');
   if (!el) return;
-  const hace60d = new Date(Date.now() - 60 * 86400000).toISOString().slice(0,10);
-  const recientes = DATA.nacional.filter(n => (n.updated || n.date || '') >= hace60d);
-  if (!recientes.length) {
-    el.innerHTML = '<p style="padding:24px;color:var(--gray4);font-size:13px">No hay normativa aprobada en los últimos 2 meses.</p>';
+  // Mostrar únicamente RDL 7/2026
+  const norm = DATA.nacional.find(n => n.id === 'RDL-7-2026');
+  if (!norm) {
+    el.innerHTML = '<p style="padding:24px;color:var(--gray4);font-size:13px">No se encontró el RDL 7/2026.</p>';
     return;
   }
-  el.innerHTML = recientes.map(n => `
-    <div class="an-list-item" onclick="selectAnNorm(this,'${n.id}','${(n.enlace||'').replace(/'/g,'\\x27')}',${JSON.stringify(n.title)})">
-      <span class="an-list-date">${n.date||''}</span>
-      <span class="an-list-title">${n.title}</span>
-      <span class="an-list-type">${n.type||''}</span>
-    </div>`).join('');
+  el.innerHTML = `
+    <div class="an-list-item" onclick="selectAnNorm(this,'${norm.id}','${(norm.enlace||'').replace(/'/g,'\\x27')}',${JSON.stringify(norm.title)})">
+      <span class="an-list-date">${norm.date||''}</span>
+      <span class="an-list-title">${norm.title}</span>
+      <span class="an-list-type">${norm.type||''}</span>
+      <span style="font-size:11px;color:var(--teal2);white-space:nowrap">▶ Analizar</span>
+    </div>`;
 }
 
 function selectAnNorm(clicked, id, url, titulo) {
   document.querySelectorAll('#an-list .an-list-item').forEach(el => el.classList.remove('active'));
   clicked.classList.add('active');
-  const detail = document.getElementById('an-detail');
-  detail.style.display = 'block';
-  detail.innerHTML = `
-    <div class="an-detail-header">
-      <div class="an-detail-titulo">${titulo}</div>
+
+  // Abrir nueva ventana
+  const win = window.open('', '_blank',
+    'width=1200,height=750,scrollbars=yes,resizable=yes,toolbar=no,menubar=no');
+  if (!win) { alert('Permite las ventanas emergentes para ver el análisis.'); return; }
+
+  const loadingHtml = _anWindowHtml(titulo, `
+    <div style="display:flex;align-items:center;gap:12px;padding:40px 24px;color:#607d8b;font-size:14px">
+      <span style="font-size:22px;animation:spin 1s linear infinite">⚙</span>
+      <span id="win-msg">Obteniendo y analizando la normativa desde el BOE…</span>
     </div>
-    <div class="an-detail-loading">
-      <span style="font-size:18px">⚙</span>
-      <span id="an-detail-msg">Obteniendo y analizando la normativa…</span>
-    </div>`;
-  const panel = document.getElementById('panel-analisis');
-  if (panel) panel.scrollTop = detail.offsetTop;
-  if (_anCache[id]) { _renderAnTable(_anCache[id], titulo); return; }
-  _streamAnNorm(id, url, titulo);
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>`);
+  win.document.open();
+  win.document.write(loadingHtml);
+  win.document.close();
+
+  if (_anCache[id]) { _renderAnTableInWindow(win, _anCache[id], titulo); return; }
+  _streamAnNormInWindow(win, id, url, titulo);
 }
 
-async function _streamAnNorm(id, url, titulo) {
+function _anWindowHtml(titulo, bodyContent) {
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+  <title>${titulo}</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;color:#1a2e3b;background:#f4f6f8;font-size:13px}
+    .win-header{background:#002b45;color:#fff;padding:16px 24px;position:sticky;top:0;z-index:10}
+    .win-title{font-size:15px;font-weight:700;line-height:1.4}
+    .win-sub{font-size:11px;opacity:.65;margin-top:3px}
+    .win-body{padding:20px 24px}
+    .win-resumen{background:#fff;border-radius:8px;padding:14px 18px;margin-bottom:16px;
+      box-shadow:0 2px 8px rgba(0,43,69,.08);font-size:12px;line-height:1.6}
+    .win-impacto{background:rgba(0,43,69,.04);border-left:3px solid #002b45;
+      padding:10px 14px;border-radius:0 6px 6px 0;margin-top:8px}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;
+      overflow:hidden;box-shadow:0 2px 12px rgba(0,43,69,.08)}
+    th{background:#002b45;color:#fff;padding:10px 14px;text-align:left;
+      font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap}
+    td{padding:11px 14px;border-bottom:1px solid #e8ecf0;vertical-align:top;line-height:1.55}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:rgba(0,184,176,.04)}
+    .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;
+      font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+    .nuevo{background:rgba(0,184,176,.15);color:#009990}
+    .modificado{background:rgba(249,168,37,.18);color:#b45309}
+    .derogado{background:rgba(229,57,53,.12);color:#c62828}
+    .ref{background:rgba(249,168,37,.08);border-left:2px solid #f9a825;
+      padding:5px 9px;margin-top:5px;font-size:11px;border-radius:0 4px 4px 0}
+    .impl{background:rgba(0,43,69,.05);border-left:2px solid #002b45;
+      padding:5px 9px;margin-bottom:5px;border-radius:0 4px 4px 0}
+  </style></head><body>
+  <div class="win-header">
+    <div class="win-title">${titulo}</div>
+    <div class="win-sub">Análisis artículo por artículo — Agente Regulatorio</div>
+  </div>
+  <div class="win-body">${bodyContent}</div>
+  </body></html>`;
+}
+
+async function _streamAnNormInWindow(win, id, url, titulo) {
   try {
     const resp = await fetch('/api/analizar-normativa', {
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -1384,52 +1427,57 @@ async function _streamAnNorm(id, url, titulo) {
         if (!p.startsWith('data:')) continue;
         let ev; try { ev = JSON.parse(p.slice(5).trim()); } catch { continue; }
         if (ev.type === 'progreso') {
-          const m = document.getElementById('an-detail-msg');
-          if (m) m.textContent = ev.msg;
+          try {
+            const m = win.document.getElementById('win-msg');
+            if (m) m.textContent = ev.msg;
+          } catch {}
         } else if (ev.type === 'resultado') {
           _anCache[id] = ev;
-          _renderAnTable(ev, titulo);
+          _renderAnTableInWindow(win, ev, titulo);
         } else if (ev.type === 'error') {
-          document.getElementById('an-detail').innerHTML +=
-            `<p style="padding:16px;color:#c62828">Error: ${ev.msg}</p>`;
+          try {
+            win.document.querySelector('.win-body').innerHTML +=
+              `<p style="padding:16px;color:#c62828;font-size:13px">Error: ${ev.msg}</p>`;
+          } catch {}
         }
       }
     }
   } catch(e) {
-    const d = document.getElementById('an-detail');
-    if (d) d.innerHTML += `<p style="padding:16px;color:#c62828">Error de conexión: ${e.message}</p>`;
+    try {
+      win.document.querySelector('.win-body').innerHTML +=
+        `<p style="padding:16px;color:#c62828;font-size:13px">Error de conexión: ${e.message}</p>`;
+    } catch {}
   }
 }
 
-function _renderAnTable(data, titulo) {
+function _renderAnTableInWindow(win, data, titulo) {
   const arts = data.articulos || [];
-  const detail = document.getElementById('an-detail');
-  if (!detail) return;
   const rows = arts.length ? arts.map(a => {
-    const badge = `<span class="an-badge ${a.estado||''}">${(a.estado||'').toUpperCase()}</span>`;
+    const badge = `<span class="badge ${a.estado||''}">${(a.estado||'').toUpperCase()}</span>`;
     const ref = a.normativa_referencia
-      ? `<div class="an-ref" style="margin-top:5px"><strong>Norma anterior:</strong> ${a.normativa_referencia}</div>` : '';
+      ? `<div class="ref"><strong>Norma anterior:</strong> ${a.normativa_referencia}</div>` : '';
     const cambios = a.cambios
-      ? `<div class="an-ref" style="margin-top:4px"><strong>Cambios:</strong> ${a.cambios}</div>` : '';
+      ? `<div class="ref" style="margin-top:4px"><strong>Cambios:</strong> ${a.cambios}</div>` : '';
     const impl = a.implicaciones_ree
-      ? `<div class="an-impl-os">${a.implicaciones_ree}</div>`
-      : `<span style="color:var(--gray4);font-size:11px">Sin impacto directo</span>`;
+      ? `<div class="impl">${a.implicaciones_ree}</div>`
+      : `<span style="color:#607d8b;font-size:11px">Sin impacto directo</span>`;
     return `<tr>
-      <td style="white-space:nowrap;font-weight:700;color:var(--navy)">${a.numero||''}</td>
-      <td style="font-weight:600;color:var(--navy)">${a.titulo||''}<br><span style="font-weight:400;color:var(--gray4);font-size:11px">${a.texto||''}</span></td>
+      <td style="white-space:nowrap;font-weight:700;color:#002b45">${a.numero||''}</td>
+      <td style="font-weight:600;color:#002b45">${a.titulo||''}<br>
+        <span style="font-weight:400;color:#607d8b;font-size:11px">${a.texto||''}</span></td>
       <td>${badge}${ref}${cambios}</td>
       <td>${impl}</td>
     </tr>`;
-  }).join('') : `<tr><td colspan="4" style="color:var(--gray4);text-align:center;padding:20px">No se encontraron apartados.</td></tr>`;
+  }).join('') : `<tr><td colspan="4" style="color:#607d8b;text-align:center;padding:20px">No se encontraron apartados.</td></tr>`;
 
-  detail.innerHTML = `
-    <div class="an-detail-header">
-      <div class="an-detail-titulo">${titulo}</div>
-      ${data.resumen_ejecutivo ? `<div style="font-size:11px;color:var(--gray4);margin-top:4px">${data.resumen_ejecutivo}</div>` : ''}
-      ${data.implicaciones_globales_os ? `<div style="font-size:11px;margin-top:6px;padding:6px 10px;background:rgba(0,43,69,.05);border-left:3px solid var(--navy);border-radius:0 4px 4px 0"><strong>Impacto global Red Eléctrica:</strong> ${data.implicaciones_globales_os}</div>` : ''}
-    </div>
-    <div class="an-table-wrap">
-      <table class="an-table">
+  const resumen = data.resumen_ejecutivo
+    ? `<div class="win-resumen"><strong>Resumen:</strong> ${data.resumen_ejecutivo}
+       ${data.implicaciones_globales_os ? `<div class="win-impacto"><strong>Impacto global para Red Eléctrica:</strong> ${data.implicaciones_globales_os}</div>` : ''}
+       </div>` : '';
+
+  const tableHtml = `${resumen}
+    <div style="overflow-x:auto">
+      <table>
         <thead><tr>
           <th style="width:10%">Apartado</th>
           <th style="width:30%">Título y contenido</th>
@@ -1439,6 +1487,13 @@ function _renderAnTable(data, titulo) {
         <tbody>${rows}</tbody>
       </table>
     </div>`;
+
+  try {
+    win.document.open();
+    win.document.write(_anWindowHtml(titulo, tableHtml));
+    win.document.close();
+  } catch {}
+}
 }
 
 loadData();
