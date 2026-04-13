@@ -18,7 +18,6 @@ import anthropic
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
 # ──────────────────────────────────────────────
 # Setup
@@ -27,7 +26,6 @@ from fastapi.templating import Jinja2Templates
 app = FastAPI(title="Agente Regulatorio REE", docs_url=None, redoc_url=None)
 
 BASE_DIR = Path(__file__).parent
-templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 static_dir = BASE_DIR / "static"
 if static_dir.exists():
@@ -55,8 +53,9 @@ BENCHMARK_EUROPEO = _load("benchmark_europeo.json")
 # ──────────────────────────────────────────────
 
 @app.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def index():
+    html = (BASE_DIR / "templates" / "index.html").read_text(encoding="utf-8")
+    return HTMLResponse(content=html)
 
 
 @app.get("/api/normativa")
